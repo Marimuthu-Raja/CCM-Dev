@@ -1,0 +1,116 @@
+*{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", sans-serif;
+  color: #354558;
+  font-size: 13px;
+}
+.container{
+  margin-left: 180px;
+}
+.card{
+  background-color: rgb(239, 243, 245);
+  width: 90%;
+  padding:2em;
+  box-shadow: 3px 3px 7px 2px rgba(161, 162, 163, 0.856);
+  border-radius: 30px;
+}
+.form{
+  margin-top: 5px;
+}
+.profile-img {
+  display:block;
+  margin: auto;
+  margin-top:20px;
+}
+.col{
+  padding-bottom: 10px;
+}
+.form-control{
+  width: 80%;
+}
+
+/* button */
+.btn{
+    max-width: 133px;
+    width: 133px;
+    /* height: 40%; */
+    border-radius: 30px;
+    background-color: rgb(58,95,133);
+    color: white;    
+    border: none;
+    margin-right: 10px;
+    margin-left: 30px;
+    margin-top: 10px;
+    box-shadow: 0px 10px 10px #00000029;
+    max-height: 40px;
+    font-size: revert;
+}
+.btn:hover{
+  background-color:rgb(66, 169, 230);
+}
+
+/* select */
+.select-style{
+
+}
+
+/* navbar */
+nav{
+  height:100%;
+  margin-top: 0px;
+  z-index:1;
+  position: fixed;
+  border-right: 1px solid rgb(228, 228, 228);
+ 
+}
+.sidebar{
+  margin-top: 40px;
+  width: 180px;
+
+}
+a{
+  color:rgb(49, 50, 51);
+}
+
+
+/* header */
+.header{
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+}
+.header-img{
+  box-sizing: border-box;
+  margin: 0px 40px;
+  margin-top: 5px;
+  position:fixed;
+  z-index: 1;
+  
+  
+}
+.header-text{
+  background-color: rgb(58,95,133);
+  color: white;
+  padding: 1.5em;
+  margin-left: 180px;
+  
+ 
+}
+.custom-header{
+  background-color: rgb(58,95,133);
+}
+
+/*  */
+.form-control{
+ border:none;
+ padding:2px;
+ 
+}
