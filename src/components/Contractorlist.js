@@ -127,6 +127,7 @@ export default class Contractorlist extends Component {
                                 <th scope="col">Address</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Phone No</th>
+                                <th scope="col">Country</th>
                                 <th scope="col">Contact Person</th>
                                 <th scope="col">Delete</th>
                                 <th scope="col"></th>
