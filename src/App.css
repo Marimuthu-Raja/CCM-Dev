@@ -107,7 +107,12 @@ a{
 .custom-header{
   background-color: rgb(58,95,133);
 }
+@media(min-width:"600px"){
+  .header-heading{
+    display: none;
+  }
 
+}
 /*  */
 .form-control{
  border:none;

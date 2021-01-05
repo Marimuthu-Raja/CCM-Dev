@@ -4,6 +4,8 @@ import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
 import Contractorlist from './components/Contractorlist'
 import Addcontractor from './components/Addcontractor'
+import QuotationList from './components/QuotationList'
+
 const BaseRouter = () => (
     <>
     
@@ -12,6 +14,8 @@ const BaseRouter = () => (
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/Contractor-list" component={Contractorlist}/>
       <Route exact path="/addcontractor" component={Addcontractor}/>
+      <Route exact path="/quotation" component={QuotationList}/>
+
       </Switch>
       
     </>
