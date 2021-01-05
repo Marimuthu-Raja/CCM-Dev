@@ -15,6 +15,7 @@ import User from './components/User'
 import ClientList from './components/ClientList'
 import AddClient from './components/AddClient'
 
+import QuotationList from './components/QuotationList'
 
 const BaseRouter = () => (
     <>
@@ -34,6 +35,8 @@ const BaseRouter = () => (
       <Route exact path="/users" component={User} /> 
       <Route exact path="/clientlist" component={ClientList} />
       <Route exact path="/addclient" component={AddClient}/> 
+      <Route exact path="/quotation" component={QuotationList}/>
+
       </Switch>
       
     </>
