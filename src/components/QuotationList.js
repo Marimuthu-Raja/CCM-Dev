@@ -17,7 +17,12 @@ export default class QuotationList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            quotationList:[]
+            quotationList:[],
+            search:'',
+            from_date:'',
+            to_date:'',
+            country:'',
+            status:'',
         }
     }
 
@@ -32,20 +37,31 @@ export default class QuotationList extends Component {
             console.log(error)
         })
     }
+    
+    
     renderTable = (quotation) =>{
         return (
-           <tr key={quotation.id} className={quotation.id % 2 === 0 ? "table-primary":""} style={{height:"30px"}}>
-              <td>{quotation.Name}</td>
-              <td>{quotation.Address}</td>
-              <td>{quotation.Email}</td>
-              <td>{quotation.Phone}</td>
-              <td>{quotation.Contactperson}</td>
+            
+           <tr key={quotation.id} className={quotation.id % 2 === 0 ? "table-primary":""} onClick={<renderInvoice/>} style={{height:"50px",padding:"10px" }}>
+              <td style={{padding:"15px"}}>{quotation.Name}</td>
+              <td style={{padding:"15px"}}>{quotation.Address}</td>
+              <td style={{padding:"15px"}}>{quotation.Email}</td>
+              <td style={{padding:"15px"}}>{quotation.Phone}</td>
+              <td style={{padding:"15px"}}>{quotation.Contactperson}</td>
+              <td style={{padding:"15px"}}>{quotation.Contactperson}</td>
               
            </tr>
         )
 }
+
+
+    handleChange = e => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
     render() {
-        const {quotationList} = this.state
+        const {quotationList,search,from_date,to_date,country,status} = this.state
         return (
             <div>
                 <div style={{marginLeft:"10%",width:"98%"}}>
@@ -58,8 +74,8 @@ export default class QuotationList extends Component {
                                     placeholder="Search"
                                     onChange={this.onChange}
                                     name="search"
-                                    // value={search}
-                                    onChange={this.handleSearch}
+                                    value={search}
+                                    onChange={this.handleChange}
                                     style={{borderRadius:"25px",padding:"10px"}}
                                     />
                                     <button style={{position:"relative",
@@ -95,9 +111,9 @@ export default class QuotationList extends Component {
                                     <Form.Control type="date"  id="date"
                                     placeholder="from"
                                     onChange={this.onChange}
-                                    name="date"
-                                    // value={search}
-                                    onChange={this.handleSearch}
+                                    name="from_date"
+                                    value={from_date}
+                                    onChange={this.handleChange}
                                     style={{borderRadius:"25px",padding:"10px"}}
                                     />
                                     
@@ -111,9 +127,9 @@ export default class QuotationList extends Component {
                                     <Form.Control type="date"  id="date"
                                     placeholder="from"
                                     onChange={this.onChange}
-                                    name="date"
-                                    // value={search}
-                                    onChange={this.handleSearch}
+                                    name="to_date"
+                                    value={to_date}
+                                    onChange={this.handleChange}
                                     style={{borderRadius:"25px",padding:"10px"}}
                                     />
                                     
@@ -152,9 +168,9 @@ export default class QuotationList extends Component {
                             
                         </Row>
                 </Card>
-                <Card style={{marginTop:"30px"}}>
+                <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                 <Row style={{marginTop:"30px"}}>
-                        <table className="table table-striped">
+                        <table className="table" style={{backgroundColor:"white"}}>
                             <thead>
                                 <tr>
                                 <th scope="col">Quotation Number</th>
@@ -163,14 +179,11 @@ export default class QuotationList extends Component {
                                 <th scope="col">Description</th>
                                 <th scope="col">Quote Amount</th>
                                 <th scope="col">Quote Approval</th>
-                                <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <button>
                             <tbody>
                                 {quotationList.map(this.renderTable)}
                             </tbody> 
-                            </button>
                         </table>
                         </Row>
                 </Card>
@@ -178,4 +191,13 @@ export default class QuotationList extends Component {
             </div>
         )
     }
+}
+
+
+const renderInvoice = () =>{
+    return(
+        <Card>
+
+        </Card>
+    )
 }
