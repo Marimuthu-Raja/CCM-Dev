@@ -65,13 +65,13 @@ export default class Client extends Component {
         const { client_name,user_name,country,email,user_type,address,phone_number} = this.state;
         return (
             <div>
-                <div style={{marginLeft:"15%",marginTop:"2%" }}>
+                <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <p style={{fontSize:"20px"}}>Client</p>
                     <Card style={{width:"90%"}} >
-                        <Row>
+                        <Row style={{marginTop:"3%"}}>
                             <Col lg={4} sm={12}>
                                 
-                                <Image src={Logo} style={{width:"100px",marginLeft:"20%"}} ></Image>
+                                <Image src={Logo} style={{width:"120px",marginLeft:"20%"}} ></Image>
                             
                             </Col>
                             <Col lg={4} sm={12}>
@@ -81,7 +81,7 @@ export default class Client extends Component {
                                                     style={{padding:"8px"}}/>
 
                                 </Form.Group>
-                            
+                            <br></br>
                                 <Form.Group >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>User Name</Form.Label>
                                                     <Form.Control type="text" name="user_name" value={user_name} id="user_name" placeholder="User Name" onChange={this.onChange}
@@ -89,7 +89,7 @@ export default class Client extends Component {
 
                                 </Form.Group>
                             
-                            
+                            <br></br>
                             <Form.Group as={Col}>
                                 <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Country</Form.Label>
                                 <Col>
@@ -102,7 +102,7 @@ export default class Client extends Component {
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
-
+                            <br></br>
                             <Form.Group >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Address</Form.Label>
                                                     <Form.Control type="text" name="address" value={address} id="address" placeholder="Address" onChange={this.onChange}
@@ -122,7 +122,7 @@ export default class Client extends Component {
                                                     style={{padding:"8px"}}/>
 
                             </Form.Group>
-                            
+                            <br></br>
                             <Form.Group as={Col}>
                                 <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>User Type</Form.Label>
                                 <Col>
@@ -133,6 +133,7 @@ export default class Client extends Component {
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
+                            <br></br>
                             <Form.Group >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Phone Number</Form.Label>
                                                     <Form.Control type="text" name="phone_number" value={phone_number} id="phone_number" placeholder="Phone Number" onChange={this.onChange}

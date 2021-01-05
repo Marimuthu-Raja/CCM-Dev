@@ -53,12 +53,12 @@ export default class Country extends Component {
         const {status,country_name}=this.state;
         return (
             <div>
-                <div style={{marginLeft:"15%",marginTop:"2%" ,}}>
+                <div style={{marginLeft:"10%",marginTop:"2%" ,width:"99%"}}>
                     <p style={{fontSize:"20px"}}>Country</p>
 
-                     <Card border="dark" sm={6} style={{height:"500px"}}>
+                     <Card border="dark" sm={6} style={{height:"600px"}}>
                          <Form >
-                            <Row>
+                            <Row style={{marginTop:"3%"}}>
                                 <Col  lg={4} sm={4}>
                                 <Image src={topimage} rounded style={{width:"100px",marginLeft:"20%"}} />
                                 </Col>

@@ -56,11 +56,11 @@ export default class Contractor extends Component {
         const {country,status,contractor_name,email,phone_number}=this.state;
         return (
             <div>
-                 <div style={{marginLeft:"20%",marginTop:"2%" ,}}>
+                 <div style={{marginLeft:"10%",marginTop:"2%",width:"99%"}}>
                      <p style={{fontSize:"25px"}}>Contractor</p>
-                     <Card border="dark" sm={6} style={{height:"90%",width:"90%"}}>
+                     <Card border="dark" sm={6} style={{width:"90%"}}>
                          <Form >
-                            <Row>
+                            <Row style={{marginTop:"3%"}}>
                                 <Col lg={4} sm={4}>
                                 <Image src={topimage} rounded style={{width:"100px",marginLeft:"20%"}} />
                                 </Col>
@@ -68,14 +68,14 @@ export default class Contractor extends Component {
                                 <Form.Group Id="input" >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Contractor Name</Form.Label>
                                                     <Form.Control type="text" name="contractor_name"  placeholder="Contractor Name" onChange={this.onChange}
-                                                    style={{padding:"8px"}}/>
+                                                    style={{padding:"10px"}}/>
 
                                 </Form.Group>
                                 <br/>
                                 <br/>
                                 <Form.Group Id="status" >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Country</Form.Label>
-                                                    <Form.Control as="select" name="status"  onChange={this.onChange}  style={{padding:"8px"}}>
+                                                    <Form.Control as="select" name="status"  onChange={this.onChange}  style={{padding:"10px"}}>
                                                     <option value="India">India</option>
                                                     <option value="Singapoor">Singapur</option>
                                                     <option value="India">India</option>
@@ -88,7 +88,7 @@ export default class Contractor extends Component {
                                 <br/>
                                 <Form.Group Id="status" >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Status</Form.Label>
-                                                    <Form.Control as="select" name="status"  onChange={this.onChange}  style={{padding:"8px"}}>
+                                                    <Form.Control as="select" name="status"  onChange={this.onChange}  style={{padding:"10px"}}>
                                                     <option value="Active">Active</option>
                                                     <option value="Inactive">Inactive</option>
                                                     </Form.Control>
@@ -98,21 +98,21 @@ export default class Contractor extends Component {
                                 <Col lg={4} sm={4}>
                                 <Form.Group Id="input" >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>E-Mail</Form.Label>
-                                                    <Form.Control type="email" name="email"  placeholder="E-Mail ID" onChange={this.onChange}  style={{padding:"8px"}}/>
+                                                    <Form.Control type="email" name="email"  placeholder="E-Mail ID" onChange={this.onChange}  style={{padding:"10px"}}/>
 
                                 </Form.Group>
                                 <br/>
                                 <br/>
                                 <Form.Group Id="input" >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Phone Number</Form.Label>
-                                                    <Form.Control type="tel" name="phone_number"  placeholder="Phone Number" onChange={this.onChange}  style={{padding:"8px"}}/>
+                                                    <Form.Control type="tel" name="phone_number"  placeholder="Phone Number" onChange={this.onChange}  style={{padding:"10px"}}/>
 
                                 </Form.Group>
                                 
                                 </Col>
                             </Row>
                             <Row>
-                            <button type="button" class="btn btn sbtn" onClick={this.onSubmit}> SAVE</button>
+                            <button type="button" class="btn btn sbtn" style={{marginTop:"12%",marginBottom:"2%"}} onClick={this.onSubmit}> SAVE</button>
                             </Row>
                             
                          </Form>

@@ -19,7 +19,7 @@ class User extends Component {
     }
     
     componentDidMount() {
-        axios.get(`http://www.json-generator.com/api/json/get/cqJfyXnwlK?indent=2`)
+        axios.get(`http://www.json-generator.com/api/json/get/bPOTIaHlGq?indent=2`)
         .then(res => {
             const users = res.data;
             this.setState({users});
@@ -33,13 +33,13 @@ class User extends Component {
 
     userTable=(user) =>{
         return(
-            <tr key={user.id} className={user.id % 2 === 0 ? "rowtable":""} style={{height:"30px" }}>
+            <tr key={user.id} className={user.id % 2 === 0 ? "rowtable":""} style={{height:"40px" }}>
                                     <td>{user.name}</td>
                                     <td>{user.department}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
                                     <td>{user.country}</td>
-                                    <td><i class="fas fa-trash" style={{color:"red"}}></i></td>
+                                    <td><button style={{border:"none"}}><i class="fas fa-trash" style={{color:"red"}}></i></button></td>
                                     <td><Link to="/profile"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
                                 </tr>                   
         )
@@ -50,8 +50,8 @@ class User extends Component {
         const{search,country,status,users}=this.state
         return (
             <div>
-                <h5 style={{font:"san-serif",marginLeft:"200px"}}>USERS</h5>
-                <div style={{marginLeft:"15%",marginTop:"2%" }}>
+                <h4 style={{font:"san-serif",marginLeft:"200px",marginTop:"20px"}}>USERS</h4>
+                <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <Card style={{backgroundColor:"white"}}>
 
                         <Row style={{marginTop:"30px", marginBottom:"40px"}}>
@@ -63,7 +63,7 @@ class User extends Component {
                                     style={{padding:"10px",width:"78%", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}}/>
                                 </Form.Group>
                             
-                                <i class="fa fa-search" style={{fontSize:"20px",position:"relative",bottom:"30px",left:"230px"}}></i> 
+                                <i class="fa fa-search" style={{fontSize:"20px",position:"relative",bottom:"30px",left:"350px"}}></i> 
                             </Col>
                             <Col lg="3" sm="12">
                                 <Form.Group as={Col}>
@@ -106,7 +106,7 @@ class User extends Component {
                                 </Link>
                             </Col>
                         </Row>
-
+                        <Row style={{marginTop:"35px"}}>
                         <table class="table ">
                             <thead>
                                 <tr>
@@ -125,6 +125,7 @@ class User extends Component {
                                 {users.map(this.userTable)}
                             </tbody>
                         </table>
+                        </Row>
                     </Card>
                 </div>
             </div>

@@ -70,7 +70,7 @@ export class Quotation extends Component {
         const {quotation,in_voice,description,date,amount,status,client,client_po,margin,marginamount,work_schedule,complete,contractor,purchace_order,po_amount,po_date}=this.state;
         return (
             <div>
-                <div style={{marginLeft:"15%",marginTop:"2%" }}>
+                <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <p style={{fontSize:"20px"}}>Quotation</p>
                     <Card>
                         <Row>
@@ -172,6 +172,7 @@ export class Quotation extends Component {
                             </Row>
                         </Col>
                         </Row>
+                        <br></br>
                         <hr/>
 
                     <Row>
@@ -244,7 +245,7 @@ export class Quotation extends Component {
                         </Row>
                         </Col>
                     </Row>
-                    <button type="button" class="btn btn sbtn" style={{marginTop:"100px"}} onClick={this.onSubmit}> SUBMIT</button>
+                    <button type="button" class="btn btn sbtn" style={{marginTop:"150px"}} onClick={this.onSubmit}> SUBMIT</button>
                     </Card>
                 </div>
             </div>

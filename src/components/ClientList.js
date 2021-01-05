@@ -38,7 +38,7 @@ export default class ClientList extends Component {
     }
     renderTable = (client) =>{
             return (
-               <tr key={client.id} className={client.id % 2 === 0 ? "table-primary":""} style={{height:"30px"}}>
+               <tr key={client.id} className={client.id % 2 === 0 ? "rowtable":""} style={{height:"30px"}}>
                   <td>{client.Name}</td>
                   <td>{client.Address}</td>
                   <td>{client.Email}</td>
@@ -64,7 +64,7 @@ export default class ClientList extends Component {
             <div>
                 <div style={{marginLeft:"10%",width:"98%"}}>
                 <h3 style={{marginTop:"30px"}}>Client List</h3>
-                    <Card style={{marginTop:"30px"}}>
+                    <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                         <Row>
                             <Col lg={4}>
                                 <Form.Group as={Col}>
@@ -75,7 +75,7 @@ export default class ClientList extends Component {
                                     name="search"
                                     value={search}
                                     onChange={this.handleSearch}
-                                    style={{borderRadius:"25px",padding:"10px"}}
+                                    style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888"}}
                                     />
                                     <button style={{position:"relative",
                                                 bottom:"30px",
@@ -90,7 +90,7 @@ export default class ClientList extends Component {
                             <Col lg={4}>
                                 <Form.Group as={Col}>
                                 <Col>
-                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px"}}>
+                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888"}}>
                                         <option disabled selected>Country</option>
                                         <option>Spain</option>
                                         <option>Italy</option>
@@ -112,7 +112,8 @@ export default class ClientList extends Component {
                                 marginLeft:"70%",
                                 backgroundColor:"#4A88DC",
                                 border:"none",
-                                borderRadius:"10px"}}>
+                                borderRadius:"10px",
+                                boxShadow:"5px 5px 8px #888888"}}>
                                     <i className="fa fa-plus" style={{fontSize:"20px",color:"white"}}></i>
                                     </button>
                                 </Link>
@@ -120,7 +121,7 @@ export default class ClientList extends Component {
                             </Col>
                         </Row>
                         <Row style={{marginTop:"30px"}}>
-                        <table className="table table-striped">
+                        <table className="table ">
                             <thead>
                                 <tr>
                                 <th scope="col">Client Name</th>
