@@ -12,12 +12,7 @@ body {
 }
 
 .card{
-<<<<<<< HEAD
   background-color: rgb(232,243,250);
-=======
-  background-color:  #DDF1FD;
-  width: 90%;
->>>>>>> 4b4bfa58cbb8f21530b33fd4eb319b29f7bb3d4f
   padding:2em;
   width:90%;
   box-shadow: 3px 3px 7px 2px rgba(161, 162, 163, 0.856);
@@ -152,7 +147,6 @@ a{
 
 }
 /*  */
-<<<<<<< HEAD
 
 
 .inner-card{
@@ -176,7 +170,7 @@ input[type=date]{
 .search-input{
   border-radius: 20px;
   box-shadow: 2px 2px 5px 1px rgba(161, 162, 163, 0.856);
-  padding:10px;
+  padding:30px;
 }
 .inner-space{
   background-color: rgb(232,243,250);
@@ -233,7 +227,7 @@ input[type=date]{
 /* canvasjs chart */
 canvas{
   margin-top: 70px;
-=======
+}
 .form-control{
  border:none;
  padding:2px;
@@ -253,5 +247,4 @@ canvas{
 }
 .rowtable{
   background-color: #C3E7FB;
->>>>>>> 4b4bfa58cbb8f21530b33fd4eb319b29f7bb3d4f
 }

@@ -4,9 +4,7 @@ import Profile from './components/Profile'
 import Dashboard from './components/Dashboard'
 import Contractorlist from './components/Contractorlist'
 import Addcontractor from './components/Addcontractor'
-<<<<<<< HEAD
 import UserProfile from './components/UserProfile'
-=======
 import Contractor from './components/Contractor'
 import Client from './components/Client'
 import Country from './components/Country'
@@ -20,7 +18,6 @@ import AddClient from './components/AddClient'
 
 import QuotationList from './components/QuotationList'
 
->>>>>>> 4b4bfa58cbb8f21530b33fd4eb319b29f7bb3d4f
 const BaseRouter = () => (
     <>
     
