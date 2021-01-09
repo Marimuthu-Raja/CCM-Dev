@@ -16,6 +16,9 @@ import ClientList from './components/ClientList'
 import AddClient from './components/AddClient'
 
 import QuotationList from './components/QuotationList'
+import BarChart from './components/BarChart'
+import Chart from './components/Chart'
+
 
 const BaseRouter = () => (
     <>
@@ -28,15 +31,16 @@ const BaseRouter = () => (
       <Route exact path="/contractor" component={Contractor} />
       <Route exact path="/client" component={Client} />
       <Route exact path="/country" component={Country} />
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
       <Route exact path="/quotation" component={Quotation} />
       <Route exact path="/contractorinvoice" component={ContractorInvoice} />
       <Route exact path="/addinvoice" component={AddInvoice} />
-      <Route exact path="/users" component={User} /> 
+      <Route exact path="/user" component={User} /> 
       <Route exact path="/clientlist" component={ClientList} />
       <Route exact path="/addclient" component={AddClient}/> 
-      <Route exact path="/quotation" component={QuotationList}/>
-
+      <Route exact path="/quotationlist" component={QuotationList}/>
+      <Route exact path="/barchart" component={BarChart} />
+      <Route exact path="/chart" component={Chart} />  
       </Switch>
       
     </>

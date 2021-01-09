@@ -4,6 +4,7 @@ import CustomTextBox from './CustomBox/TextBox'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
+import Sidebar from './Sidebar'
 
 
 
@@ -70,6 +71,8 @@ export class Quotation extends Component {
         const {quotation,in_voice,description,date,amount,status,client,client_po,margin,marginamount,work_schedule,complete,contractor,purchace_order,po_amount,po_date}=this.state;
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <p style={{fontSize:"20px"}}>Quotation</p>
                     <Card>

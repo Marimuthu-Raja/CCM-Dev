@@ -10,6 +10,8 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios'
 import {Link} from 'react-router-dom';
+import Sidebar from './Sidebar'
+
 
 
 export default class ClientList extends Component {
@@ -45,7 +47,7 @@ export default class ClientList extends Component {
                   <td>{client.Phone}</td>
                   <td>{client.Contactperson}</td>
                   <td><button style={{border:"none"}}><i className="fa fa-trash" style={{fontSize:"18px",color:"red"}}></i></button></td>
-                    <td><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></td>
+                    <td><Link to="/addclient"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link> </td>
                </tr>
             )
     }
@@ -62,6 +64,8 @@ export default class ClientList extends Component {
         const {clientList,search} = this.state
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"10%",width:"98%"}}>
                 <h3 style={{marginTop:"30px"}}>Client List</h3>
                     <Card style={{marginTop:"30px",backgroundColor:"white"}}>

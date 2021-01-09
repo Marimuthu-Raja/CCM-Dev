@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
 import $ from 'jquery';
+import Sidebar from './Sidebar'
+
 
 
 export class AddInvoice extends Component {
@@ -106,6 +108,8 @@ export class AddInvoice extends Component {
         const{invoice,customername,description,price,date}=this.state;
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"15%",marginTop:"2%" }}>
                     <p style={{fontSize:"20px"}}>Quotation</p>
                     <Card>

@@ -5,6 +5,8 @@ import topimage from  '../logo-light.png';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
+import Sidebar from './Sidebar'
+
 
 
 
@@ -20,8 +22,7 @@ export default class Country extends Component {
     onChange=(e) =>{
         e.preventDefault();
         this.setState({
-            country_name: e.target.value,
-            status: e.target.value
+            [e.target.name]:e.target.value
         })
     }
     onSubmit=(e)=>{
@@ -53,6 +54,7 @@ export default class Country extends Component {
         const {status,country_name}=this.state;
         return (
             <div>
+        <Sidebar />
                 <div style={{marginLeft:"10%",marginTop:"2%" ,width:"99%"}}>
                     <p style={{fontSize:"20px"}}>Country</p>
 

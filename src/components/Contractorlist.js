@@ -10,6 +10,8 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios'
 import {Link} from 'react-router-dom';
+import Sidebar from './Sidebar'
+
 
 
 export default class Contractorlist extends Component {
@@ -22,7 +24,7 @@ export default class Contractorlist extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://www.json-generator.com/api/json/get/bTDFppcrIi?indent=2")
+        axios.get("http://dev.digisailor.in/ccm_json/contractorlist.php")
         .then(res => {
             const contractorList = res.data
             console.log(contractorList,"response")
@@ -45,7 +47,7 @@ export default class Contractorlist extends Component {
                   <td>{contractor.Phone}</td>
                   <td>{contractor.Contactperson}</td>
                   <td><button style={{border:"none"}}><i className="fa fa-trash" style={{fontSize:"18px",color:"red"}}></i></button></td>
-                    <td><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></td>
+                    <td><Link to="/addcontractor"> <button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
                </tr>
             )
     }
@@ -62,6 +64,8 @@ export default class Contractorlist extends Component {
         const {contractorList,search} = this.state
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"10%",width:"98%"}}>
                 <h3 style={{marginTop:"30px"}}>Contractor List</h3>
                     <Card style={{marginTop:"30px",backgroundColor:"white"}}>

@@ -12,6 +12,8 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
+import Sidebar from './Sidebar'
+
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -30,6 +32,8 @@ export class Dashboard extends Component {
         const {Date_From,Date_To,select_month}= this.state;
         return (
             <div>
+        <Sidebar />
+
                 <Container>
                     <Card>
                         <Row>
