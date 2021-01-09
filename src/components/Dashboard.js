@@ -9,13 +9,18 @@ import {
     Image,
     DropdownButton,
     Dropdown,
+    Spinner,
 } from 'react-bootstrap';
 import CustomTextBox from './CustomBox/TextBox'
-import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
 import axios from 'axios'
-import {CanvasJSChart} from 'canvasjs-react-charts'
+import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { addMonths, subMonths, addYears, subYears } from "date-fns";
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -24,7 +29,7 @@ export class Dashboard extends Component {
         this.state = {
            Date_From:null,
            Date_To:null,
-           select_month:"",
+           select_month: new Date(),
            total_amount:380,
            received_amount:280,
            remaining_amount:100,
@@ -34,135 +39,307 @@ export class Dashboard extends Component {
     }
 
     componentDidMount() {
-        axios('http://www.json-generator.com/api/json/get/cqUHhMhfvS?indent=2' )
+        const {invoice,quotation,select_month}=this.state;
+        axios('http://www.json-generator.com/api/json/get/cfrDwSAQMO?indent=2' )
         .then(res =>{
             const quotation = res.data
             this.setState({quotation})
             console.log(quotation,"quotation")
             
         })
-        axios('http://www.json-generator.com/api/json/get/ckCdZLcVua?indent=2' )
+        axios('http://www.json-generator.com/api/json/get/cguvqhaVQi?indent=2' )
         .then(res =>{
             const invoice = res.data
+            
             this.setState({invoice})
             console.log(invoice,"invoice")
-            let sum=0;
-            this.state.invoice.map(invoice=>{
-            sum = sum + invoice.amount
-            }) 
-            this.setState({Total:sum},()=>{console.log(this.state,"state")})
-        })
-        // axios('http://dev.digisailor.in/ccm_json/invoice.json')
-        // .then(res =>{
-        //     const invoice = res.data
-        //     this.setState({invoice})
-        //     console.log(invoice,"invoice")
-        // })
-        
-           
-    
-        
-    }
-    chartData1= ()=>{
-		
-        const option1 = {
-            animationEnabled: true,
-            theme: "light1", //"light1", "dark1", "dark2"
-            height:400,
-            data: [{
-				type: "pie",
-				showInLegend: true,
-				legendText: "{label}",
-				toolTipContent: "{label}: <strong>${y}</strong>",
-				indexLabel: "${y}",
-                indexLabelPlacement: "inside",
-                dataPoints: [
-					{ y: 222, label: "Total",  },
-					{ y: 100, label: "Remaining", },
-					{ y: 280, label: "Received" },
-				]
-			}]
-            // axisX:{
-            //     title:"Release_name",
-            //     titleFontColor:"#DD2735",
-            //     titleFontSize:25,
-            //     labelFontSize:20,
-                
-            // },
-            // axisY:{
-            //     title:"Builds",
-            //     titleFontColor:"#DD2735",
-            //     titleFontSize:25,
-            //     labelFontSize:15,
-            //     maximum:25,
-            //     minimum:5,
-            // },
-            // data: [{
-            //     type: "column", 
-            //     dataPoints: this.state.option1_Data.map(e=>{
-            //         console.log(e,"e")
-            //         return {label:e.release_name, y:e.builds }
-            //     })
             
-            // }]
+           
+        }) 
+        
+              
+           
+    }
+    
+      
+
+
+  
+        // onChange = (e)=>{
+            
+
+        //     const { Date_From,Date_To,total_amount,invoice_amount,remaining_amount,quotation,invoice} = this.state;
+        //     console.log(this.state,"state")
+        //     // if(name=="Date_To"){
+                
+        //     //     this.setState({Date_To:date}) 
+        //     //     if(Date_From!=null && date!=null){
+                   
+        //     //         let sum=0;
+        //     //         let amount=0;
+        //     //         this.state.quotation.map(quotation=>{
+                        
+        //     //             const quotation_date = Date.parse(quotation.date)
+        //     //             const from = Date.parse(Date_From)
+        //     //             const end = Date.parse(date)
+                        
+        //     //             if(quotation_date>from && quotation_date<end){
+                           
+        //     //                 sum = sum + quotation.amount
+                            
+
+        //     //                 this.state.invoice.map(invoice=>{
+        //     //                     if(invoice.quotation_no==quotation.quotation_no){
+                                    
+        //     //                         amount=amount+invoice.amount
+        //     //                     }
+        //     //                 })
+        //     //             }
+        //     //         }) 
+                
+        //     //         this.setState({
+        //     //             total_amount:sum,
+        //     //             received_amount:amount,
+        //     //             remaining_amount:sum-amount,
+        //     //         },()=>{console.log(this.state,"state")})
+        //     //     }
+        //     //     return
+        //     // }
+            
+        //     this.setState({
+        //         [e.target.name]:e.target.value
+        //     },()=>{console.log(e.target.value,"value")})
+        // }
+        chartData = ()=>{
+            var progress = document.getElementById('animationProgress');
+         const data= { 
+             labels: [
+                "Total",
+                "Received",
+                "Remaining"
+            ],
+            datasets: [
+                {
+                    data: [this.state.total_amount,this.state.received_amount,this.state.remaining_amount],
+                    toolTipContent: "{label}:${data}",
+                    borderWidth: 1,
+                    backgroundColor: [
+                        'rgba(236,242,63,0.3)',
+                        'rgba(38, 211, 211,0.3)',
+                        'rgba(247, 7, 55, 0.3)',
+                    ],
+                    borderColor:  [
+                        'rgba(236,242,63,0.80)',
+                        'rgba(38, 211, 211)',
+                        'rgba(247, 7, 55, 0.80)',
+                    ],
+                    hoverBackgroundColor: [
+                        'rgba(236,242,63,0.80)',
+                        'rgba(38, 211, 211)',
+                        'rgba(247, 7, 55, 0.80)',
+                    ],
+            
+                }],
+                
+        }
+        const options = {
+            legend: {
+                position:'right',
+                padding:20,
+                labels: {
+                    fontSize:15,
+                    fontColor:"black",
+                    fontWeight:'bold'
+                }
+            }, 
+            plugins: {
+                datalabels: {
+                    color: 'black',
+                    font:{
+                        size:'20',
+                        weight:'bold',
+                    },
+                    formatter: function(value, data) {
+                        return "$"+value;
+                    },
+                }
+            },
+            tooltips: {
+                titleSpacing: 6,
+                xPadding: 20,
+                yPadding: 20,
+                titleFontSize: 15,
+                bodyFontSize:20,
+                callbacks: {
+                    title: function(tooltipItem, data) {
+                    return data['labels'][tooltipItem[0]['index']];
+                    },
+                    label: function(tooltipItem, data) {
+                    return "$" + data['datasets'][0]['data'][tooltipItem['index']];
+                    },
+                },
+            },
         }
         
-        return (option1);
-}
+        return {data, options} ;
+    }           
+    setDate = (date, name)=>{
+        const { Date_From,Date_To,total_amount,invoice_amount,remaining_amount,quotation,invoice} = this.state;
 
-        changeFormat = (input) =>{
+        console.log(this.state, "state")
 
+        if(name=="Date_To"){
+                
+            
+            if(Date_From!=null && date!=null){
+               
+                let sum=0;
+                let amount=0;
+                this.state.quotation.map(quotation=>{
+                    
+                    const quotation_date = Date.parse(quotation.date)
+                    const from = Date.parse(Date_From)
+                    const end = Date.parse(date)
+                    
+                    if(quotation_date>=from && quotation_date<=end){
+                       
+                        sum = sum + quotation.amount
+                        
+
+                        this.state.invoice.map(invoice=>{
+                            if(invoice.quotation_no==quotation.quotation_no){
+                                
+                                amount=amount+invoice.amount
+                            }
+                        })
+                    }
+                }) 
+            
+                this.setState({
+                    Date_To:date,
+                    total_amount:sum,
+                    received_amount:amount,
+                    remaining_amount:sum-amount,
+                },()=>{console.log(this.state,"state")})
+            }
+            return
         }
 
-        onChange = (e)=>{
-            e.preventDefault();
-            const { Date_From,Date_To,total_amount,invoice_amount,remaining_amount,quotation,invoice} = this.state;
-            console.log(this.state,"state")
-            if(e.target.name=="Date_To"){
-                
-                this.setState({Date_To:e.target.value}) 
-                if(Date_From!=null && e.target.value!=null){
-                   
-                    let sum=0;
-                   
-                    this.state.quotation.map(quotation=>{
+        if(name=="select_month"){
+
+            const month=date.getMonth()
+            const year=date.getFullYear()
+            console.log(month,"month")
+            console.log(year,"year")
+            
+                let sum=0;
+                let amount=0;
+                this.state.quotation.map(quotation=>{
+                    
+                    const quotation_date = new Date(quotation.date)
+                    console.log(quotation_date,"quotation_date")
+                    const quotation_month=quotation_date.getMonth()
+                    const quotation_year=quotation_date.getFullYear()
+                    
+                    if(quotation_month==month && quotation_year==year){
+                       
+                        sum = sum + quotation.amount
                         
-                        const quotation_date = Date.parse(quotation.date)
-                        const from = Date.parse(Date_From)
-                        const end = Date.parse(e.target.value)
-                        
-                        if(quotation_date>from && quotation_date<end){
-                           
-                            sum = sum + quotation.amount
-                            console.log(sum)
-                        }
-                    }) 
-                
-                    this.setState({total_amount:sum},()=>{console.log(this.state,"state")})
-                }
+
+                        this.state.invoice.map(invoice=>{
+                            if(invoice.quotation_no==quotation.quotation_no){
+                                
+                                amount=amount+invoice.amount
+                            }
+                        })
+                    }
+                    
+                }) 
+                this.setState({
+                    select_month:date,
+                    total_amount:sum,
+                    received_amount:amount,
+                    remaining_amount:sum-amount,
+                },()=>{console.log(this.state,"state")})
+
                 return
             }
-            
-            this.setState({
-                [e.target.name]:e.target.value
-            },()=>{console.log(e.target.value,"value")})
-        }
+        
 
+        this.setState({
+            [name]:date
+        },()=>{console.log(date,"value")})
+    }
+    // getDataBefore = ()=>{
+    //     if(this.state.check==""){
+    //         const month=this.state.select_month.getMonth()
+    //     const year=this.state.select_month.getFullYear()
+    //     console.log(month,"month")
+    //     console.log(year,"year")
+    //     let sum=0;
+    //     let amount=0;
+
+    //     this.state.quotation.map(quotation=>{
+            
+    //         const quotation_date = new Date(quotation.date)
+    //         console.log(quotation_date,"quotation_date")
+    //         const quotation_month=quotation_date.getMonth()
+    //         const quotation_year=quotation_date.getFullYear()
+            
+    //         if(quotation_month==month && quotation_year==year){
+               
+    //             sum = sum + quotation.amount
+                
+    
+    //             this.state.invoice.map(invoice=>{
+    //                 if(invoice.quotation_no==quotation.quotation_no){
+                        
+    //                     amount=amount+invoice.amount
+    //                 }
+    //             })
+    //         }
+            
+    //     }) 
+    //     this.setState({
+    //         check:"entered",
+    //         total_amount:sum,
+    //         received_amount:amount,
+    //         remaining_amount:sum-amount,
+    //     },()=>{console.log(this.state,"state")})
+    //     }
+        
+    // }
 
     render() {
-        const option1 = this.chartData1(); 
-        const {Date_From,Date_To,select_month,total_amount,remaining_amount,received_amount}= this.state;
+        const barData = this.chartData(); 
+        const {Date_From,Date_To,select_month,total_amount,remaining_amount,received_amount,loading}= this.state;
         return (
             <div>
                 <div style={{marginLeft:"10%", width:"98%"}}>
 
-                <Row className="justify-content-md-center">
-                       <Col lg={1}><Form.Label className="select-bold" >DASHBOARD</Form.Label></Col>
-                        <Col lg={5}><Form.Control className="search" type='text' name="" value="" placeholder="Search"/></Col>   
+                <Row style={{marginTop:"40px"}}>
+                       <Col lg={{span:2, offset:1}}>
+                           <Form.Label className="search-title" >DASHBOARD</Form.Label></Col>
+                       <Col lg={5}>
+                                <Form.Control type="text"  
+                                    placeholder="Search"
+                                    onChange={this.onChange}
+                                    value=""
+                                    name=""
+                                    onChange=""
+                                    className="search-input"
+                                    />
+                                    <button style={{position:"relative",
+                                                bottom:"30px",
+                                                left:"73%",backgroundColor:"white",border:"none"}} onClick={this.search}>
+                                    <i className="fa fa-search" 
+                                        ></i>
+                                        </button>
+                        </Col>
                 </Row>
                    
-                    <Card style={{marginTop:"30px"}}>
-                        <Row>
+                    <Card style={{marginTop:"20px"}}>
+                        <Row style={{marginTop:"10px"}}>
                             <Col lg={2}>
                             
                             <Form.Control as="select" className="select" name=""  value="" onChange="" required>
@@ -203,32 +380,56 @@ export class Dashboard extends Component {
                             <Row>
                                 <Col lg={3}>
                                 <Form.Group>
-                                    <label>From</label>
-                                    <div>
-                                    <input type="date" className="select" name="Date_From" value={Date_From} onChange={this.onChange} />
-                                    </div>
+                                    <label className="inner-title">From</label>
                                     
-                                </Form.Group>
+                                    <DatePicker
+                                        className="date-style"
+                                        selected={Date_From}
+                                        onChange={(date)=>{this.setDate(date, 'Date_From')}}
+                                        name="Date_From"
+                                        dateFormat="YYY/MM/dd"
+                                        minDate={subYears(new Date(), 5)}
+                                        maxDate={new Date()}
+                                        placeholderText="From"
+                                        />
+                                    
+                                 </Form.Group>
                                 </Col>
                                 <Col lg={3}>
                                 <Form.Group>
-                                    <label>To</label>
-                                    <div>
-                                    <input type="date" className="select" name="Date_To" value={Date_To} onChange={this.onChange} />
-                                    </div>
+                                    <label className="inner-title">To</label>
+                                        
+                                    <DatePicker
+                                        className="date-style"
+                                        selected={Date_To}
+                                        onChange={(date)=>{this.setDate(date, 'Date_To')}}
+                                        name="Date_To"
+                                        dateFormat="YYY-MM-dd"
+                                        minDate={subYears(new Date(), 5)}
+                                        maxDate={new Date()}
+                                        placeholderText="To"
+                                        />
+                                   
                                    
                                 </Form.Group>
                                 </Col>
                                 <Col lg={{span:3, offset:3}}>
-                            <Form.Control as="select" className="select-bold" name=""  value="" onChange="" required>
-                                        <option value="January 2021" >January 2021</option>
-                                        <option value="February 2021">December 2020</option>
-                                        <option value="March 2021">November 2020</option>
-                                        <option value="April 2021">October 2020</option>
-                            </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px",fontWeight:'bold'}} ></i>
-                            </Col>   
+                                    <DatePicker
+                                        className="select-bold"
+                                        selected={select_month}
+                                        onChange={(date)=>{this.setDate(date, 'select_month')}}
+                                        name="select_month"
+                                        minDate={subYears(new Date(), 5)}
+                                        maxDate={new Date()}
+                                        dateFormat="MMMM, yyyy"
+                                        showMonthYearPicker
+                                        />
+                                </Col>   
                             </Row>
-                            <CanvasJSChart  options = {option1}/>
+
+
+                        <Pie data={barData.data} options={barData.options} height="110"> </Pie>  
+
                         </Col>
                         <Col lg={4}>
                         <Row>
@@ -237,19 +438,19 @@ export class Dashboard extends Component {
                                     <Col lg={4} sm={4} >
                                         <div className="in-in-col">
                                         <label style={{color:"rgb(33,213,155)"}}>Total</label>
-                                        <div>${total_amount}K</div>
+                                        <div>${total_amount}</div>
                                         </div>
                                     </Col>
                                     <Col lg={4} sm={4}>
                                     <div className="in-in-col">
                                         <label style={{color:"rgb(33,213,155)"}}>Received</label>
-                                        <div>${received_amount}K</div>
+                                        <div>${received_amount}</div>
                                     </div>
                                     </Col>
                                     <Col lg={4} sm={4}>
                                     <div className="in-in-col">
                                         <label style={{color:"rgb(33,213,155)"}}>Remaining</label>
-                                        <div>${remaining_amount}K</div>
+                                        <div>${remaining_amount}</div>
                                     </div>
                                     </Col>
                                 </Row>
@@ -260,19 +461,19 @@ export class Dashboard extends Component {
                                     <Col lg={4} sm={4} >
                                         <div className="in-in-col" >
                                         <label style={{color:"rgb(87,98,214)"}}>Total</label>
-                                        <div> ${total_amount}K </div>
+                                        <div> ${total_amount} </div>
                                         </div>
                                     </Col>
                                     <Col lg={4}  sm={4}>
                                     <div className="in-in-col">
                                         <label style={{color:"rgb(87,98,214)"}}>Paid</label>
-                                        <div>${received_amount}K</div>
+                                        <div>${received_amount}</div>
                                     </div>
                                     </Col>
                                     <Col lg={4} sm={4} >
                                     <div className="in-in-col">
                                         <label style={{color:"rgb(87,98,214)"}}>Remaining</label>
-                                        <div>${remaining_amount}K</div>
+                                        <div>${remaining_amount}</div>
                                     </div>
                                     </Col>
                                 </Row>

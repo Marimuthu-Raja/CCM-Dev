@@ -25,10 +25,10 @@ class Sidebar extends Component {
                         <div  className="sidebar">
                         <Link to="/" className="nav-link">CWR summary</Link>
                         <Link to="/dashboard" className="nav-link">Dashboard</Link>
-                        <Link to="/" className="nav-link">My Profile</Link>
+                        <Link to="/profile" className="nav-link">My Profile</Link>
                         <Link to="/" className="nav-link">Admistration</Link>
                         <Link to="/" className="nav-link">CCM home</Link>
-                        <Link to="/profile" className="nav-link">Profile</Link>
+                        
                         </div>
                         
                   
