@@ -38,7 +38,7 @@ export default class Contractorlist extends Component {
     }
     renderTable = (contractor) =>{
             return (
-               <tr key={contractor.id} className={contractor.id % 2 === 0 ? "table-primary":""} style={{height:"30px"}}>
+               <tr key={contractor.id} className={contractor.id % 2 === 0 ? "rowtable":""} style={{height:"30px"}}>
                   <td>{contractor.Name}</td>
                   <td>{contractor.Address}</td>
                   <td>{contractor.Email}</td>
@@ -64,7 +64,7 @@ export default class Contractorlist extends Component {
             <div>
                 <div style={{marginLeft:"10%",width:"98%"}}>
                 <h3 style={{marginTop:"30px"}}>Contractor List</h3>
-                    <Card style={{marginTop:"30px"}}>
+                    <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                         <Row>
                             <Col lg={4}>
                                 <Form.Group as={Col}>
@@ -75,7 +75,7 @@ export default class Contractorlist extends Component {
                                     name="search"
                                     value={search}
                                     onChange={this.handleSearch}
-                                    style={{borderRadius:"25px",padding:"10px"}}
+                                    style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888"}}
                                     />
                                     <button style={{position:"relative",
                                                 bottom:"30px",
@@ -90,7 +90,7 @@ export default class Contractorlist extends Component {
                             <Col lg={4}>
                                 <Form.Group as={Col}>
                                 <Col>
-                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px"}}>
+                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888"}}>
                                         <option disabled selected>Country</option>
                                         <option>Spain</option>
                                         <option>Italy</option>
@@ -120,13 +120,14 @@ export default class Contractorlist extends Component {
                             </Col>
                         </Row>
                         <Row style={{marginTop:"30px"}}>
-                        <table className="table table-striped">
+                        <table className="table">
                             <thead>
                                 <tr>
                                 <th scope="col">Contractor Name</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Phone No</th>
+                                <th scope="col">Country</th>
                                 <th scope="col">Contact Person</th>
                                 <th scope="col">Delete</th>
                                 <th scope="col"></th>
