@@ -3,6 +3,7 @@ import { Col, Row,Card,Container, Form} from 'react-bootstrap'
 import axios from 'axios'
 import CustomTextBox from './CustomBox/TextBox'
 import {Link} from 'react-router-dom';
+import Sidebar from './Sidebar'
 
 
 
@@ -39,7 +40,7 @@ class User extends Component {
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
                                     <td>{user.country}</td>
-                                    <td><button style={{border:"none"}}><i class="fas fa-trash" style={{color:"red"}}></i></button></td>
+                                    <td><button style={{border:"none"}}><i class="fas fa-trash" style={{fontSize:"17px", color:"red"}}></i></button></td>
                                     <td><Link to="/profile"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
                                 </tr>                   
         )
@@ -50,6 +51,8 @@ class User extends Component {
         const{search,country,status,users}=this.state
         return (
             <div>
+        <Sidebar />
+
                 <h4 style={{font:"san-serif",marginLeft:"200px",marginTop:"20px"}}>USERS</h4>
                 <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <Card style={{backgroundColor:"white"}}>

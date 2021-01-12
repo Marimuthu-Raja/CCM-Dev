@@ -12,6 +12,8 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
+import Sidebar from './Sidebar'
+
 
 export class Profile extends Component {
     constructor(props) {
@@ -69,9 +71,11 @@ export class Profile extends Component {
         const { full_name,user_name,country,email, department, password,address, mobile} = this.state;
         return (
             <div>
+                 <Sidebar />
                  <div style={{marginLeft:"10%",width:"95%"}}>
                     <Card style={{marginTop:"30px"}} >
                         <Row style={{marginTop:"50px"}} >
+       
                             <Col lg={4} sm={12}>
                                 
                                 <Image src={Logo} className="profile-img" ></Image>

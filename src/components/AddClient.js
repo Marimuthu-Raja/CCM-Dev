@@ -10,6 +10,8 @@ import {
 } from 'react-bootstrap';
 import Logo from '../logo-light.png'
 import axios from 'axios'
+import Sidebar from './Sidebar'
+
 
 
 export default class AddClient extends Component {
@@ -36,9 +38,11 @@ export default class AddClient extends Component {
         const {clientName,address,phone,email,contactPerson,country} = this.state
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"10%",width:"95%"}}>
                 
-                <Card>
+                <Card style={{marginTop:"3%"}}>
                     <Row>
                     <h5>ADD/EDIT CLIENT PROFILE</h5>
                         <Col lg={4}>

@@ -13,6 +13,8 @@ import Logo from '../logo-light.png'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
+import Sidebar from './Sidebar'
+
 
 
 export default class Client extends Component {
@@ -65,6 +67,8 @@ export default class Client extends Component {
         const { client_name,user_name,country,email,user_type,address,phone_number} = this.state;
         return (
             <div>
+        <Sidebar />
+
                 <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
                     <p style={{fontSize:"20px"}}>Client</p>
                     <Card style={{width:"90%"}} >

@@ -250,3 +250,14 @@ canvas{
 .rowtable{
   background-color: #C3E7FB;
 }
+
+.login{
+  background-color:rgb(202,229,245);
+  height:960px;
+   text-align: center;
+   font-family: sans-serif;
+  color: rgb(71,115,160);
+}
+@media(min-width:"600px"){
+  
+}
