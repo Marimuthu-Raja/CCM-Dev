@@ -14,10 +14,8 @@ import {
 import CustomTextBox from './CustomBox/TextBox'
 import $ from 'jquery'
 import swal from 'sweetalert'
-<<<<<<< HEAD
 import Sidebar from './Sidebar'
 
-=======
 import axios from 'axios'
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
@@ -25,7 +23,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addMonths, subMonths, addYears, subYears } from "date-fns";
->>>>>>> d7c27fa06628026e57705094d00384b388b288a2
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -267,18 +264,7 @@ export class Dashboard extends Component {
         const {Date_From,Date_To,select_month,total_amount,remaining_amount,received_amount,loading}= this.state;
         return (
             <div>
-<<<<<<< HEAD
-        <Sidebar />
-
-                <Container>
-                    <Card>
-                        <Row>
-                            <Col style={{width:"100px"}} >
-                            <Form.Group as={Col}>
-                                <Form.Label>From</Form.Label>
-                                <Form.Control type="date"  />
-                            </Form.Group>
-=======
+                <Sidebar />
                 <div style={{marginLeft:"10%", width:"98%"}}>
 
                 <Row style={{marginTop:"30px"}}>
@@ -320,7 +306,6 @@ export class Dashboard extends Component {
                                         <option value="March 2021">March 2021</option>
                                         <option value="April 2021">April 2021</option>
                             </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px"}} ></i>
->>>>>>> d7c27fa06628026e57705094d00384b388b288a2
                             </Col>
                             <Col lg={2}>
                             <Form.Control as="select" className="select" name=""  value="" onChange="" required>

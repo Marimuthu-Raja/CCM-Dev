@@ -22,26 +22,12 @@ export default class Sidebar extends Component {
     render() {
         return (
             <div>
-<<<<<<< HEAD
                 <div className="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style={{width:"180px"}} id="mySidebar">
                     <Image src={Logo} style={{marginLeft:"30px",marginTop:"20px"}}/>
                 <button className="w3-bar-item w3-button w3-large w3-hide-large" onclick={this.sidebarClose}>Close &times;</button>
                         <Link to="/" className="nav-link w3-bar-item">CWR summary</Link>
                         <Link to="/dashboard" className="nav-link w3-bar-item">Dashboard</Link>
                         <Link to="/" className="nav-link w3-bar-item">My Profile</Link>
-=======
-                <nav>
-                
-                     
-                        <div  className="sidebar">
-                        <Link to="/" className="nav-link">CWR summary</Link>
-                        <Link to="/dashboard" className="nav-link">Dashboard</Link>
-                        <Link to="/profile" className="nav-link">My Profile</Link>
-                        <Link to="/" className="nav-link">Admistration</Link>
-                        <Link to="/" className="nav-link">CCM home</Link>
-                        
-                        </div>
->>>>>>> d7c27fa06628026e57705094d00384b388b288a2
                         
                         <NavDropdown title="Administration" id="collasible-nav-dropdown">
                             <NavDropdown.Item><Link to="/user" className="nav-link">User</Link></NavDropdown.Item>
