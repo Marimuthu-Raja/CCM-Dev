@@ -6,10 +6,13 @@ import {
     Row,
     Col,
     Button,
-    Image
+    Image,
+    Table,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios'
+import Invoice from './Invoice'
+import DatePicker from "react-datepicker";
 
 
 export default class QuotationList extends Component {
@@ -23,6 +26,8 @@ export default class QuotationList extends Component {
             to_date:'',
             country:'',
             status:'',
+            visible:false,
+            visible_key:null,
         }
     }
 
@@ -37,12 +42,19 @@ export default class QuotationList extends Component {
             console.log(error)
         })
     }
-    
-    
+    invoice = (e)=>{
+        console.log(e)
+        this.setState({
+            visible: ! this.state.visible,
+            visible_key:e
+        })
+    }
+   
     renderTable = (quotation) =>{
         return (
+            <>
             
-           <tr key={quotation.id} className={quotation.id % 2 === 0 ? "table-primary":""} onClick={<renderInvoice/>} style={{height:"50px",padding:"10px" }}>
+           <tr key={quotation.id} className={quotation.id % 2 === 0 ? "rowtable":""} onClick={()=>this.invoice(quotation.id)} style={{height:"50px",padding:"10px" }}>
               <td style={{padding:"15px"}}>{quotation.Name}</td>
               <td style={{padding:"15px"}}>{quotation.Address}</td>
               <td style={{padding:"15px"}}>{quotation.Email}</td>
@@ -51,6 +63,11 @@ export default class QuotationList extends Component {
               <td style={{padding:"15px"}}>{quotation.Contactperson}</td>
               
            </tr>
+           { this.state.visible && this.state.visible_key==quotation.id && <Invoice id={quotation.id}  />}
+             
+          
+          
+           </>
         )
 }
 
@@ -60,14 +77,20 @@ export default class QuotationList extends Component {
             [e.target.name]:e.target.value
         })
     }
+    setDate = (date, name)=>{
+        this.setState({
+            [name]:date
+        })
+    } 
+
     render() {
         const {quotationList,search,from_date,to_date,country,status} = this.state
         return (
             <div>
                 <div style={{marginLeft:"10%",width:"98%"}}>
-                <Card>
-                <Row>
-                            <Col lg={2}>
+                <Card  style={{marginTop:"30px"}} >
+                <Row  >
+                            <Col lg={3}>
                                 <Form.Group as={Col}>
                                 <Col>
                                     <Form.Control type="text"  id="search"
@@ -76,11 +99,11 @@ export default class QuotationList extends Component {
                                     name="search"
                                     value={search}
                                     onChange={this.handleChange}
-                                    style={{borderRadius:"25px",padding:"10px"}}
+                                    style={{borderRadius:"25px",padding:"10px",boxShadow:"2px 2px 5px 1px rgba(161, 162, 163, 0.856)" }}
                                     />
                                     <button style={{position:"relative",
                                                 bottom:"30px",
-                                                left:"73%",backgroundColor:"white",border:"none"}} onClick={this.search}>
+                                                left:"70%",backgroundColor:"white",border:"none"}} onClick={this.search}>
                                     <i className="fa fa-search" 
                                         ></i>
                                     </button>
@@ -91,7 +114,7 @@ export default class QuotationList extends Component {
                             <Col lg={2}>
                                 <Form.Group as={Col}>
                                 <Col>
-                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px"}}>
+                                    <select className="form-control"  style={{borderRadius:"25px",padding:"5px",boxShadow:"2px 2px 5px 1px rgba(161, 162, 163, 0.856)"}}>
                                         <option disabled selected>Country</option>
                                         <option>Spain</option>
                                         <option>Italy</option>
@@ -101,46 +124,46 @@ export default class QuotationList extends Component {
                                     </select>
                                     <i className="fa fa-sort"style={{position:"relative",
                                                 bottom:"30px",
-                                                left:"73%",fontSize:"18px"}}></i>
+                                                left:"70%",fontSize:"18px"}}></i>
                                 </Col>
                             </Form.Group>
                             </Col>
                             <Col lg={2}>
                             <Form.Group as={Col}>
                                 <Col>
-                                    <Form.Control type="date"  id="date"
-                                    placeholder="from"
-                                    onChange={this.onChange}
-                                    name="from_date"
-                                    value={from_date}
-                                    onChange={this.handleChange}
-                                    style={{borderRadius:"25px",padding:"10px"}}
-                                    />
-                                    
-                                   
+                                <DatePicker
+                                        className="date-style"
+                                        selected={from_date}
+                                        onChange={(date)=>{this.setDate(date, 'from_date')}}
+                                        name="from_date"
+                                        dateFormat="YYY/MM/dd"
+                                        minDate=''
+                                        maxDate={new Date()}
+                                        placeholderText="From"
+                                        />
                                 </Col>
                             </Form.Group>
                             </Col>
                             <Col lg={2}>
                             <Form.Group as={Col}>
                                 <Col>
-                                    <Form.Control type="date"  id="date"
-                                    placeholder="from"
-                                    onChange={this.onChange}
-                                    name="to_date"
-                                    value={to_date}
-                                    onChange={this.handleChange}
-                                    style={{borderRadius:"25px",padding:"10px"}}
-                                    />
-                                    
-                                   
+                                <DatePicker
+                                        className="date-style"
+                                        selected={to_date}
+                                        onChange={(date)=>{this.setDate(date, 'to_date')}}
+                                        name="to_date"
+                                        dateFormat="YYY/MM/dd"
+                                        minDate=''
+                                        maxDate={new Date()}
+                                        placeholderText="To"
+                                        />
                                 </Col>
                             </Form.Group>
                             </Col>
                             <Col lg={2}>
                                 <Form.Group as={Col}>
                                 <Col>
-                                    <select className="form-control"  style={{borderRadius:"25px",padding:"10px"}}>
+                                    <select className="form-control"  style={{borderRadius:"25px",padding:"5px",boxShadow:"2px 2px 5px 1px rgba(161, 162, 163, 0.856)"}}>
                                         <option disabled selected>Status</option>
                                         <option>Pending</option>
                                         <option>Completed</option>
@@ -152,10 +175,10 @@ export default class QuotationList extends Component {
                                 </Col>
                             </Form.Group>
                             </Col>
-                            <Col lg={2}>
+                            <Col lg={1}>
                                 {/* <Link to="/addcontractor"> */}
                                 <button 
-                                style={{width:"14%",
+                                style={{width:"40%",
                                 height:"50px",
                                 backgroundColor:"#4A88DC",
                                 border:"none",
@@ -167,25 +190,28 @@ export default class QuotationList extends Component {
                             </Col>
                             
                         </Row>
-                </Card>
+                        </Card>
                 <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                 <Row style={{marginTop:"30px"}}>
-                        <table className="table" style={{backgroundColor:"white"}}>
+                        <Table  hover style={{backgroundColor:"white"}}>
                             <thead>
                                 <tr>
-                                <th scope="col">Quotation Number</th>
-                                <th scope="col">Date Issued</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Quote Amount</th>
-                                <th scope="col">Quote Approval</th>
+                                <th>Quotation Number</th>
+                                <th >Date Issued</th>
+                                <th >Client</th>
+                                <th >Description</th>
+                                <th >Quote Amount</th>
+                                <th >Quote Approval</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {quotationList.map(this.renderTable)}
                             </tbody> 
-                        </table>
+                        </Table>
+                        
+         
                         </Row>
+                       
                 </Card>
                 </div>
             </div>

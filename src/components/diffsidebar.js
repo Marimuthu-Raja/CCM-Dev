@@ -22,12 +22,12 @@ export default class diffsidebar extends Component {
                 <div className="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style={{width:"180px"}} id="mySidebar">
                     <Image src={Logo} style={{marginLeft:"10px",marginTop:"20px"}}/>
                 <button className="w3-bar-item w3-button w3-large w3-hide-large" onclick={this.sidebarClose}>Close &times;</button>
-                        <Link to="/" className="nav-link w3-bar-item">CWR summary</Link>
+                        <Link to="/swr-summary" className="nav-link w3-bar-item">CWR summary</Link>
                         <Link to="/dashboard" className="nav-link w3-bar-item">Dashboard</Link>
-                        <Link to="/" className="nav-link w3-bar-item">My Profile</Link>
+                        <Link to="/profile" className="nav-link w3-bar-item">My Profile</Link>
                         <Link to="/" className="nav-link w3-bar-item">Admistration</Link>
                         <Link to="/" className="nav-link w3-bar-item">CCM home</Link>
-                        <Link to="/profile" className="nav-link w3-bar-item">Profile</Link>
+                        
                 </div>
                 <div className="w3-main" style={{marginLeft:"180px"}}>
                     <div style={{backgroundColor:"rgb(58,95,133)",height:"80px"}}>

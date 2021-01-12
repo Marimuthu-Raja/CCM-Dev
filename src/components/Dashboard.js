@@ -30,11 +30,12 @@ export class Dashboard extends Component {
            Date_From:null,
            Date_To:null,
            select_month: new Date(),
-           total_amount:380,
-           received_amount:280,
-           remaining_amount:100,
+           total_amount:0,
+           received_amount:0,
+           remaining_amount:0,
            quotation:[],
            invoice:[],
+           loading:false,
         }
     }
 
@@ -46,72 +47,55 @@ export class Dashboard extends Component {
             this.setState({quotation})
             console.log(quotation,"quotation")
             
-        })
+        }).then(
         axios('http://www.json-generator.com/api/json/get/cguvqhaVQi?indent=2' )
         .then(res =>{
             const invoice = res.data
-            
             this.setState({invoice})
-            console.log(invoice,"invoice")
-            
-           
-        }) 
+            console.log(invoice,"invoice")   
+        }) )
+        .then(
+            ()=>{
+            const month=this.state.select_month.getMonth()
+            const year=this.state.select_month.getFullYear()
+            console.log(month,"month")
+            console.log(year,"year")
+            let sum=0;
+            let amount=0;
+    
+            this.state.quotation.map(quotation=>{
+                
+                const quotation_date = new Date(quotation.date)
+                console.log(quotation_date,"quotation_date")
+                const quotation_month=quotation_date.getMonth()
+                const quotation_year=quotation_date.getFullYear()
+                
+                if(quotation_month==month && quotation_year==year){
+                   
+                    sum = sum + quotation.amount
+                    
         
-              
-           
+                    this.state.invoice.map(invoice=>{
+                        if(invoice.quotation_no==quotation.quotation_no){
+                            
+                            amount=amount+invoice.amount
+                        }
+                    })
+                }
+                
+            }) 
+            this.setState({
+                check:"entered",
+                total_amount:sum,
+                received_amount:amount,
+                remaining_amount:sum-amount,
+            },()=>{console.log(this.state,"state")})
+        }
+            
+        ) 
     }
     
-      
-
-
-  
-        // onChange = (e)=>{
-            
-
-        //     const { Date_From,Date_To,total_amount,invoice_amount,remaining_amount,quotation,invoice} = this.state;
-        //     console.log(this.state,"state")
-        //     // if(name=="Date_To"){
-                
-        //     //     this.setState({Date_To:date}) 
-        //     //     if(Date_From!=null && date!=null){
-                   
-        //     //         let sum=0;
-        //     //         let amount=0;
-        //     //         this.state.quotation.map(quotation=>{
-                        
-        //     //             const quotation_date = Date.parse(quotation.date)
-        //     //             const from = Date.parse(Date_From)
-        //     //             const end = Date.parse(date)
-                        
-        //     //             if(quotation_date>from && quotation_date<end){
-                           
-        //     //                 sum = sum + quotation.amount
-                            
-
-        //     //                 this.state.invoice.map(invoice=>{
-        //     //                     if(invoice.quotation_no==quotation.quotation_no){
-                                    
-        //     //                         amount=amount+invoice.amount
-        //     //                     }
-        //     //                 })
-        //     //             }
-        //     //         }) 
-                
-        //     //         this.setState({
-        //     //             total_amount:sum,
-        //     //             received_amount:amount,
-        //     //             remaining_amount:sum-amount,
-        //     //         },()=>{console.log(this.state,"state")})
-        //     //     }
-        //     //     return
-        //     // }
-            
-        //     this.setState({
-        //         [e.target.name]:e.target.value
-        //     },()=>{console.log(e.target.value,"value")})
-        // }
-        chartData = ()=>{
-            var progress = document.getElementById('animationProgress');
+    chartData = ()=>{
          const data= { 
              labels: [
                 "Total",
@@ -182,7 +166,8 @@ export class Dashboard extends Component {
         }
         
         return {data, options} ;
-    }           
+    }    
+
     setDate = (date, name)=>{
         const { Date_From,Date_To,total_amount,invoice_amount,remaining_amount,quotation,invoice} = this.state;
 
@@ -255,13 +240,14 @@ export class Dashboard extends Component {
                     }
                     
                 }) 
-                this.setState({
-                    select_month:date,
-                    total_amount:sum,
-                    received_amount:amount,
-                    remaining_amount:sum-amount,
-                },()=>{console.log(this.state,"state")})
-
+                    this.setState({
+                        select_month:date,
+                        total_amount:sum,
+                        received_amount:amount,
+                        remaining_amount:sum-amount,
+                    },()=>{console.log(this.state,"state")})
+    
+                
                 return
             }
         
@@ -269,46 +255,7 @@ export class Dashboard extends Component {
         this.setState({
             [name]:date
         },()=>{console.log(date,"value")})
-    }
-    // getDataBefore = ()=>{
-    //     if(this.state.check==""){
-    //         const month=this.state.select_month.getMonth()
-    //     const year=this.state.select_month.getFullYear()
-    //     console.log(month,"month")
-    //     console.log(year,"year")
-    //     let sum=0;
-    //     let amount=0;
-
-    //     this.state.quotation.map(quotation=>{
-            
-    //         const quotation_date = new Date(quotation.date)
-    //         console.log(quotation_date,"quotation_date")
-    //         const quotation_month=quotation_date.getMonth()
-    //         const quotation_year=quotation_date.getFullYear()
-            
-    //         if(quotation_month==month && quotation_year==year){
-               
-    //             sum = sum + quotation.amount
-                
-    
-    //             this.state.invoice.map(invoice=>{
-    //                 if(invoice.quotation_no==quotation.quotation_no){
-                        
-    //                     amount=amount+invoice.amount
-    //                 }
-    //             })
-    //         }
-            
-    //     }) 
-    //     this.setState({
-    //         check:"entered",
-    //         total_amount:sum,
-    //         received_amount:amount,
-    //         remaining_amount:sum-amount,
-    //     },()=>{console.log(this.state,"state")})
-    //     }
-        
-    // }
+    } 
 
     render() {
         const barData = this.chartData(); 
@@ -317,7 +264,7 @@ export class Dashboard extends Component {
             <div>
                 <div style={{marginLeft:"10%", width:"98%"}}>
 
-                <Row style={{marginTop:"40px"}}>
+                <Row style={{marginTop:"30px"}}>
                        <Col lg={{span:2, offset:1}}>
                            <Form.Label className="search-title" >DASHBOARD</Form.Label></Col>
                        <Col lg={5}>
@@ -338,7 +285,7 @@ export class Dashboard extends Component {
                         </Col>
                 </Row>
                    
-                    <Card style={{marginTop:"20px"}}>
+                    <Card style={{marginTop:"10px"}}>
                         <Row style={{marginTop:"10px"}}>
                             <Col lg={2}>
                             
@@ -365,14 +312,14 @@ export class Dashboard extends Component {
                                         <option value="April 2021">Contractor 3</option>
                             </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px"}} ></i>
                             </Col>
-                            <Col lg={{span:2, offset:4}}>
+                            {/* <Col lg={{span:2, offset:4}}>
                             <Form.Control as="select" className="select" name=""  value="" onChange="" required>
                                         <option value="January 2021" >Currency</option>
                                         <option value="February 2021">February 2021</option>
                                         <option value="March 2021">March 2021</option>
                                         <option value="April 2021">April 2021</option>
                             </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px"}} ></i>
-                            </Col>
+                            </Col> */}
                         </Row>
                         
                     <Row >
@@ -428,7 +375,10 @@ export class Dashboard extends Component {
                             </Row>
 
 
-                        <Pie data={barData.data} options={barData.options} height="110"> </Pie>  
+                        {total_amount!=0 ? 
+                        <Pie data={barData.data} options={barData.options}  height="110"> </Pie> : 
+                        <div className="no-data">No Data Found...</div> 
+                        }
 
                         </Col>
                         <Col lg={4}>

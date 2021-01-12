@@ -47,7 +47,7 @@ class UserProfile extends Component {
         return (
             <div>
                 <div style={{marginLeft:"10%",width:"95%"}}>
-                    <Card>
+                    <Card style={{marginTop:"20px"}}>
                         <Row style={{marginTop:"20px"}}>
                             <Col lg={2}>
                             <Image src={Logo} className="profile-img" ></Image>

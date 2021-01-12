@@ -22,21 +22,21 @@ const BaseRouter = () => (
     <>
     
     <Switch>
-      <Route exact path="/profile" component={UserProfile} />
+      <Route exact path="/profile" component={Profile} />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/Contractor-list" component={Contractorlist}/>
       <Route exact path="/addcontractor" component={Addcontractor}/>
       <Route exact path="/contractor" component={Contractor} />
       <Route exact path="/client" component={Client} />
       <Route exact path="/country" component={Country} />
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
       <Route exact path="/quotation" component={Quotation} />
       <Route exact path="/contractorinvoice" component={ContractorInvoice} />
       <Route exact path="/addinvoice" component={AddInvoice} />
       <Route exact path="/users" component={User} /> 
       <Route exact path="/clientlist" component={ClientList} />
       <Route exact path="/addclient" component={AddClient}/> 
-      <Route exact path="/quotation" component={QuotationList}/>
+      <Route exact path="/swr-summary" component={QuotationList}/>
 
       </Switch>
       

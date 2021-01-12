@@ -21,11 +21,12 @@ export class Profile extends Component {
             full_name:'',
             user_name:'',
             country:'',
-            password:'',
-            confirm_password:'',
             email:'',
-            user_type:'',
-            position:'',
+            email:'',
+            department:'',
+            password:'',
+            address:'',
+            mobile:'',
             
         }
     }
@@ -65,12 +66,12 @@ export class Profile extends Component {
     }
     
     render() {
-        const { full_name,user_name,country,password,confirm_password,email,user_type,position,} = this.state;
+        const { full_name,user_name,country,email, department, password,address, mobile} = this.state;
         return (
             <div>
-                <Container  >
-                    <Card style={{marginTop:"50px"}} >
-                        <Row>
+                 <div style={{marginLeft:"10%",width:"95%"}}>
+                    <Card style={{marginTop:"30px"}} >
+                        <Row style={{marginTop:"50px"}} >
                             <Col lg={4} sm={12}>
                                 
                                 <Image src={Logo} className="profile-img" ></Image>
@@ -79,7 +80,7 @@ export class Profile extends Component {
                             <Col  lg={4} sm={12}>
 
                             <CustomTextBox
-                            style = ""
+                            style = "lg-label-style"
                             txtBoxLabel ="Full name"
                             txtBoxType ="text"
                             txtBoxName = "full_name"
@@ -89,7 +90,7 @@ export class Profile extends Component {
                             changeEvent = {this.onChange}
                             />
                             <CustomTextBox
-                            style = ""
+                            style = "lg-label-style"
                             txtBoxLabel ="User name"
                             txtBoxType ="text"
                             txtBoxName = "user_name"
@@ -98,8 +99,8 @@ export class Profile extends Component {
                             txtBoxPH ="User Name"
                             changeEvent = {this.onChange}
                             />
-                            <Form.Group as={Col}>
-                                <Form.Label>Country</Form.Label>
+                            <Form.Group as={Col} style={{paddingBottom:"10px"}}>
+                                <Form.Label className="lg-label-style">Country</Form.Label>
                                 <Col>
                                 <Form.Control as="select" className="select-style" name="country"  value={country} onChange={this.onChange} required>
                                         <option value="country"selected disabled> </option>
@@ -107,11 +108,12 @@ export class Profile extends Component {
                                         <option value="Country 2">Country 2</option>
                                         <option value="Country 3">Country 3 </option>
                                         <option value="Country 4">Country 4</option>
-                                    </Form.Control>
+                                    </Form.Control><i class="fas fa-angle-down" style={{fontSize:"20px", position:"relative", bottom:"26px", left:"70%"}}></i>
+                    
                                 </Col>
                             </Form.Group>
                             <CustomTextBox
-                            style = ""
+                            style = "lg-label-style"
                             txtBoxLabel ="Email"
                             txtBoxType ="text"
                             txtBoxName = "email"
@@ -130,53 +132,58 @@ export class Profile extends Component {
                             <Col lg={4} sm={12}>
                             
                             
-                            <Form.Group as={Col}>
-                                <Form.Label>User Type</Form.Label>
+                            <Form.Group as={Col} style={{paddingBottom:"10px"}}>
+                                <Form.Label  className="lg-label-style">Department</Form.Label>
                                 <Col>
-                                <Form.Control as="select"  name="user_type" value={user_type}  onChange={this.onChange} required>
-                                        <option value=""selected disabled> User type</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="User">User</option>
-                                    </Form.Control>
+                                <Form.Control as="select"  name="department" value={department}  onChange={this.onChange} required>
+                                        <option value=""selected disabled> Plumping</option>
+                                        <option value="Admin">department 2</option>
+                                        <option value="User">department 3</option>
+                                        <option value="Admin">department 4</option>
+                                        <option value="User">department 5</option>
+                                    </Form.Control> 
                                 </Col>
                             </Form.Group>
                             <CustomTextBox
-                            style = ""
-                            txtBoxLabel ="Position"
-                            txtBoxType ="text"
-                            txtBoxName = "position"
-                            txtBoxValue = {position}
-                            txtBoxID = "position"
-                            txtBoxPH ="Position"
-                            changeEvent =  {this.onChange}
-                            />
-                             <CustomTextBox
-                            style = ""
+                            style = "lg-label-style"
                             txtBoxLabel =" Password"
                             txtBoxType ="password"
                             txtBoxName = "password"
                             txtBoxValue = {password}
                             txtBoxID = "password"
-                            txtBoxPH ="Password"
+                            txtBoxPH ="********"
                             changeEvent =  {this.onChange}
                             />
                             <CustomTextBox
-                            style = ""
-                            txtBoxLabel ="Confirm"
+                            style = "lg-label-style"
+                            txtBoxLabel ="Address"
                             txtBoxType ="text"
-                            txtBoxName = "confirm_password"
-                            txtBoxValue = {confirm_password}
-                            txtBoxID = "confirm_password"
-                            txtBoxPH ="Password"
-                            changeEvent = {this.onChange}
+                            txtBoxName = "address"
+                            txtBoxValue = {address}
+                            txtBoxID = "address"
+                            txtBoxPH ="Address"
+                            changeEvent =  {this.onChange}
+                            />
+                            <CustomTextBox
+                            style = "lg-label-style"
+                            txtBoxLabel ="Phone Number"
+                            txtBoxType ="text"
+                            txtBoxName = "mobile"
+                            txtBoxValue = {mobile}
+                            txtBoxID = "mobile"
+                            txtBoxPH ="mobile"
+                            changeEvent =  {this.onChange}
                             />
                             </Col>
                         </Row>
-                        <Row className="row justify-content-center">
-                            <Button onClick={this.onSubmit}>Save</Button>
+                        <Row style={{marginTop:"200px"}} >
+                            <Col sm={{span:4, offset:8}} lg={{span:4, offset:8}}> 
+                                <Button  >Reset Password</Button>
+                                <Button onClick={this.onSubmit}>Save</Button>
+                            </Col> 
                         </Row>
                     </Card>
-                </Container>
+                </div>
                 
             </div>
         )
