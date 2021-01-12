@@ -41,7 +41,7 @@ class User extends Component {
                                     <td>{user.phone}</td>
                                     <td>{user.country}</td>
                                     <td><button style={{border:"none"}}><i class="fas fa-trash" style={{fontSize:"17px", color:"red"}}></i></button></td>
-                                    <td><Link to="/profile"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
+                                    <td><Link to="/UserProfile"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
                                 </tr>                   
         )
     }
@@ -96,7 +96,7 @@ class User extends Component {
                             </Col>
 
                             <Col lg="1" sm="12">
-                            <Link to="/profile">
+                            <Link to="/UserProfile">
                                 <button 
                                 style={{width:"60%",
                                 height:"60px",

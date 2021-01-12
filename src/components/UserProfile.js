@@ -12,7 +12,7 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
-
+import Sidebar from './Sidebar'
 import ReactCountryFlag from "react-country-flag"
 import ReactFlagsSelect from 'react-flags-select';
 
@@ -46,6 +46,7 @@ class UserProfile extends Component {
         const {full_name,user_name,country,email,address,department,phone,selected_country}=this.state;
         return (
             <div>
+                <Sidebar />
                 <div style={{marginLeft:"10%",width:"95%"}}>
                     <Card style={{marginTop:"20px"}}>
                         <Row style={{marginTop:"20px"}}>

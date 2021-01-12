@@ -39,9 +39,10 @@ const BaseRouter = () => (
       <Route exact path="/user" component={User} /> 
       <Route exact path="/clientlist" component={ClientList} />
       <Route exact path="/addclient" component={AddClient}/> 
-      <Route exact path="/swr-summary" component={QuotationList}/>
+      <Route exact path="/cwr-summary" component={QuotationList}/>
       <Route exact path="/barchart" component={BarChart} />
       <Route exact path="/chart" component={Chart} />  
+      <Route exact path="/UserProfile" component={UserProfile} />  
       </Switch>
       
     </>
