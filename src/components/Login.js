@@ -50,36 +50,36 @@ class Login extends Component {
 
                 <Row>
                 <Col lg={6} sm={6}>
+                    
                 <Image src={topimage} style={{width:"150px", marginTop:"100px"}} />
-
-                <h2 style={{fontWeight:"bold", color:" rgb(71,115,160)",marginTop:"40px"}}>Crystal Clear Management- </h2>
-                <h2 style={{fontWeight:"bold",color:" rgb(71,115,160)"}}>Leading Facilities Management In Asia</h2>
+                <Row style={{marginTop:"40px"}}>
+                    <h2 className="login-title">Crystal Clear Management- </h2>
+                    <h2 className="login-title">Leading Facilities Management In Asia</h2>
+                </Row>
+                
                 
                 <div class="form-group row">
                     <div class="col-xs-2">
                     <i className="fa fa-user-circle" style={{fontSize:"30px",position:"relative",top:"20%",right:"25%"}}></i>
-                        <input class="form-control form-control-lg col-xs-4" 
-                        style={{marginLeft:"135px",
-                        textAlign:"center", 
-                        width:"500px",
-                        padding:"15px",
-                        borderRadius: "20px",
-                        border:"none",
-                        boxShadow: "10px 5px 7px rgba(10, 9, 9, 0.376)"}}
-                        name="user_name" type="text" placeholder="Country Name" onChange={this.onChange}></input>
+                        
+                        <Form.Control 
+                            className="login-input"
+                            name="user_name" 
+                            type="text" 
+                            placeholder="User Name" 
+                            onChange={this.onChange}
+                         />
 
 
                         <i class="fa fa-lock" aria-hidden="true"  style={{fontSize:"30px",position:"relative",top:"43%",right:"25%"}}></i>
-                        <input class="form-control form-control-lg col-xs-2"
-                         style={{marginTop:"50px",
-                         textAlign:"center",
-                         marginLeft:"135px",
-                         width:"500px",
-                        borderRadius: "20px",
-                        border:"none",
-                        padding:"15px",
-                        boxShadow: "10px 5px 7px rgba(10, 9, 9, 0.376)"}} 
-                        name="password" type="password" placeholder="Password" name="password" onChange =  {this.onChange} ></input>
+                        <Form.Control
+                            className="login-input"
+                            style={{marginTop:"50px"}}
+                            name="password" 
+                            type="password" 
+                            placeholder="Password" 
+                            onChange =  {this.onChange}  
+                         />
                     </div>
                 </div>
                 
@@ -93,9 +93,7 @@ class Login extends Component {
                     
                     </Col>
                     <Col lg={4} sm={4}>
-                       <button className="cbtn" type="button" class="btn " 
-                    style={{marginRight:"80%", backgroundColor:"rgb(41,88,140)", color:"white",marginTop:"20px", width:"150px", borderRadius:"12px",padding:"10px",fontSize:"18px"}}
-                    onClick={this.onSubmit}>Login</button>
+                       <button className="login-button" type="button"  onClick={this.onSubmit}>Login</button>
                     </Col>
 
                 </Row>
