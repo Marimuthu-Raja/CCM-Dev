@@ -14,8 +14,8 @@ class Login extends Component {
         super(props)
     
         this.state = {
-             user_name:'',
-             password:''
+            Username:'',
+            Password:''
         }
     }
     onChange=(e) =>{
@@ -26,25 +26,27 @@ class Login extends Component {
     }
     onSubmit=(e)=>{
         e.preventDefault();
-        const {user_name,password}=this.state;
-        if(user_name !=='' && password !==''){
-            axios.post('http://www.json-generator.com/api/json/get/bUmzzXVWTC?indent=2',{user_name,password})
+        const {Username,Password}=this.state;
+        console.log(this.state,"state")
+    
+        if(Username !=='' && Password !==''){
+            axios.get('http://ccm.digisailor.in/api/public/prithivi/login', {
+                auth: {
+                username: Username,
+                password: Password
+                },
+              })
                 .then(function(response){
-                    console.log(response)
-                    console.log(this.state,"user_name,password")
-                    console.log("action=login")
-                }
-                )
+                    console.log(response)    
+                })
                 .catch(err =>{
                     console.log(err)
-                    console.log(this.state,"user_name,password")
-                    console.log("action=login")
                 })   
      }
     }
 
     render() {
-        const {user_name,password}=this.state;
+        const {Username,Password}=this.state;
         return (
             <div className="login" >
 
@@ -64,7 +66,7 @@ class Login extends Component {
                         
                         <Form.Control 
                             className="login-input"
-                            name="user_name" 
+                            name="Username" 
                             type="text" 
                             placeholder="User Name" 
                             onChange={this.onChange}
@@ -75,8 +77,8 @@ class Login extends Component {
                         <Form.Control
                             className="login-input"
                             style={{marginTop:"50px"}}
-                            name="password" 
-                            type="password" 
+                            name="Password" 
+                            type="text" 
                             placeholder="Password" 
                             onChange =  {this.onChange}  
                          />

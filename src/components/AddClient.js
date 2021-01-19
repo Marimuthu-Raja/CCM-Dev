@@ -40,7 +40,7 @@ export default class AddClient extends Component {
             <div>
         <Sidebar />
 
-                <div style={{marginLeft:"10%",width:"95%"}}>
+                <div style={{marginLeft:"200px",width:"98%"}}>
                 
                 <Card style={{marginTop:"3%"}}>
                     <Row>

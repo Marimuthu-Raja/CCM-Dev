@@ -66,7 +66,7 @@ export default class Contractorlist extends Component {
             <div>
         <Sidebar />
 
-                <div style={{marginLeft:"10%",width:"98%"}}>
+                <div style={{marginLeft:"200px",width:"98%"}}>
                 <h3 style={{marginTop:"30px"}}>Contractor List</h3>
                     <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                         <Row>
