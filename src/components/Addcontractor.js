@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import Logo from '../logo-light.png'
 import axios from 'axios'
-import Sidebar from './Sidebar'
+
 
 
 
@@ -38,9 +38,9 @@ export default class Addcontractor extends Component {
         const {contractorName,address,phone,email,contactPerson,country} = this.state
         return (
             <div>
-        <Sidebar />
+       
 
-                <div style={{marginLeft:"10%",width:"95%"}}>
+                <div className="component">
                 
                 <Card style={{marginTop:"3%"}}>
                     <Row>

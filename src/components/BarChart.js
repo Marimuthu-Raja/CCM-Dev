@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Bar} from 'react-chartjs-2'
 import {Card} from 'react-bootstrap'
 import axios from 'axios'
-import Sidebar from './Sidebar'
+
 
 
 
@@ -147,7 +147,7 @@ const options={
    }
     return (
       <div className="chart">
-        <Sidebar />
+       
 
         <Card style={{backgroundColor:"white",marginLeft:"15%",width:"80%"}}>
        <Bar 

@@ -5,7 +5,6 @@ import topimage from  '../logo-light.png';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
-import Sidebar from './Sidebar'
 
 
 export default class Contractor extends Component {
@@ -57,9 +56,9 @@ export default class Contractor extends Component {
         const {country,status,contractor_name,email,phone_number}=this.state;
         return (
             <div>
-        <Sidebar />
+     
 
-                 <div style={{marginLeft:"10%",marginTop:"2%",width:"99%"}}>
+                 <div className="component">
                      <p style={{fontSize:"25px"}}>Contractor</p>
                      <Card border="dark" sm={6} style={{width:"90%"}}>
                          <Form >

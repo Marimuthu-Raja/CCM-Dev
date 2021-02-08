@@ -3,6 +3,10 @@
   margin:0;
   padding:0;
 }
+.component{
+  margin-left: 200px;
+  margin-top: 80px;
+}
 body {
   margin: 0;
   padding: 0;
@@ -14,7 +18,7 @@ body {
 .card{
   background-color: rgb(232,243,250);
   padding:2em;
-  width:90%;
+  width:98%;
   box-shadow: 3px 3px 7px 2px rgba(161, 162, 163, 0.856);
   border-radius: 30px;
   border: none;

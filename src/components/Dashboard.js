@@ -14,7 +14,7 @@ import {
 import CustomTextBox from './CustomBox/TextBox'
 import $ from 'jquery'
 import swal from 'sweetalert'
-import Sidebar from './Sidebar'
+
 
 import axios from 'axios'
 import { Bar } from 'react-chartjs-2';
@@ -264,8 +264,8 @@ export class Dashboard extends Component {
         const {Date_From,Date_To,select_month,total_amount,remaining_amount,received_amount,loading}= this.state;
         return (
             <div>
-                <Sidebar />
-                <div style={{marginLeft:"10%", width:"98%"}}>
+                
+                <div className="component">
 
                 <Row style={{marginTop:"30px"}}>
                        <Col lg={{span:2, offset:1}}>

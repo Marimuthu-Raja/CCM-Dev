@@ -5,7 +5,7 @@ import topimage from  '../logo-light.png';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
-import Sidebar from './Sidebar'
+
 
 
 
@@ -54,8 +54,8 @@ export default class Country extends Component {
         const {status,country_name}=this.state;
         return (
             <div>
-        <Sidebar />
-                <div style={{marginLeft:"10%",marginTop:"2%" ,width:"99%"}}>
+      
+                <div className="component">
                     <p style={{fontSize:"20px"}}>Country</p>
 
                      <Card border="dark" sm={6} style={{height:"600px"}}>

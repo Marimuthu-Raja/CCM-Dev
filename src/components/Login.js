@@ -5,7 +5,7 @@ import CustomTextBox from './CustomBox/TextBox';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 
 class Login extends Component {
@@ -32,12 +32,23 @@ class Login extends Component {
         if(Username !=='' && Password !==''){
             axios.get('http://ccm.digisailor.in/api/public/prithivi/login', {
                 auth: {
-                username: Username,
-                password: Password
+                username: 'ccm_auth',
+                password: 'ccm_digi123#'
                 },
+                params:{
+                    name: Username,
+                    password: Password
+                }
               })
-                .then(function(response){
-                    console.log(response)    
+                .then((res)=>{
+                    console.log(res) 
+                    const data = res.data
+                    if(data.response.is_login===true && data.session.users!==undefined){
+                        localStorage.setItem('isLogin',true)
+                        localStorage.setItem('name',Username)
+                        localStorage.setItem('password',Password)
+                        this.props.history.push('/cwr-summary')
+                    }  
                 })
                 .catch(err =>{
                     console.log(err)

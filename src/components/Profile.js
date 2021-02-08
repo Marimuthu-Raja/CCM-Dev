@@ -12,7 +12,7 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
-import Sidebar from './Sidebar'
+
 
 
 export class Profile extends Component {
@@ -71,8 +71,8 @@ export class Profile extends Component {
         const { full_name,user_name,country,email, department, password,address, mobile} = this.state;
         return (
             <div>
-                 <Sidebar />
-                 <div style={{marginLeft:"10%",width:"95%"}}>
+              
+                 <div className="component">
                     <Card style={{marginTop:"30px"}} >
                         <Row style={{marginTop:"50px"}} >
        

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios'
 import {Link} from 'react-router-dom';
-import Sidebar from './Sidebar'
+
 
 
 
@@ -64,9 +64,9 @@ export default class Contractorlist extends Component {
         const {contractorList,search} = this.state
         return (
             <div>
-        <Sidebar />
+      
 
-                <div style={{marginLeft:"200px",width:"98%"}}>
+                <div className="component">
                 <h3 style={{marginTop:"30px"}}>Contractor List</h3>
                     <Card style={{marginTop:"30px",backgroundColor:"white"}}>
                         <Row>

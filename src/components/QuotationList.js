@@ -13,7 +13,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios'
 import Invoice from './Invoice'
 import DatePicker from "react-datepicker";
-import Sidebar from './Sidebar'
+
 
 
 export default class QuotationList extends Component {
@@ -88,9 +88,9 @@ export default class QuotationList extends Component {
         const {quotationList,search,from_date,to_date,country,status} = this.state
         return (
             <div>
-        <Sidebar />
+      
 
-                <div style={{marginLeft:"10%",width:"98%"}}>
+                <div className="component">
                 <Card  style={{marginTop:"30px"}} >
                 <Row  >
                             <Col lg={3}>

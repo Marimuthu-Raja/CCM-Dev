@@ -19,13 +19,72 @@ import AddClient from './components/AddClient'
 import QuotationList from './components/QuotationList'
 import BarChart from './components/BarChart'
 import Chart from './components/Chart'
+import NavBar from './components/Navbar'
+import Logout from './components/auth/Logout'
 
+export default function BaseRouter() {
 
-const BaseRouter = () => (
+  const isLogin = localStorage.getItem('isLogin')
+  return(
     <>
     
-    <Switch>
-      <Route exact path="/profile" component={Profile} />
+    <Switch>  
+    <Route exact path="/" component={Login} />
+    <Route exact path="/logout" component={Logout} />
+      <Route exact path="/profile">
+        {isLogin?<><NavBar /> <Profile /></>:<Login />}
+      </Route>
+      <Route exact path="/dashboard">
+        {isLogin? <><NavBar /><Dashboard /></>:<Login />}
+      </Route>
+      <Route exact path="/Contractor-list">
+        {isLogin?<><NavBar /> <Contractorlist /></>:<Login />}
+      </Route>
+      <Route exact path="/addcontractor">
+        {isLogin? <><NavBar /><Addcontractor /> </>:<Login />}
+      </Route>
+      <Route exact path="/contractor">
+        {isLogin? <><NavBar /><Contractor /></>:<Login />}
+      </Route>
+      <Route exact path="/client">
+        {isLogin?<><NavBar /> <Client /></>:<Login />}
+      </Route>
+      <Route exact path="/country">
+        {isLogin? <><NavBar /><Country /></>:<Login />}
+      </Route>
+      <Route exact path="/quotation">
+        {isLogin?<><NavBar /> <Quotation /></>:<Login />}
+      </Route>
+      <Route exact path="/contractorinvoice">
+        {isLogin? <><NavBar /><ContractorInvoice /></>:<AddInvoice />}
+      </Route>
+      <Route exact path="/addinvoice">
+        {isLogin?<><NavBar /> <AddInvoice /></>:<AddInvoice />}
+      </Route>
+      <Route exact path="/user">
+        {isLogin?<><NavBar /> <User /></>:<Login />}
+      </Route>
+      <Route exact path="/clientlist">
+        {isLogin?<><NavBar /> <ClientList /></>:<Login />}
+      </Route>
+      <Route exact path="/addclient">
+        {isLogin? <><NavBar /><AddClient /></>:<Login />}
+      </Route>
+      <Route exact path="/cwr-summary">
+        {isLogin?<><NavBar /> <QuotationList /></>:<Login />}
+      </Route>
+      <Route exact path="/barchart">
+        {isLogin? <><NavBar /><BarChart /></>:<Login />}
+      </Route>
+      <Route exact path="/chart">
+        {isLogin? <><NavBar /><Chart /></>:<Login />}
+      </Route>
+      <Route exact path="/UserProfile">
+        {isLogin? <><NavBar /><UserProfile /></>:<Login />}
+      </Route>
+      {/* <Route exact path="/profile">
+        {isLogin? <Profile />:<Login />}
+      </Route>
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/Contractor-list" component={Contractorlist}/>
       <Route exact path="/addcontractor" component={Addcontractor}/>
@@ -42,10 +101,10 @@ const BaseRouter = () => (
       <Route exact path="/cwr-summary" component={QuotationList}/>
       <Route exact path="/barchart" component={BarChart} />
       <Route exact path="/chart" component={Chart} />  
-      <Route exact path="/UserProfile" component={UserProfile} />  
+      <Route exact path="/UserProfile" component={UserProfile} />   */}
       </Switch>
       
     </>
-  );
+  )
+}
   
-  export default BaseRouter;

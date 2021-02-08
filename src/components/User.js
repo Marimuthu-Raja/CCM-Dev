@@ -3,7 +3,7 @@ import { Col, Row,Card,Container, Form} from 'react-bootstrap'
 import axios from 'axios'
 import CustomTextBox from './CustomBox/TextBox'
 import {Link} from 'react-router-dom';
-import Sidebar from './Sidebar'
+
 
 
 
@@ -51,10 +51,10 @@ class User extends Component {
         const{search,country,status,users}=this.state
         return (
             <div>
-        <Sidebar />
+      
 
                 <h4 style={{font:"san-serif",marginLeft:"200px",marginTop:"20px"}}>USERS</h4>
-                <div style={{marginLeft:"10%",marginTop:"2%",width:"99%" }}>
+                <div className="component">
                     <Card style={{backgroundColor:"white"}}>
 
                         <Row style={{marginTop:"30px", marginBottom:"40px"}}>
