@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container ,Card,Row,Col,Form,Image} from 'react-bootstrap'
 import topimage from  '../logo-light.png';
+import loginimage from  '../loginscrn.png';
 import CustomTextBox from './CustomBox/TextBox';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -101,7 +102,7 @@ class Login extends Component {
                 <br></br>
                 <Row style={{marginTop:"5%",marginLeft:"7%"}}>
                     <Col lg={6} sm={4} style={{marginTop:"10px"}}>
-                        <h5 style={{fontWeight:"bold"}}>forget your password?</h5>
+                        {/* <h5 style={{fontWeight:"bold"}}>forget your password?</h5> */}
                     
                     </Col>
                     <Col lg={6} sm={4}>
@@ -109,6 +110,9 @@ class Login extends Component {
                     </Col>
 
                 </Row>
+                </Col>
+                <Col>
+                <img style={{width:"80%",marginTop:"100px"}} src={loginimage} alt="img missing"/>
                 </Col>
                 </Row>
                 
