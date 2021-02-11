@@ -48,7 +48,7 @@ class Login extends Component {
                         localStorage.setItem('isLogin',true)
                         localStorage.setItem('name',Username)
                         localStorage.setItem('password',Password)
-                        window.location.replace('http://localhost:3001/cwr-summary')
+                        window.location.replace('http://localhost:3000/cwr-summary')
                     }  
                 })
                 .catch(err =>{
