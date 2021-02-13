@@ -92,7 +92,7 @@ export default class ClientList extends Component {
                             </Form.Group>
                             </Col>
                             <Col lg={4}>
-                                <Form.Group as={Col}>
+                                <Form.Group as={Col}> 
                                 <Col>
                                     <select className="form-control"  style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888"}}>
                                         <option disabled selected>Country</option>
@@ -124,7 +124,7 @@ export default class ClientList extends Component {
                                 
                             </Col>
                         </Row>
-                        <Row style={{marginTop:"30px"}}>
+                        <Row style={{marginTop:"30px",overflow:"auto"}}>
                         <table className="table ">
                             <thead>
                                 <tr>

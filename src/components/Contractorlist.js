@@ -123,7 +123,7 @@ export default class Contractorlist extends Component {
                                 
                             </Col>
                         </Row>
-                        <Row style={{marginTop:"30px"}}>
+                        <Row style={{marginTop:"30px",overflow:"auto"}}>
                         <table className="table">
                             <thead>
                                 <tr>
