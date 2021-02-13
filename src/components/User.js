@@ -58,49 +58,63 @@ class User extends Component {
                     <Card style={{backgroundColor:"white"}}>
 
                         <Row style={{marginTop:"30px", marginBottom:"40px"}}>
-                            <Col lg="11" sm="12">
-                            <Row>
-                            <Col lg="4" sm="12">
-                                <Form.Group >
-                                    <Form.Control type="search" name="search" value={search} id="search" placeholder="Search" onChange={this.onChange}
-                                    style={{padding:"10px",width:"78%", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}}/>
-                                </Form.Group>
+                            <Col lg="4">
                             
-                                <i class="fa fa-search" style={{fontSize:"20px",position:"relative",bottom:"30px",left:"350px"}}></i> 
-                            </Col>
-                            <Col lg="3" sm="12">
+                                <Form.Group >
+                                <Col>
+                                    <Form.Control type="search"
+                                     name="search" 
+                                     value={search}
+                                     id="search" 
+                                     placeholder="Search" 
+                                     onChange={this.onChange}
+                                    style={{padding:"10px", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}}/>
+                                <button style={{position:"relative",
+                                                bottom:"30px",
+                                                left:"73%",backgroundColor:"white",border:"none"}} onClick={this.search}>
+                                    <i className="fa fa-search" 
+                                        ></i>
+                                    </button>
+                                    </Col>
+                                </Form.Group>
+                                </Col>     
+                            
+                            <Col lg="2">
                                 <Form.Group as={Col}>
-                                    <Form.Control as="select"  name="country" value={country}  id="country"  onChange={this.onChange} 
-                                    style={{padding:"10px",width:"78%", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}} required>
+                                <Col>
+                                    <Form.Control as="select" name="country" value={country}  id="country"  onChange={this.onChange} 
+                                    style={{padding:"10px", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}} required>
                                             <option value="Country"selected disabled> Country</option>
                                             <option value="Country 1">Country 1</option>
                                             <option value="Country 2">Country 2</option>
                                             <option value="Country 3">Country 3 </option>
                                             <option value="Country 4">Country 4</option>
                                         </Form.Control>
-                                </Form.Group>
-                            </Col>
-                            <Col lg="3" sm="12">
-                            <Form.Group as={Col}>
-                                
+                                        </Col>
+                                        </Form.Group>
+                                       
+                                    </Col>
+
+                            <Col lg="2">
+                                <Form.Group as={Col}>
+                                <Col>
                                 <Form.Control as="select"  name="status" value={status} id="status" onChange={this.onChange} 
-                                 style={{padding:"10px",width:"78%", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}} required>
+                                 style={{padding:"10px", borderRadius: "30px",border:"none", boxShadow:"5px 5px 8px #888888"}} required>
                                         <option value="status"selected disabled> status</option>
                                         <option value="status 1" style={{color:"blue"}}>Pending</option>
                                         <option value="status 2" style={{color:"green"}}>Completed</option>
                                         <option value="status 3" style={{color:"red"}}>Canceled</option>
-                                    </Form.Control>
+                                </Form.Control>
+                                </Col>
                             </Form.Group>
                             </Col>
-                            </Row>
-                            </Col>
-
-                            <Col lg="1" sm="12">
+                       
+                            <Col lg="4">
                             <Link to="/UserProfile">
                                 <button 
-                                style={{width:"60%",
+                                style={{width:"15%",
                                 height:"60px",
-                                // marginLeft:"70%",
+                                marginLeft:"70%",
                                 backgroundColor:"#4A88DC",
                                 border:"none",
                                 borderRadius:"10px"}}>
@@ -109,7 +123,8 @@ class User extends Component {
                                 </Link>
                             </Col>
                         </Row>
-                        <Row style={{marginTop:"35px"}}>
+                        
+                        <Row style={{marginTop:"35px",overflow:"auto"}}>
                         <table class="table ">
                             <thead>
                                 <tr>

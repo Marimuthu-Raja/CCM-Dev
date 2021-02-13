@@ -82,9 +82,9 @@ function ResponsiveDrawer(props) {
     <Link to="/profile" className="nav-link w3-bar-item" style={{fontSize:"1.1em"}}>My Profile</Link>
                         
     <NavDropdown title="Administration" id="collasible-nav-dropdown" style={{fontSize:"1.1em"}}>
-        <NavDropdown.Item><Link to="/user" className="nav-link"  style={{fontSize:"1.1em"}}>User</Link></NavDropdown.Item>
-        <NavDropdown.Item><Link to="/clientlist" className="nav-link" style={{fontSize:"1.1em"}}>Client</Link></NavDropdown.Item>
-        <NavDropdown.Item> <Link to="/contractor-list" className="nav-link" style={{fontSize:"1.1em"}}>Contractor</Link></NavDropdown.Item>  
+        <NavDropdown.Item><Link to="/user" className="nav-link"  style={{fontSize:"1em"}}>User</Link></NavDropdown.Item>
+        <NavDropdown.Item><Link to="/clientlist" className="nav-link" style={{fontSize:"1em"}}>Client</Link></NavDropdown.Item>
+        <NavDropdown.Item> <Link to="/contractor-list" className="nav-link" style={{fontSize:"1em"}}>Contractor</Link></NavDropdown.Item>  
      </NavDropdown>
       
     </div>
