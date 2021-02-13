@@ -36,10 +36,19 @@ export default class Country extends Component {
               })
         }
         else{
-            axios.post('', {country_name,status})                   
+            axios.post('http://ccm.digisailor.in/api/public/country/add',{
+                auth: {
+                username: 'ccm_auth',
+                password: 'ccm_digi123#'
+                },
+                params:{
+                    name: localStorage.getItem('Username'),
+                    password: localStorage.getItem('password')
+                }
+            },{country_name,status})                   
             .then(function (response) {
                   //access the results here....           
-                swal("success!", "Client added", "success").then(setInterval(function(){window.location.reload();},1500));// alert
+                swal("success!", "Client added", "success")//.then(setInterval(function(){window.location.reload();},1500));// alert
                 console.log(response);// log
               })
               .catch(function (error) {
@@ -75,8 +84,9 @@ export default class Country extends Component {
                                     <Form.Group  >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Status</Form.Label>
                                                     <Form.Control as="select" name="status" placeholder="status" value={status} id="status"  onChange={this.onChange} style={{padding:"8px"}}>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="" disabled>Status</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
                                                     </Form.Control>
                                     </Form.Group>
                                     </Col>
