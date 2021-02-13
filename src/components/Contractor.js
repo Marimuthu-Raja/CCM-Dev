@@ -68,15 +68,15 @@ export default class Contractor extends Component {
                                 </Col>
                                 <Col lg={4} sm={4}>
                                 <Form.Group Id="input" >
-                                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Contractor Name</Form.Label>
-                                                    <Form.Control type="text" name="contractor_name"  placeholder="Contractor Name" onChange={this.onChange}
+                                                    <Form.Label className="required-field" style={{fontSize:"17px",fontWeight:"bold"}}>Contractor Name </Form.Label>
+                                                    <Form.Control type="text" name="contractor_name"  placeholder="Contractor Name" onChange={this.onChange} required
                                                     style={{padding:"10px"}}/>
 
                                 </Form.Group>
                                 <br/>
                                 <br/>
                                 <Form.Group Id="status" >
-                                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>Country</Form.Label>
+                                                    <Form.Label className="required-field" style={{fontSize:"17px",fontWeight:"bold"}}>Country </Form.Label>
                                                     <Form.Control as="select" name="status"  onChange={this.onChange}  style={{padding:"10px"}}>
                                                     <option value="India">India</option>
                                                     <option value="Singapoor">Singapur</option>
@@ -99,7 +99,7 @@ export default class Contractor extends Component {
 
                                 <Col lg={4} sm={4}>
                                 <Form.Group Id="input" >
-                                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold"}}>E-Mail</Form.Label>
+                                                    <Form.Label className="required-field" style={{fontSize:"17px",fontWeight:"bold"}}>E-Mail </Form.Label>
                                                     <Form.Control type="email" name="email"  placeholder="E-Mail ID" onChange={this.onChange}  style={{padding:"10px"}}/>
 
                                 </Form.Group>

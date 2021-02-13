@@ -39,6 +39,10 @@ body {
   
  }
 
+.required-field::after{
+  content: "*";
+  color: red;
+}
 /*  */
 .justify-content-md-center{
   margin-top: 40px;
