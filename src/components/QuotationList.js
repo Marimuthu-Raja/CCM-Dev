@@ -179,7 +179,7 @@ export default class QuotationList extends Component {
                             </Form.Group>
                             </Col>
                             <Col lg={1}>
-                                {/* <Link to="/addcontractor"> */}
+                                <Link to="/quotation">
                                 <button 
                                 style={{width:"40%",
                                 height:"50px",
@@ -188,7 +188,7 @@ export default class QuotationList extends Component {
                                 borderRadius:"10px"}}>
                                     <i className="fa fa-plus" style={{fontSize:"20px",color:"white"}}></i>
                                     </button>
-                                {/* </Link> */}
+                                </Link>
                                 
                             </Col>
                             
