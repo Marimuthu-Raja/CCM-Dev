@@ -270,7 +270,7 @@ export class Dashboard extends Component {
                 <Row style={{marginTop:"30px"}}>
                        <Col lg={{span:2, offset:1}}>
                            <Form.Label className="search-title" >DASHBOARD</Form.Label></Col>
-                       <Col lg={5}>
+                       <Col lg={{span:5, offset:1}}>
                                 <Form.Control type="text"  
                                     placeholder="Search"
                                     onChange={this.onChange}
@@ -289,7 +289,7 @@ export class Dashboard extends Component {
                 </Row>
                    
                     <Card style={{marginTop:"10px"}}>
-                        <Row style={{marginTop:"10px"}}>
+                        <Row >
                             <Col lg={2}>
                             
                             <Form.Control as="select" className="select" name=""  value="" onChange="" required>
@@ -315,23 +315,15 @@ export class Dashboard extends Component {
                                         <option value="April 2021">Contractor 3</option>
                             </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px"}} ></i>
                             </Col>
-                            {/* <Col lg={{span:2, offset:4}}>
-                            <Form.Control as="select" className="select" name=""  value="" onChange="" required>
-                                        <option value="January 2021" >Currency</option>
-                                        <option value="February 2021">February 2021</option>
-                                        <option value="March 2021">March 2021</option>
-                                        <option value="April 2021">April 2021</option>
-                            </Form.Control><i class="fa fa-angle-down" style={{position:"relative",bottom:"24px" , left:"65%",fontSize:"20px"}} ></i>
-                            </Col> */}
+                           
                         </Row>
                         
                     <Row >
                         <Col lg={8} className="inner-card">
                             <Row>
-                                <Col lg={3}>
+                                <Col xl={3} >
                                 <Form.Group>
                                     <label className="inner-title">From</label>
-                                    
                                     <DatePicker
                                         className="date-style"
                                         selected={Date_From}
@@ -341,14 +333,13 @@ export class Dashboard extends Component {
                                         minDate={subYears(new Date(), 5)}
                                         maxDate={new Date()}
                                         placeholderText="From"
-                                        />
-                                    
+                                        />    
                                  </Form.Group>
                                 </Col>
-                                <Col lg={3}>
+
+                                <Col xl={3}>
                                 <Form.Group>
-                                    <label className="inner-title">To</label>
-                                        
+                                    <label className="inner-title">To</label>    
                                     <DatePicker
                                         className="date-style"
                                         selected={Date_To}
@@ -359,11 +350,10 @@ export class Dashboard extends Component {
                                         maxDate={new Date()}
                                         placeholderText="To"
                                         />
-                                   
-                                   
                                 </Form.Group>
                                 </Col>
-                                <Col lg={{span:3, offset:3}}>
+                                
+                                <Col xl={{span:4, offset:2}}>
                                     <DatePicker
                                         className="select-bold"
                                         selected={select_month}
@@ -377,70 +367,71 @@ export class Dashboard extends Component {
                                 </Col>   
                             </Row>
 
-
                         {total_amount!=0 ? 
                         <Pie data={barData.data} options={barData.options}  height="110"> </Pie> : 
                         <div className="no-data">No Data Found...</div> 
                         }
-
                         </Col>
+
                         <Col lg={4}>
                         <Row>
                                 <div className="inner-title">Client Amount</div>
                                 <Row  className="inner-row" style={{backgroundColor:"rgb(33,213,155)"}}>
-                                    <Col lg={4} sm={4} >
-                                        <div className="in-in-col">
+                                    <Col lg={4} sm={4} className="in-in-col">
+                                        
                                         <label style={{color:"rgb(33,213,155)"}}>Total</label>
                                         <div>${total_amount}</div>
-                                        </div>
+                                        
                                     </Col>
-                                    <Col lg={4} sm={4}>
-                                    <div className="in-in-col">
+                                    <Col lg={4} sm={4} className="in-in-col">
+                                    
                                         <label style={{color:"rgb(33,213,155)"}}>Received</label>
                                         <div>${received_amount}</div>
-                                    </div>
+                                    
                                     </Col>
-                                    <Col lg={4} sm={4}>
-                                    <div className="in-in-col">
+                                    <Col lg={4} sm={4} className="in-in-col">
+
                                         <label style={{color:"rgb(33,213,155)"}}>Remaining</label>
                                         <div>${remaining_amount}</div>
-                                    </div>
+
                                     </Col>
                                 </Row>
                             </Row>
                             <Row>
                                 <div className="inner-title">Contractor Amount</div>
                                 <Row  className="inner-row" style={{backgroundColor:"rgb(87,98,214)"}}>
-                                    <Col lg={4} sm={4} >
-                                        <div className="in-in-col" >
+                                    <Col lg={4} sm={4} className="in-in-col" >
+
                                         <label style={{color:"rgb(87,98,214)"}}>Total</label>
-                                        <div> ${total_amount} </div>
-                                        </div>
+                                        <div > ${total_amount} </div>
+
                                     </Col>
-                                    <Col lg={4}  sm={4}>
-                                    <div className="in-in-col">
+                                    <Col lg={4}  sm={4} className="in-in-col">
+
                                         <label style={{color:"rgb(87,98,214)"}}>Paid</label>
                                         <div>${received_amount}</div>
-                                    </div>
+
                                     </Col>
-                                    <Col lg={4} sm={4} >
-                                    <div className="in-in-col">
+                                    <Col lg={4} sm={4} className="in-in-col" >
+
                                         <label style={{color:"rgb(87,98,214)"}}>Remaining</label>
                                         <div>${remaining_amount}</div>
-                                    </div>
+
                                     </Col>
                                 </Row>
                             </Row>
                             <Row >
                             <div className="inner-title">Profit(Margin)</div>
                                 <Row className="inner-row" style={{backgroundColor:"rgb(250, 143, 214)"}}>
-                                    <Col lg={4}  sm={4}>
-                                    <div className="in-in-col">
-                                        <label style={{color:"rgb(250, 143, 214)", marginTop:"40px" }}>P&L</label>
-                                    </div>
+                                    <Col lg={4}  sm={4} className="in-in-col">
+
+                                        <label style={{color:"rgb(250, 143, 214)"}}>P&L</label>
+
                                     </Col >
-                                    <Col lg={8} sm={8}>
-                                    <label className="center-col">+5280K</label>
+                                    <Col lg={8} sm={8} >
+
+                                        <label className="center-col">+5280K</label>
+
                                     </Col>
                                 </Row>
                             </Row>

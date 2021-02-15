@@ -5,6 +5,7 @@ import topimage from  '../logo-light.png';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
+import CustomButton from './Button/Button'
 
 
 
@@ -36,18 +37,26 @@ export default class Country extends Component {
               })
         }
         else{
-            axios.post('', {country_name,status})                   
-            .then(function (response) {
-                  //access the results here....           
-                swal("success!", "Client added", "success").then(setInterval(function(){window.location.reload();},1500));// alert
-                console.log(response);// log
-              })
-              .catch(function (error) {
-                console.log(error);
-              }); 
-            console.log(this.state.errors)
-            
-     }
+           
+                axios.post(`http://ccm.digisailor.in/api/public/country/list`,
+                {
+                    auth: {
+                    username: 'ccm_auth',
+                    password: 'ccm_digi123#'
+                    },
+                }
+                )                   
+                .then( (res)=> {
+                    
+                    console.log(res);         
+                    // swal("success!", "Country added", "success")
+                })
+                .catch( (e)=> {
+                    console.log(e);
+                });   
+              
+           
+        }
     }
 
     render() {
@@ -58,7 +67,7 @@ export default class Country extends Component {
                 <div className="component">
                     <p style={{fontSize:"20px"}}>Country</p>
 
-                     <Card border="dark" sm={6} style={{height:"600px"}}>
+                     <Card border="dark" sm={6} style={{height:"500px"}}>
                          <Form >
                             <Row style={{marginTop:"3%"}}>
                                 <Col  lg={4} sm={4}>
@@ -75,14 +84,17 @@ export default class Country extends Component {
                                     <Form.Group  >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Status</Form.Label>
                                                     <Form.Control as="select" name="status" placeholder="status" value={status} id="status"  onChange={this.onChange} style={{padding:"8px"}}>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="" disabled>Status</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
                                                     </Form.Control>
                                     </Form.Group>
                                     </Col>
                             </Row>
-                            <Row>
-                            <button type="button" class="btn btn sbtn" style={{marginTop:"300px"}} onClick={this.onSubmit}> SAVE</button>
+                           <Row className="row justify-content-md-center" style={{marginTop:"15%"}}>
+                                <CustomButton btnType="reset" BtnTxt="Add"   ClickEvent={this.onSubmit}  />
+                                <CustomButton btnType="reset" BtnTxt="Update"   ClickEvent={this.onUpdate} />    
+                                <CustomButton btnType="reset" BtnTxt="Delete"   ClickEvent={this.onDelete} /> 
                             </Row>
                          </Form>
                         </Card>

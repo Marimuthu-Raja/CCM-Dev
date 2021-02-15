@@ -86,6 +86,7 @@ function ResponsiveDrawer(props) {
         <NavDropdown.Item><Link to="/clientlist" className="nav-link" style={{fontSize:"1em"}}>Client</Link></NavDropdown.Item>
         <NavDropdown.Item> <Link to="/contractor-list" className="nav-link" style={{fontSize:"1em"}}>Contractor</Link></NavDropdown.Item>  
      </NavDropdown>
+     <Link to="/country" className="nav-link w3-bar-item" style={{fontSize:"1.1em"}}>Country</Link>
       
     </div>
   );
@@ -106,11 +107,11 @@ function ResponsiveDrawer(props) {
           >
            <i class='fas fa-bars' />
           </IconButton>
-          <Typography  variant="h6" noWrap>
+          <Typography  variant="h6" style={{marginRight:'40px'}} noWrap>
           In a world of gray, CCM provides clarity to all construction & facility projects.
           </Typography>
-          <Typography style={{marginLeft:'10%', fontSize:'2em'}} noWrap>
-            <Link style={{textDecoration:"none",}} to='/logout'><i style={{marginRight:'25px'}} class='fas fa-times-circle' /></Link>
+          <Typography  style={{ fontSize:'2em'}} noWrap>
+            <Link id="link-button" to='/logout'><i style={{marginRight:'20px'}} class='fas fa-times-circle' /></Link>
           </Typography>
         </Toolbar>
       </AppBar>
