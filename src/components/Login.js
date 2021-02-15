@@ -17,7 +17,7 @@ const history = useHistory()
 const onSubmit=(e)=>{
     e.preventDefault()
     if(Username !=='' && Password !==''){
-        axios.get('http://ccm.digisailor.in/api/public/prithivi/login', {
+        axios.get('http://ccm.digisailor.in/api/public/login/login', {
             auth: {
             username: 'ccm_auth',
             password: 'ccm_digi123#'
@@ -34,7 +34,7 @@ const onSubmit=(e)=>{
                     localStorage.setItem('isLogin',true)
                     localStorage.setItem('name',Username)
                     localStorage.setItem('password',Password)
-                    history.push('/dashboard')
+                    window.location.replace('http://localhost:3000/dashboard')
                 }
                 else{
                     Swal.fire({
