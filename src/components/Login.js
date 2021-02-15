@@ -31,9 +31,9 @@ const onSubmit=(e)=>{
                 console.log(res) 
                 const data = res.data
                 if(data.response.is_login===true && data.session.users!==undefined){
+                    const access_token = data.response.access_token
                     localStorage.setItem('isLogin',true)
-                    localStorage.setItem('name',Username)
-                    localStorage.setItem('password',Password)
+                    localStorage.setItem('access_token',access_token)
                     window.location.replace('http://localhost:3000/dashboard')
                 }
                 else{

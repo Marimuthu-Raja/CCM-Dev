@@ -29,6 +29,7 @@ export default class Country extends Component {
     onSubmit=(e)=>{
         e.preventDefault();
         const {country_name,status}=this.state;
+
         if(country_name ==='' && status ===''){
             Swal.fire({
                 icon: 'error',
@@ -37,26 +38,31 @@ export default class Country extends Component {
               })
         }
         else{
-           
-                axios.post(`http://ccm.digisailor.in/api/public/country/list`,
+                const token= localStorage.getItem('access_token')
+                axios.post(`http://ccm.digisailor.in/api/public/country/add`, {},
                 {
                     auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
                     },
-                }
+                    params:{
+                        name : country_name,
+                        status : status,
+                        access_token:token,
+                    }
+                },
                 )                   
                 .then( (res)=> {
-                    
-                    console.log(res);         
-                    // swal("success!", "Country added", "success")
+                    console.log(res.data);   
+                    (res.data.message.success!==undefined) && swal("success!", "Country created Successfully", "success")
                 })
                 .catch( (e)=> {
                     console.log(e);
                 });   
-              
-           
         }
+    }
+    onUpdate= (e)=>{
+        e.preventDefault();
     }
 
     render() {
