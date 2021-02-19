@@ -25,7 +25,8 @@ export default class Country extends Component {
         }
     }
     componentDidMount(){
-        axios.post(`${process.env.REACT_APP_URL}/country/list`,{},{
+        console.log(process.env.REACT_APP_URL)
+        axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
             params:{ access_token:token }
         }).then((res)=>{
             const country_list = res.data.response.country_list
@@ -54,6 +55,11 @@ export default class Country extends Component {
     }
     onSubmit=(e)=>{
         const {country_object,status}=this.state;
+        const data={
+            name : country_object.name,
+            status : status,
+            
+        }
         
         if(country_object === null || status ===''){
             Swal.fire({
@@ -62,14 +68,12 @@ export default class Country extends Component {
                 text: 'Please Fillout all the Fields!',
               })
         }else{
-            axios.post(`${process.env.REACT_APP_URL}/country/add`,{},{
+            axios.post(`https://ccm.digisailor.in/api/public/country/add`,data,{
                 auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
                     },
                 params:{
-                    name : country_object.name,
-                    status : status,
                     access_token:token,
                 }
             })                   
@@ -84,15 +88,16 @@ export default class Country extends Component {
     }
     onUpdate= (e)=>{
        const {country_id,country_object,status}=this.state;
-            axios.post(`${process.env.REACT_APP_URL}/country/edit` ,{},{
+       const data={
+                name : country_object.name,
+                status : status,
+            }
+            axios.post(`https://ccm.digisailor.in/api/public/country/edit/` +country_id  ,data,{
                 auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
                     },
                  params:{
-                    id:country_id,
-                    name : country_object.name,
-                    status : status,
                     access_token:token,
                 }
             })                   
@@ -106,13 +111,12 @@ export default class Country extends Component {
     }
     onDelete = (e)=>{
         const {country_id,country_object,status}=this.state;
-            axios.post(`${process.env.REACT_APP_URL}/country/delete` ,{},{
+            axios.post(`https://ccm.digisailor.in/api/public/country/delete` ,{id:country_id,},{
                 auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
                     },
                  params:{
-                    id:country_id,
                     access_token:token,
                 }
             })                   
