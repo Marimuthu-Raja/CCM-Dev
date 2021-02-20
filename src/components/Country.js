@@ -6,9 +6,11 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
 import CustomButton from './Button/Button'
+import CountrySelect from 'react-bootstrap-country-select';
+import { pathOr,equals,head,filter,} from 'ramda';
 
 
-
+var token = localStorage.getItem('access_token')
 
 
 export default class Country extends Component {
@@ -16,51 +18,129 @@ export default class Country extends Component {
         super(props)
     
         this.state = {
-             country_name:'',
-             status:''
+            country_id:null,
+            country_object : '',
+            status:'',
+            country_list:[],
         }
     }
-    onChange=(e) =>{
-        e.preventDefault();
-        this.setState({
-            [e.target.name]:e.target.value
+    componentDidMount(){
+        console.log(process.env.REACT_APP_URL)
+        axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
+            params:{ access_token:token }
+        }).then((res)=>{
+            const country_list = res.data.response.country_list
+            this.setState({ country_list })
+            console.log(country_list);
         })
     }
+    onChange = (e) =>{
+        this.setState({ [e.target.name]:e.target.value })
+    }
+    countryChange = (e)=>{ 
+        this.setState({country_object:e},()=>this.filterID())
+    }
+    filterID = ()=>{
+        const {country_list,country_object,}=this.state;
+        if(country_object!==null){
+            const filterList = head(country_list.filter(object => object.name==country_object.name))
+            if(filterList!==undefined){
+                this.setState({country_id:filterList.id , status:filterList.status })
+            }
+            
+        }else{
+            this.setState({country_id:null, status:''})
+        }
+        
+    }
     onSubmit=(e)=>{
-        e.preventDefault();
-        const {country_name,status}=this.state;
-        if(country_name ==='' && status ===''){
+        const {country_object,status}=this.state;
+        const data={
+            name : country_object.name,
+            status : status,
+            
+        }
+        
+        if(country_object === null || status ===''){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Please Fillout all the Fields!',
               })
-        }
-        else{
-           
-                axios.post(`http://ccm.digisailor.in/api/public/country/list`,
-                {
-                    auth: {
+        }else{
+            axios.post(`https://ccm.digisailor.in/api/public/country/add`,data,{
+                auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
                     },
+                params:{
+                    access_token:token,
                 }
-                )                   
-                .then( (res)=> {
-                    
-                    console.log(res);         
-                    // swal("success!", "Country added", "success")
-                })
-                .catch( (e)=> {
-                    console.log(e);
-                });   
-              
-           
+            })                   
+            .then( (res)=> {
+                console.log(res);   
+                (res.data.message.success!==undefined) && swal("success!", "Country created Successfully", "success").then(()=>this.onCancel())
+            })
+            .catch( (e)=> {
+                console.log(e);
+            });   
         }
+    }
+    onUpdate= (e)=>{
+       const {country_id,country_object,status}=this.state;
+       const data={
+                name : country_object.name,
+                status : status,
+            }
+            axios.post(`https://ccm.digisailor.in/api/public/country/edit/` +country_id  ,data,{
+                auth: {
+                    username: 'ccm_auth',
+                    password: 'ccm_digi123#'
+                    },
+                 params:{
+                    access_token:token,
+                }
+            })                   
+            .then( (res)=> {
+                console.log(res);   
+                (res.data.message.success!==undefined) && swal("success!", "Country updated Successfully", "success").then(()=>this.onCancel())
+                })
+            .catch( (e)=> {
+                    console.log(e);
+            });   
+    }
+    onDelete = (e)=>{
+        const {country_id,country_object,status}=this.state;
+            axios.post(`https://ccm.digisailor.in/api/public/country/delete` ,{id:country_id,},{
+                auth: {
+                    username: 'ccm_auth',
+                    password: 'ccm_digi123#'
+                    },
+                 params:{
+                    access_token:token,
+                }
+            })                   
+            .then( (res)=> {
+                console.log(res);   
+                (res.data.message.success!==undefined) && swal("success!", "Country deleted Successfully", "success").then(()=>this.onCancel())
+                })
+            .catch( (e)=> {
+                    console.log(e);
+            }); 
+    }
+    onCancel = (e)=>{
+        this.setState({
+            country_id:null,
+            country_object : '',
+            status:'',
+            country_list:[],
+        })
+        this.componentDidMount();
     }
 
     render() {
-        const {status,country_name}=this.state;
+        const {country_id,status,country_object}=this.state;
+
         return (
             <div>
       
@@ -73,17 +153,23 @@ export default class Country extends Component {
                                 <Col  lg={4} sm={4}>
                                 <Image src={topimage} rounded style={{width:"100px",marginLeft:"20%"}} />
                                 </Col>
-                                <Col xs={6} sm={4}>
-                                <Form.Group  >
-                                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Country Name</Form.Label>
-                                                    <Form.Control type="text" name="country_name" value={country_name} id="country_name"  placeholder="Country Name" onChange={this.onChange} style={{padding:"8px"}}/>
 
+                                <Col xs={6} sm={4}>
+                               
+                                <Form.Group  >
+                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Country Name</Form.Label>
+                                    <CountrySelect
+                                    value={country_object}
+                                    onChange={this.countryChange}
+                                    valueAs='name'
+                                    />
                                 </Form.Group>
                                 </Col>
+
                                 <Col xs={6} sm={4}>
                                     <Form.Group  >
                                                     <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Status</Form.Label>
-                                                    <Form.Control as="select" name="status" placeholder="status" value={status} id="status"  onChange={this.onChange} style={{padding:"8px"}}>
+                                                    <Form.Control as="select" name="status" placeholder="status" value={status} id="status"  onChange={this.onChange} >
                                                     <option value="" disabled>Status</option>
                                                     <option value="1">Active</option>
                                                     <option value="0">Inactive</option>
@@ -92,9 +178,10 @@ export default class Country extends Component {
                                     </Col>
                             </Row>
                            <Row className="row justify-content-md-center" style={{marginTop:"15%"}}>
-                                <CustomButton btnType="reset" BtnTxt="Add"   ClickEvent={this.onSubmit}  />
-                                <CustomButton btnType="reset" BtnTxt="Update"   ClickEvent={this.onUpdate} />    
-                                <CustomButton btnType="reset" BtnTxt="Delete"   ClickEvent={this.onDelete} /> 
+                                <CustomButton btnType="reset" BtnTxt="Add"  disabledButton={country_id!==null}  ClickEvent={this.onSubmit}  />
+                                <CustomButton btnType="reset" BtnTxt="Update" disabledButton={country_id===null}  ClickEvent={this.onUpdate} />    
+                                <CustomButton btnType="reset" BtnTxt="Delete" disabledButton={country_id===null}  ClickEvent={this.onDelete} /> 
+                                <CustomButton btnType="reset" BtnTxt="Cancel"   ClickEvent={this.onCancel} />
                             </Row>
                          </Form>
                         </Card>
