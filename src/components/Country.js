@@ -29,6 +29,7 @@ export default class Country extends Component {
         axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
             params:{ access_token:token }
         }).then((res)=>{
+            console.log(res)
             const country_list = res.data.response.country_list
             this.setState({ country_list })
             console.log(country_list);
@@ -79,7 +80,11 @@ export default class Country extends Component {
             })                   
             .then( (res)=> {
                 console.log(res);   
-                (res.data.message.success!==undefined) && swal("success!", "Country created Successfully", "success").then(()=>this.onCancel())
+                if(res.data.message.success!==undefined) {
+                    swal("success!", `${res.data.message.success}`, "success")
+                }else{
+                    swal("error!", `${res.data.message.error}`, "error")
+                }
             })
             .catch( (e)=> {
                 console.log(e);

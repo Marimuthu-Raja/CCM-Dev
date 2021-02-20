@@ -61,10 +61,10 @@ export default function BaseRouter() {
       <Route exact path="/addinvoice">
         {isLogin?<><NavBar /> <AddInvoice /></>:<Redirect to='/' />}
       </Route>
-      <Route exact path="/user">
+      <Route exact path="/user-list">
         {isLogin?<><NavBar /> <User /></>:<Redirect to='/' />}
       </Route>
-      <Route exact path="/clientlist">
+      <Route exact path="/client-list">
         {isLogin?<><NavBar /> <ClientList /></>:<Redirect to='/' />}
       </Route>
       <Route exact path="/addclient">

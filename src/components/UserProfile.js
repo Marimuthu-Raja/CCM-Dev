@@ -9,12 +9,20 @@ import {
     Image
 } from 'react-bootstrap';
 import CustomTextBox from './CustomBox/TextBox'
+import CustomButton from './Button/Button'
 import Logo from '../logo-light.png'
-import $ from 'jquery'
-import swal from 'sweetalert'
+import axios from 'axios'
+import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import {Link} from 'react-router-dom';
 
 import ReactCountryFlag from "react-country-flag"
 import ReactFlagsSelect from 'react-flags-select';
+import { Us } from 'react-flags-select';
+
+
+var token = localStorage.getItem('access_token')
+
 
 class UserProfile extends Component {
     constructor(props) {
@@ -28,8 +36,17 @@ class UserProfile extends Component {
             address:"",
             department:"",
             phone:"",
-            selected_country:'',
+            selected_country:0,
+            country_list:[],
         }
+    }
+    componentDidMount(){
+        axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
+            params:{ access_token:token }
+        }).then((res)=>{
+            const country_list = res.data.response.country_list
+            this.setState({ country_list })
+        })
     }
     onChange = (e)=>{
         e.preventDefault();
@@ -39,11 +56,11 @@ class UserProfile extends Component {
         })
     }
 
-    onSelect = (code)=>{
-        console.log(code,"code")
+    onSelect = (e)=>{
+        console.log(e,"code")
     }
     render() {
-        const {full_name,user_name,country,email,address,department,phone,selected_country}=this.state;
+        const {full_name,user_name,country,email,address,department,phone,selected_country,country_list}=this.state;
         return (
             <div>
                
@@ -75,17 +92,16 @@ class UserProfile extends Component {
                                 changeEvent = {this.onChange}
                                 />
                                <Form.Group as={Col}>
-                                    <Form.Label className="label-style">Country</Form.Label>
-                                    <Col>
-                                    <Form.Control as="select" className="select-style" name="country"  value={country} onChange={this.onChange} required>
-                                            <option value="Country"selected disabled> Country</option>
-                                            <option value="Country 1">Country 1</option>
-                                            <option value="Country 2">Country 2</option>
-                                            <option value="Country 3">Country 3 </option>
-                                            <option value="Country 4">Country 4</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Form.Group>
+                                <Col>
+                                <Form.Label style={{marginTop:"35px",fontSize:"20px"}}>Country</Form.Label>        
+                                    <Form.Control as="select" className="select-style"  name="country"  value={country} onChange={this.onChange} style={{padding:"10px"}} required>
+                                            <option value='0' selected disabled> Country</option>
+                                            {country_list.map((country)=>{                   
+                                                return<option key={country.id} value={country.id}>{country.name}</option>                                
+                                            })}
+                                </Form.Control>
+                                </Col>
+                        </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <CustomTextBox
@@ -137,9 +153,9 @@ class UserProfile extends Component {
 
                         <Row style={{marginTop:"20px"}} >
                             <Col lg={2}>
-                                <label  className="search-title">Permissions</label>
+                                <label  className="inner-title">Permissions</label>
                             </Col>
-                            <Col lg={5} style={{backgroundColor:"White" , borderRadius:"20px 0 0 20px"}}>
+                            <Col lg={7} style={{backgroundColor:"White" , borderRadius:"20px 0 0 20px"}}>
                                 <div className="inner-space">
                                     <Form.Group as={Row}> 
                                        <Form.Label className="label-style" column lg={8}>Quotation/Invoice Management</Form.Label>
@@ -209,35 +225,32 @@ class UserProfile extends Component {
 
                         <Row style={{marginTop:"20px"}}>
                             <Col lg={2}>
-                                <label  className="search-title">Country</label>
+                                <label  className="inner-title">Country</label>
                             </Col>
-                            <Col lg={8} style={{backgroundColor:"White" , borderRadius:"20px"}}>
-                            </Col>
+                        
+                                
+                                <Col lg={3}>        
+                                    <Form.Control as="select" className="select-style"  name="selected_country"  value={selected_country} onChange={this.onChange} style={{padding:"10px"}} required>
+                                            <option value='0' selected disabled> Country</option>
+                                            {country_list.map((country)=>{                   
+                                                return<option key={country.id} value={country.id}>{country.name}</option>                                
+                                            })}
+                                </Form.Control>
+                                </Col>
+                                <Col lg={6} style={{backgroundColor:"White" , borderRadius:"20px"}}>
+                                </Col>
+                        
+                            
                         </Row>
 
-
-
-                        {/* <Row>
-                            
-                            <ReactCountryFlag
-                countryCode="US"
-                svg
-                
-                title="US"
-            />
-                        </Row> */}
-                        <Row>
-
-                            <Col sm={2} lg={2}> 
-                            
-                            <ReactFlagsSelect selected={selected_country} name="selected_country" placeholder="Add Country" onSelect={this.onSelect}/>
-                            
-                            </Col>
-                            <Col sm={2} lg={{span:4, offset:6}}> 
-                            <Button  >Reset Password</Button>
-                            <Button >Save </Button>
-                            </Col>
+                        
+                        <Row className="row justify-content-md-center" style={{marginTop:"3%"}}>
+                            <CustomButton btnType="reset" BtnTxt="Add"  disabledButton={this.props.id!==undefined}  ClickEvent={this.onSubmit}  />
+                            <CustomButton btnType="reset" BtnTxt="Update" disabledButton={this.props.id===undefined}  ClickEvent={this.onUpdate} />     
+                            <CustomButton btnType="reset" BtnTxt="Cancel"   ClickEvent={this.onCancel} />
+                            <Link to='/user-list' ><CustomButton btnType="reset" BtnTxt="Back" ClickEvent={this.props.function} /></Link> 
                         </Row>
+                       
 
                     </Card>
                 </div>  
