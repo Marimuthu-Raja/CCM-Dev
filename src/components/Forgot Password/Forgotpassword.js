@@ -9,12 +9,12 @@ export default function Forgotpassword() {
     const [Password, setPassword] = useState('')
     const [ConfirmPassword, setConfirmPassword] = useState('')
 
-    const containerStyle = {
-            width:"40%",
-            height:"500px",
-    }
 
     const onSubmit = () =>{
+        const data = {
+            password:Password,
+            confirm_password:ConfirmPassword,
+        }
         if(Password === '' || ConfirmPassword === ''){
             Alert("error","Oops","Please Fillout All Fields!")
         }
@@ -25,6 +25,8 @@ export default function Forgotpassword() {
             Alert("success","Success","Password Reset Successful")
         }
     }
+
+
     return (
         <div>
             <div className="component">
@@ -37,7 +39,7 @@ export default function Forgotpassword() {
                     <Image src={Logo} rounded style={{width:"100px",marginLeft:"30%",marginTop:"20%"}} />
                 </Col>
                 <Col lg={8} sm={8}>
-                <div style={containerStyle}>
+                <div style={{width:"40%",height:"500px"}}>
                     <div style={{marginTop:"30%"}}>
 
                     <Row style={{marginTop:"10%"}}>

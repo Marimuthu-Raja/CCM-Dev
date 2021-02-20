@@ -12,7 +12,7 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
-
+import { Link } from 'react-router-dom'
 import ReactCountryFlag from "react-country-flag"
 import ReactFlagsSelect from 'react-flags-select';
 
@@ -234,7 +234,7 @@ class UserProfile extends Component {
                             
                             </Col>
                             <Col sm={2} lg={{span:4, offset:6}}> 
-                            <Button  >Reset Password</Button>
+                            <Link to="/forgot-password"><Button  >Reset Password</Button></Link>
                             <Button >Save </Button>
                             </Col>
                         </Row>

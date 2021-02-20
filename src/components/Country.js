@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
-import { Container ,Card,Row,Col,Form,Image} from 'react-bootstrap'
-import CustomTextBox from './CustomBox/TextBox'
+import { Card,Row,Col,Form,Image} from 'react-bootstrap'
 import topimage from  '../logo-light.png';
-import Swal from 'sweetalert2';
-import axios from 'axios';
-import swal from 'sweetalert';
 import CustomButton from './Button/Button'
 import CountrySelect from 'react-bootstrap-country-select';
-import { pathOr,equals,head,filter,} from 'ramda';
-
-
-var token = localStorage.getItem('access_token')
+import { head } from 'ramda';
+import axios from './utils/axiosinstance'
+import { Alert } from './utils/Utilities'
 
 
 export default class Country extends Component {
+
+
     constructor(props) {
         super(props)
     
@@ -24,22 +21,29 @@ export default class Country extends Component {
             country_list:[],
         }
     }
+
+
     componentDidMount(){
         console.log(process.env.REACT_APP_URL)
-        axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
-            params:{ access_token:token }
-        }).then((res)=>{
+        axios.post(`/country/list`,{})
+        .then((res)=>{
             const country_list = res.data.response.country_list
             this.setState({ country_list })
             console.log(country_list);
         })
     }
+
+
     onChange = (e) =>{
         this.setState({ [e.target.name]:e.target.value })
     }
+
+
     countryChange = (e)=>{ 
         this.setState({country_object:e},()=>this.filterID())
     }
+
+
     filterID = ()=>{
         const {country_list,country_object,}=this.state;
         if(country_object!==null){
@@ -53,81 +57,52 @@ export default class Country extends Component {
         }
         
     }
+
+
     onSubmit=(e)=>{
         const {country_object,status}=this.state;
+
         const data={
             name : country_object.name,
-            status : status,
-            
+            status : status,  
         }
         
         if(country_object === null || status ===''){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please Fillout all the Fields!',
-              })
-        }else{
-            axios.post(`https://ccm.digisailor.in/api/public/country/add`,data,{
-                auth: {
-                    username: 'ccm_auth',
-                    password: 'ccm_digi123#'
-                    },
-                params:{
-                    access_token:token,
-                }
-            })                   
-            .then( (res)=> {
-                console.log(res);   
-                (res.data.message.success!==undefined) && swal("success!", "Country created Successfully", "success").then(()=>this.onCancel())
-            })
-            .catch( (e)=> {
-                console.log(e);
-            });   
+              Alert('error','Oops','Please Fillout All Fields!');
+        }
+        else{
+            axios.post(`/country/add`,data)                   
+            .then((res)=> (res.data.message.success!==undefined) && Alert("success", "Success!", "Country created Successfully"))
+            .then(()=>this.onCancel())
+            .catch(e=> console.log(e))  
         }
     }
+
+
     onUpdate= (e)=>{
        const {country_id,country_object,status}=this.state;
+
        const data={
                 name : country_object.name,
                 status : status,
             }
-            axios.post(`https://ccm.digisailor.in/api/public/country/edit/` +country_id  ,data,{
-                auth: {
-                    username: 'ccm_auth',
-                    password: 'ccm_digi123#'
-                    },
-                 params:{
-                    access_token:token,
-                }
-            })                   
-            .then( (res)=> {
-                console.log(res);   
-                (res.data.message.success!==undefined) && swal("success!", "Country updated Successfully", "success").then(()=>this.onCancel())
-                })
-            .catch( (e)=> {
-                    console.log(e);
-            });   
+            axios.post(`/country/edit/` +country_id  ,data)                   
+            .then(res=> (res.data.message.success!==undefined) && Alert("success", "Success!", "Country Updated Successfully"))
+            .then(()=>this.onCancel())
+            .catch(e=> console.log(e))   
     }
+
+
     onDelete = (e)=>{
         const {country_id,country_object,status}=this.state;
-            axios.post(`https://ccm.digisailor.in/api/public/country/delete` ,{id:country_id,},{
-                auth: {
-                    username: 'ccm_auth',
-                    password: 'ccm_digi123#'
-                    },
-                 params:{
-                    access_token:token,
-                }
-            })                   
-            .then( (res)=> {
-                console.log(res);   
-                (res.data.message.success!==undefined) && swal("success!", "Country deleted Successfully", "success").then(()=>this.onCancel())
-                })
-            .catch( (e)=> {
-                    console.log(e);
-            }); 
+
+            axios.post(`/country/delete` ,{id:country_id})                   
+            .then( (res)=> (res.data.message.success!==undefined) && Alert("success", "Success!", "Country Deleted Successfully"))
+            .then(()=>this.onCancel())
+            .catch((e)=> console.log(e)) 
     }
+
+
     onCancel = (e)=>{
         this.setState({
             country_id:null,
