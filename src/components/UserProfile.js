@@ -29,10 +29,10 @@ class UserProfile extends Component {
             department:"",
             phone:"",
             selected_country:'',
+            role:"1",
         }
     }
     onChange = (e)=>{
-        e.preventDefault();
 
         this.setState({
             [e.target.name] : e.target.value
@@ -43,7 +43,7 @@ class UserProfile extends Component {
         console.log(code,"code")
     }
     render() {
-        const {full_name,user_name,country,email,address,department,phone,selected_country}=this.state;
+        const {full_name,user_name,country,email,address,department,phone,selected_country,role}=this.state;
         return (
             <div>
                
@@ -108,6 +108,16 @@ class UserProfile extends Component {
                                 txtBoxPH ="Address"
                                 changeEvent =  {this.onChange}
                                 />
+                                <Form.Group as={Col}>
+                                    <Form.Label className="label-style">Role</Form.Label>
+                                    <Col>
+                                    <Form.Control as="select" className="select-style" name="role"  value={role} onChange={this.onChange} required>
+                                            <option value="" selected disabled> Role</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">User</option>
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <Form.Group as={Col}>
@@ -134,7 +144,8 @@ class UserProfile extends Component {
                                 />
                             </Col>
                         </Row>
-
+                        {role === "1"?
+                        <div>
                         <Row style={{marginTop:"20px"}} >
                             <Col lg={2}>
                                 <label  className="search-title">Permissions</label>
@@ -214,6 +225,7 @@ class UserProfile extends Component {
                             <Col lg={8} style={{backgroundColor:"White" , borderRadius:"20px"}}>
                             </Col>
                         </Row>
+                    </div>:<></>}
 
 
 
