@@ -245,6 +245,7 @@ class UserProfile extends Component {
 
                         
                         <Row className="row justify-content-md-center" style={{marginTop:"3%"}}>
+                        <Link to="/forgot-password"><Button  >Reset Password</Button></Link>
                             <CustomButton btnType="reset" BtnTxt="Add"  disabledButton={this.props.id!==undefined}  ClickEvent={this.onSubmit}  />
                             <CustomButton btnType="reset" BtnTxt="Update" disabledButton={this.props.id===undefined}  ClickEvent={this.onUpdate} />     
                             <CustomButton btnType="reset" BtnTxt="Cancel"   ClickEvent={this.onCancel} />

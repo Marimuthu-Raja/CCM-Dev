@@ -12,6 +12,7 @@ import CustomTextBox from './CustomBox/TextBox'
 import Logo from '../logo-light.png'
 import $ from 'jquery'
 import swal from 'sweetalert'
+import { Link } from 'react-router-dom'
 
 
 
@@ -182,7 +183,7 @@ export class Profile extends Component {
                         </Row>
                         <Row style={{marginTop:"200px"}} >
                             <Col sm={{span:4, offset:8}} lg={{span:4, offset:8}}> 
-                                <Button  >Reset Password</Button>
+                                <Link to="/forgot-password"><Button  >Reset Password</Button></Link>
                                 <Button onClick={this.onSubmit}>Save</Button>
                             </Col> 
                         </Row>

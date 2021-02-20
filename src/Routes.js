@@ -15,7 +15,7 @@ import AddInvoice from './components/AddInvoice'
 import User from './components/User'
 import ClientList from './components/ClientList'
 import AddClient from './components/AddClient'
-
+import ForgotPassword from './components/Forgot Password/Forgotpassword'
 import QuotationList from './components/QuotationList'
 import BarChart from './components/BarChart'
 import Chart from './components/Chart'
@@ -82,26 +82,9 @@ export default function BaseRouter() {
       <Route exact path="/UserProfile">
         {isLogin? <><NavBar /><UserProfile /></>:<Redirect to='/' />}
       </Route>
-      {/* <Route exact path="/profile">
-        {isLogin? <Profile />:<Login />}
+      <Route exact path="/forgot-password">
+        {isLogin? <><NavBar /><ForgotPassword /></>:<Redirect to='/' />}
       </Route>
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/Contractor-list" component={Contractorlist}/>
-      <Route exact path="/addcontractor" component={Addcontractor}/>
-      <Route exact path="/contractor" component={Contractor} />
-      <Route exact path="/client" component={Client} />
-      <Route exact path="/country" component={Country} />
-      <Route exact path="/" component={Login} />
-      <Route exact path="/quotation" component={Quotation} />
-      <Route exact path="/contractorinvoice" component={ContractorInvoice} />
-      <Route exact path="/addinvoice" component={AddInvoice} />
-      <Route exact path="/user" component={User} /> 
-      <Route exact path="/clientlist" component={ClientList} />
-      <Route exact path="/addclient" component={AddClient}/> 
-      <Route exact path="/cwr-summary" component={QuotationList}/>
-      <Route exact path="/barchart" component={BarChart} />
-      <Route exact path="/chart" component={Chart} />  
-      <Route exact path="/UserProfile" component={UserProfile} />   */}
       </Switch>
       
     </>
