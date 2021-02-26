@@ -21,6 +21,8 @@ import BarChart from './components/BarChart'
 import Chart from './components/Chart'
 import NavBar from './components/Navbar'
 import Logout from './components/auth/Logout'
+import LandingPage from './components/ClientList/LandingPage'
+
 
 export default function BaseRouter() {
 
@@ -84,6 +86,9 @@ export default function BaseRouter() {
       </Route>
       <Route exact path="/forgot-password">
         {isLogin? <><NavBar /><ForgotPassword /></>:<Redirect to='/' />}
+      </Route>
+      <Route exact path="/list">
+        {isLogin? <><NavBar /><LandingPage /></>:<Redirect to='/' />}
       </Route>
       </Switch>
       
