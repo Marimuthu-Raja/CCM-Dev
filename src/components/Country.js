@@ -6,7 +6,10 @@ import CountrySelect from 'react-bootstrap-country-select';
 import { head } from 'ramda';
 import axios from './utils/axiosinstance'
 import { Alert } from './utils/Utilities'
+import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
+var token = localStorage.getItem('access_token')
 
 export default class Country extends Component {
 
@@ -66,7 +69,6 @@ export default class Country extends Component {
             name : country_object.name,
             status : status,  
         }
-        
         if(country_object === null || status ===''){
             Swal.fire({
                 icon: 'error',
