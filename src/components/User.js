@@ -3,9 +3,11 @@ import { Col, Row,Card,Container, Form} from 'react-bootstrap'
 import axios from 'axios'
 import CustomTextBox from './CustomBox/TextBox'
 import {Link} from 'react-router-dom';
+import Swal from 'sweetalert2';
+import swal from 'sweetalert';
+import UserProfile from './UserProfile'
 
-
-
+var token = localStorage.getItem('access_token')
 
 class User extends Component {
     constructor(props) {
@@ -15,44 +17,88 @@ class User extends Component {
              search:'',
              country:'',
              status:'',
-             users:[]
+             users:[],
+             country_list:[],
         }
     }
     
     componentDidMount() {
-        axios.get(`http://www.json-generator.com/api/json/get/bPOTIaHlGq?indent=2`)
-        .then(res => {
-            const users = res.data;
-            this.setState({users});
-            console.log(users,"response");
-          })
-        .catch(error =>{
-            console.log(error)
-        }
-        )
+        axios.post(`https://ccm.digisailor.in/api/public/country/list`,{},{
+            params:{ access_token:token }
+        }).then((res)=>{
+            const country_list = res.data.response.country_list
+            this.setState({ country_list })
+            console.log(country_list);
+        })
+        axios.post(`http://ccm.digisailor.in/api/public/user/list`,{},{
+            params : { access_token : token }
+        })
+        .then(res=>{
+            const users = res.data.response.user_list
+            this.setState({ users })
+            console.log(users);
+        })
+    }
+    trashContractor = (id)=>{
+        console.log(id)
+        axios.post(`http://ccm.digisailor.in/api/public/user/delete`,{id},{
+            auth: {
+                username: 'ccm_auth',
+                password: 'ccm_digi123#'
+                },
+            params : { access_token : token }
+        })
+        .then( (res)=> {
+            console.log(res);   
+            if(res.data.message.success!==undefined) {
+                swal("success!", `${res.data.message.success}`, "success").then(()=>this.componentDidMount())
+            }else{
+                swal("error!", `${res.data.message.error}`, "error")
+            }
+        })
+        .catch((e)=>{
+            console.log(e)
+        })
+    }
+    renderComponent = (id)=>{
+        this.setState({
+            addUser:true,
+            user_id:id,
+        })
+    }
+    Back=(e)=>{
+        this.setState({
+            addUser:false,
+            user_id:'',
+        })
+        this.componentDidMount()
     }
 
     userTable=(user) =>{
+        console.log(user.country)
         return(
             <tr key={user.id} className={user.id % 2 === 0 ? "rowtable":""} style={{height:"40px" }}>
-                                    <td>{user.name}</td>
-                                    <td>{user.department}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
-                                    <td>{user.country}</td>
-                                    <td><button style={{border:"none"}}><i class="fas fa-trash" style={{fontSize:"17px", color:"red"}}></i></button></td>
-                                    <td><Link to="/UserProfile"><button style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></Link></td>
-                                </tr>                   
+                <td>{user.name}</td>
+                <td>{user.department}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                 {this.state.country_list.map(country=>{     
+                      return (user.country===country.id)&&<td>{country.name}</td>                                                                                                    
+                  })}
+                <td><button onClick={(e)=>this.trashContractor(user.id)} style={{border:"none"}} ><i className="fa fa-trash" style={{fontSize:"18px",color:"red"}}></i></button></td>
+                <td> <button onClick={(e)=>this.renderComponent(user.id)} style={{width:"100px",height:"25px",backgroundColor:"#4A88DC",border:"none",color:"white",borderRadius:"10px"}}>EDIT</button></td>
+            </tr>                   
         )
     }
     
 
     render() {
-        const{search,country,status,users}=this.state
+        const{search,country,status,users,addUser,}=this.state
+        
         return (
             <div>
-      
-
+       {addUser?<UserProfile id={this.state.user_id} function={this.Back} />:
+            <div>
                 <h4 style={{font:"san-serif",marginLeft:"200px",marginTop:"20px"}}>USERS</h4>
                 <div className="component">
                     <Card style={{backgroundColor:"white"}}>
@@ -134,6 +180,7 @@ class User extends Component {
                                     <th scope="col">PHONE NO</th>
                                     <th scope="col">COUNTRY</th>
                                     <th scope="col">DELETE</th>
+                                    <th scope="col">Edit</th>
                                     <th scope="col"></th>
                                     
                                 </tr>
@@ -146,6 +193,7 @@ class User extends Component {
                         </Row>
                     </Card>
                 </div>
+                </div>}
             </div>
         )
     }

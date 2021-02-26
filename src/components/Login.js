@@ -34,9 +34,9 @@ const onSubmit=(e)=>{
                     const access_token = data.response.access_token
                     localStorage.setItem('isLogin',true)
                     localStorage.setItem('access_token',access_token)
-                    window.location.replace('http://localhost:3000/dashboard')
+                    window.location.replace('http://localhost:3001/dashboard')
                 }
-                else{
+                else{   
                     Swal.fire({
                         icon:"error",
                         title:"Oops!",
