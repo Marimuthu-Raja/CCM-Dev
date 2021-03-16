@@ -37,7 +37,7 @@ export default class ClientList extends Component {
             this.setState({ country_list })
         })
 
-        axios.post(`http://ccm.digisailor.in/api/public/client/list`,{},{
+        axios.post(`https://ccm.digisailor.in/api/public/client/list`,{},{
             params : { access_token : token }
         })
         .then(res=>{
@@ -51,7 +51,7 @@ export default class ClientList extends Component {
         this.setState({search:e.target.value})
     }
     trashClient = (id)=>{
-        axios.post(`http://ccm.digisailor.in/api/public/client/delete`,{id},{
+        axios.post(`https://ccm.digisailor.in/api/public/client/delete`,{id},{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'

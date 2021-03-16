@@ -8,13 +8,14 @@ const CustomTextBox = (props) =>{
     
     return (
         <Form.Group as={Col} style={{paddingBottom:"20px"}}>
-        <Form.Label className={props.style} >{props.txtBoxLabel}</Form.Label>
+        <Form.Label style={{marginTop:"10px",fontSize:"18px"}}  >{props.txtBoxLabel}</Form.Label>
         <Col >
             <Form.Control type={props.txtBoxType}  id={props.txtBoxID}
              placeholder={props.txtBoxPH} 
              value={props.txtBoxValue}
              onChange={props.changeEvent}
              name={props.txtBoxName}
+             style={{padding:"8px"}}
              required
              />
         </Col>

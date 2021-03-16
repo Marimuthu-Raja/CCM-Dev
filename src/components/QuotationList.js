@@ -33,7 +33,7 @@ export default class QuotationList extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://www.json-generator.com/api/json/get/bTDFppcrIi?indent=2")
+        axios.get("https://www.json-generator.com/api/json/get/bTDFppcrIi?indent=2")
         .then(res => {
             const quotationList = res.data
             console.log(quotationList,"response")

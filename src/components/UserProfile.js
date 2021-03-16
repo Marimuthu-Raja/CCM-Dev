@@ -53,7 +53,7 @@ class UserProfile extends Component {
             this.setState({ country_list })
         })
         if(this.state.user_id!==undefined){
-            axios.post(`http://ccm.digisailor.in/api/public/user/get_user_details`,{id:this.state.user_id},{
+            axios.post(`https://ccm.digisailor.in/api/public/user/get_user_details`,{id:this.state.user_id},{
                 params : { access_token : token }
             })
             .then(res=>{
@@ -84,7 +84,7 @@ class UserProfile extends Component {
 
         const data={name:user_name, fname:full_name, email, country,address,contact_person,department, phone,role }
 
-        axios.post(`http://ccm.digisailor.in/api/public/user/add`,data,{
+        axios.post(`https://ccm.digisailor.in/api/public/user/add`,data,{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'
@@ -108,7 +108,7 @@ class UserProfile extends Component {
 
         const data={name:user_name, fname:full_name, email, country,address,contact_person,department, phone,role }
 
-        axios.post(`http://ccm.digisailor.in/api/public/contractor/edit/`+user_id,data,{
+        axios.post(`https://ccm.digisailor.in/api/public/contractor/edit/`+user_id,data,{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'
@@ -147,7 +147,7 @@ class UserProfile extends Component {
         const {full_name,user_name,country,email,address,department,phone,contact_person,selected_country,country_list,role}=this.state;
         return (
             <div>
-               
+               <p style={{ fontSize: "20px" }}>User Profile</p>
                 <div className="component">
                     <Card style={{marginTop:"20px"}}>
                         <Row style={{marginTop:"20px"}}>

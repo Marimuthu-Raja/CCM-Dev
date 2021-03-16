@@ -17,7 +17,7 @@ const history = useHistory()
 const onSubmit=(e)=>{
     e.preventDefault()
     if(Username !=='' && Password !==''){
-        axios.get('http://ccm.digisailor.in/api/public/login/login', {
+        axios.get('https://ccm.digisailor.in/api/public/login/login', {
             auth: {
             username: 'ccm_auth',
             password: 'ccm_digi123#'
@@ -34,7 +34,9 @@ const onSubmit=(e)=>{
                     const access_token = data.response.access_token
                     localStorage.setItem('isLogin',true)
                     localStorage.setItem('access_token',access_token)
-                    window.location.replace('http://localhost:3000/dashboard')
+                    window.location.replace('http://localhost:3001/dashboard')
+                    //window.location.replace('https://fir-2304e.web.app/dashboard')
+
                 }
                 else{   
                     Swal.fire({

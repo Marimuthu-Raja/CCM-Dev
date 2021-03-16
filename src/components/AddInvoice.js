@@ -1,175 +1,214 @@
 import React, { Component } from 'react'
-import { Container,Card,Row,Col,Form } from 'react-bootstrap'
+import {
+    Container,
+    Card,
+    Form,
+    Row,
+    Col,
+    Button,
+    Image,
+    Input,
+} from 'react-bootstrap';
 import CustomTextBox from './CustomBox/TextBox'
-import Swal from 'sweetalert2';
-import axios from 'axios';
+import CustomButton from './Button/Button'
+import Logo from '../logo-light.png'
+import axios from 'axios'
 import swal from 'sweetalert';
-import $ from 'jquery';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-
-
+var token = localStorage.getItem('access_token')
 
 export class AddInvoice extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
-             invoice:'',
-             customername:'',
-             description:'',
-             price:'',
-             date:''
+            invoice_id: '',
+            invoice_user: 'client',
+            client_id: '',
+            contractor_id: '',
+            price: '',
+            description: '',
+            date: '',
+            client_list: [],
+            contractor_list:[],
         }
     }
-    
-    onChange=(e) =>{
-        e.preventDefault();
-        
-        this.setState({
-            [e.target.name]: e.target.value
+    componentDidMount() {
+        axios.post(`https://ccm.digisailor.in/api/public/client/list`, {}, {
+            params: { access_token: token }
         })
-        const{invoice,customername,description,price,date}=this.state;
-        $("#invoice").focusout(function(){
-            if(invoice ==='' ){
-                $("#invoice").css("border", "1px solid red");
-                $("#invoiceerror").css('display','block')
-            }
-             else{
-                $("#invoice").css("border", "1px solid green");
-                $("#invoiceerror").css('display','none')
-             }
-             } )
-             $("#description").focusout(function(){
-                if(description ==='' ){
-                    $("#description").css("border", "1px solid red");
-                    $("#descriptionerror").css('display','block')
-                }
-                 else{
-                    $("#description").css("border", "1px solid green");
-                    $("#descriptionerror").css('display','none')
-                 }
-                 } )
-                 $("#customername").focusout(function(){
-                    if(customername ==='' ){
-                        $("#customername").css("border", "1px solid red");
-                        $("#customererror").css('display','block')
-                    }
-                     else{
-                        $("#customername").css("border", "1px solid green");
-                        $("#customererror").css('display','none')
-                     }
-                     } )
-                     $("#price").focusout(function(){
-                        if(price ==='' ){
-                            $("#price").css("border", "1px solid red");
-                            $("#priceerror").css('display','block')
-                        }
-                         else{
-                            $("#price").css("border", "1px solid green");
-                            $("#priceerror").css('display','none')
-                         }
-                         } )
-                         $("#date").focusout(function(){
-                            if(date ==='' ){
-                                $("#date").css("border", "1px solid red");
-                                $("#dateerror").css('display','block')
-                            }
-                             else{
-                                $("#date").css("border", "1px solid green");
-                                $("#dateerror").css('display','none')
-                             }
-                             } )
-    } 
-
-    onSubmit=(e) =>{
-        const{invoice,customername,description,price,date}=this.state;
-        if(invoice === '' && customername==='' && description==='' && price==='' && date===''){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please Fillout all the Fields!',
-              })
-        }
-        else{
-            axios.post('', {})                   
-            .then(function (response) {
-                  //access the results here....           
-                swal("success!", "Client added", "success").then(setInterval(function(){window.location.reload();},1500));// alert
-                console.log(response);// log
-              })
-              .catch(function (error) {
-                console.log(error);
-              }); 
-            console.log(this.state.errors)
-        }
+            .then(res => {
+                const client_list = res.data.response.client_list
+                this.setState({ client_list })
+                console.log(client_list);
+            })
+        axios.post(`https://ccm.digisailor.in/api/public/contractor/list`, {}, {
+                params: { access_token: token }
+            })
+                .then(res => {
+                    const contractor_list = res.data.response.contractor_list
+                    this.setState({ contractor_list })
+                    console.log(contractor_list);
+                })
     }
 
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    clientSearch = (e, value)=>{
+        value !== null && this.setState({ client_id: value.id, client_name:value.name ,contractor_id:''})  
+    }
+    contractorSearch = (e, value)=>{
+        value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name,client_id:''  })
+    }
+
+    onSubmit = (e) => {
+        const { invoice_id,  client_id, contractor_id, price, description, date } = this.state;
+        var data = '';
+          if( client_id !== ''){
+            data = { client_id, price, description, date, }
+          }else{
+            data = { contractor_id, price, description, date, }
+          }
+        console.log(data, 'data')
+        axios.post(`https://ccm.digisailor.in/api/public/invoice/add`, data, {
+            auth: {
+                username: 'ccm_auth',
+                password: 'ccm_digi123#'
+            },
+            params: { access_token: token }
+        })
+            .then((res) => {
+                console.log(res);
+                if (res.data.message.success !== undefined) {
+                    swal("success!", `${res.data.message.success}`, "success").then(() => this.onCancel())
+                } else {
+                    swal("error!", `${res.data.message.error}`, "error")
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }
+
+    onCancel = ()=>{
+        this.setState({
+            invoice_id: '',
+            invoice_user: 'client',
+            client_id: '',
+            contractor_id: '',
+            price: '',
+            description: '',
+            date: '',
+            client_list: [],
+            contractor_list:[],
+        })
+        this.componentDidMount()
+    }
     render() {
-        const{invoice,customername,description,price,date}=this.state;
+        const { invoice_user, client_list, contractor_list,client_name, contractor_name, price, description, date } = this.state;
         return (
             <div>
-       
+                <div className="component">
+                    <p style={{ fontSize: "20px" }}>Add Invoice</p>
 
-                <div style={{marginLeft:"15%",marginTop:"2%" }}>
-                    <p style={{fontSize:"20px"}}>Quotation</p>
-                    <Card>
-                        <Row>
-                            <Col lg={6} sm={12}>
-                            
-                                <Form.Group as={Col}>
-                                <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Invoice No</Form.Label>
-                                <Form.Control as="select"  name="invoice" id="invoice" value={invoice} onChange={this.onChange} style={{padding:"8px"}} required>
-                                        <option value=""selected disabled> invoice</option>
-                                        <option value="invoice 1">invoice 1</option>
-                                        <option value="invoice 2">invoice 2</option>
-                                        <option value="invoice 3">invoice 3 </option>
-                                        <option value="invoice 4">invoice 4</option>
+                    <Card border="dark" sm={6} style={{ height: "500px" }}>
+                        <Form >
+                            <Row>
+                                <Col lg={{ span: '5', offset: '1' }}>
+                                    <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Invoice </Form.Label>
+                                    <Form.Control as="select" className="select-style" name="invoice_user" defaultValue={invoice_user} onChange={this.onChange} style={{ padding: "10px" }} required>
+                                        <option value='' disabled> Select</option>
+                                        <option value='client' > Client</option>
+                                        <option value='contractor' > Contractor</option>
+
                                     </Form.Control>
-                            </Form.Group>
-                            <span style={{display:"none", color:"red"}} id="invoiceerror">Invalid Data</span>
-                            <Form.Group >
-                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Description</Form.Label>
-                                    <Form.Control type="text" name="description" value={description} id="description" placeholder="Description" onChange={this.onChange}
-                                    style={{padding:"8px"}}/>
+                                </Col>
+                                <Col lg={{ span: '5', }}>
+                                    <Form.Group  >
+                                        {invoice_user === 'client'
+                                            ? <>
+                                                <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Client</Form.Label>
+                                                <Autocomplete
+                                                    id="combo-box-demo"
+                                                    options={client_list}
+                                                    value={client_name}
+                                                    onChange={(e, value)=>this.clientSearch(e, value)}
+                                                    getOptionLabel={(option) => option.name}
+                                                    style={{ width: '80% ', backgroundColor:'white', padding:'0px'}}
+                                                    renderInput={(params) => <TextField {...params} size='small'   variant="outlined" />}
+                                                />
 
-                                </Form.Group>
+                                            </>
+                                            : <>
+                                            <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Contractor</Form.Label>
+                                               <Autocomplete
+                                                    id="combo-box-demo"
+                                                    options={contractor_list}
+                                                    value={contractor_name}
+                                                    onChange={(e,value)=>this.contractorSearch(e, value)}
+                                                    getOptionLabel={(option) => option.name}
+                                                    style={{ width: '80% ', backgroundColor:'white', padding:'0px'}}
+                                                    renderInput={(params) => <TextField {...params} size='small'  variant="outlined" />}
+                                                /> </>}
+                                    </Form.Group>
+                                </Col>
 
-                           
-                            <span style={{display:"none", color:"red"}} id="descriptionerror">Invalid Data</span>
-                            <Form.Group >
-                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Date</Form.Label>
-                                    <Form.Control type="date" name="date" value={date} id="date" placeholder="Date" onChange={this.onChange}
-                                    style={{padding:"8px"}}/>
+                            </Row>
+                            <Row>
+                                <Col lg={{ span: '5', offset: '1' }}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Price"
+                                        txtBoxType="text"
+                                        txtBoxName="price"
+                                        txtBoxValue={price}
+                                        txtBoxID="price"
+                                        txtBoxPH="Price Amount"
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                                <Col lg={{ span: '5', }}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Description"
+                                        txtBoxType="text"
+                                        txtBoxName="description"
+                                        txtBoxValue={description}
+                                        txtBoxID="description"
+                                        txtBoxPH="Description"
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
 
-                            </Form.Group>
+                            </Row>
+                            <Row>
+                                <Col lg={{ span: '5', offset: '1' }}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Date"
+                                        txtBoxType="date"
+                                        txtBoxName="date"
+                                        txtBoxValue={date}
+                                        txtBoxID="price"
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                            </Row>
 
-                            <span style={{display:"none", color:"red"}} id="dateerror">Invalid Data</span>
-                            </Col>
+                            <Row className='d-flex justify-content-center' style={{ marginTop: '80px' }}>
+                                <CustomButton btnType="reset" BtnTxt="Add" ClickEvent={this.onSubmit} />
+                                {/* <CustomButton btnType="reset" BtnTxt="Update" ClickEvent={this.onUpdate} />
+                                <CustomButton btnType="reset" BtnTxt="Delete" ClickEvent={this.onDelete} />
+                                <CustomButton btnType="reset" BtnTxt="Cancel" ClickEvent={this.onCancel} /> */}
+                            </Row>
 
-                            <Col lg={6} sm={12}>
-                            <Form.Group >
-                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Customer Name</Form.Label>
-                                    <Form.Control type="text" name="customername" value={customername} id="customername" placeholder="Customer Name" onChange={this.onChange}
-                                    style={{padding:"8px"}}/>
-
-                                </Form.Group>
-
-                            
-                            <span style={{display:"none", color:"red"}} id="customererror">Invalid Data</span>
-                            <Form.Group >
-                                    <Form.Label style={{fontSize:"17px",fontWeight:"bold",marginTop:"15px"}}>Price</Form.Label>
-                                    <Form.Control type="number" name="price" value={price} id="price" placeholder="Price" onChange={this.onChange}
-                                    style={{padding:"8px"}}/>
-
-                                </Form.Group>
-
-                        
-                            <span style={{display:"none", color:"red"}} id="priceerror">Invalid Data</span>
-                            </Col>
-                        </Row>
-                        <button type="button" class="btn btn sbtn" style={{marginTop:"100px"}} onClick={this.onSubmit}> SAVE</button>
+                        </Form>
                     </Card>
                 </div>
+
             </div>
         )
     }

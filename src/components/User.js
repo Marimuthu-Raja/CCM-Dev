@@ -30,7 +30,7 @@ class User extends Component {
             this.setState({ country_list })
             console.log(country_list);
         })
-        axios.post(`http://ccm.digisailor.in/api/public/user/list`,{},{
+        axios.post(`https://ccm.digisailor.in/api/public/user/list`,{},{
             params : { access_token : token }
         })
         .then(res=>{
@@ -41,7 +41,7 @@ class User extends Component {
     }
     trashContractor = (id)=>{
         console.log(id)
-        axios.post(`http://ccm.digisailor.in/api/public/user/delete`,{id},{
+        axios.post(`https://ccm.digisailor.in/api/public/user/delete`,{id},{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'

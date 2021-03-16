@@ -43,14 +43,14 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         const {invoice,quotation,select_month}=this.state;
-        axios('http://www.json-generator.com/api/json/get/cfrDwSAQMO?indent=2' )
+        axios('https://www.json-generator.com/api/json/get/cfrDwSAQMO?indent=2' )
         .then(res =>{
             const quotation = res.data
             this.setState({quotation})
             console.log(quotation,"quotation")
             
         }).then(
-        axios('http://www.json-generator.com/api/json/get/cguvqhaVQi?indent=2' )
+        axios('https://www.json-generator.com/api/json/get/cguvqhaVQi?indent=2' )
         .then(res =>{
             const invoice = res.data
             this.setState({invoice})

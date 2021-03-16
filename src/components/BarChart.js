@@ -21,7 +21,7 @@ export class BarChart extends Component {
 
 componentDidMount(){
 
-    axios.get("http://www.json-generator.com/api/json/get/cfFjAhAOjS?indent=2")
+    axios.get("https://www.json-generator.com/api/json/get/cfFjAhAOjS?indent=2")
     .then(res=>{
         const labelData1=res.data[1].data1;
         const labelData2=res.data[2].data2;

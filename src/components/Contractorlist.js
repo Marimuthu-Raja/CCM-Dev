@@ -39,7 +39,7 @@ export default class contractor_list extends Component {
             console.log(country_list);
         })
 
-        axios.post(`http://ccm.digisailor.in/api/public/contractor/list`,{},{
+        axios.post(`https://ccm.digisailor.in/api/public/contractor/list`,{},{
             params : { access_token : token }
         })
         .then(res=>{
@@ -55,7 +55,7 @@ export default class contractor_list extends Component {
     }
     trashContractor = (id)=>{
         console.log(id)
-        axios.post(`http://ccm.digisailor.in/api/public/contractor/delete`,{id},{
+        axios.post(`https://ccm.digisailor.in/api/public/contractor/delete`,{id},{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'

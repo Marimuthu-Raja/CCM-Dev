@@ -7,7 +7,7 @@ export default function Logout(){
 
     useEffect(()=>{
         
-        axios.get('http://ccm.digisailor.in/api/public/login/logout',{
+        axios.get('https://ccm.digisailor.in/api/public/login/logout',{
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'

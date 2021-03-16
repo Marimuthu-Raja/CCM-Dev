@@ -21,7 +21,7 @@ class Chart extends Component {
     
     componentDidMount(){
 
-        axios.get("http://www.json-generator.com/api/json/get/bVEmBtzcQy?indent=2")
+        axios.get("https://www.json-generator.com/api/json/get/bVEmBtzcQy?indent=2")
         .then(res=>{
             const labelData3=res.data;
             console.log(labelData3,"res")

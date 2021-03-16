@@ -44,7 +44,7 @@ export default class AddClient extends Component {
       
 
         if(this.state.client_id!==undefined){
-            axios.post(`http://ccm.digisailor.in/api/public/client/get_client_details`,{id:this.state.client_id},{
+            axios.post(`https://ccm.digisailor.in/api/public/client/get_client_details`,{id:this.state.client_id},{
                 params : { access_token : token }
             })
             .then(res=>{
@@ -89,7 +89,7 @@ export default class AddClient extends Component {
                 text: 'Please Fillout all the Fields!',
               })
         }else{
-            axios.post(`http://ccm.digisailor.in/api/public/client/add`,data,{
+            axios.post(`https://ccm.digisailor.in/api/public/client/add`,data,{
                 auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
@@ -128,7 +128,7 @@ export default class AddClient extends Component {
                 text: 'Please Fillout all the Fields!',
               })
         }else{
-            axios.post(`http://ccm.digisailor.in/api/public/client/edit/`+10,data,{
+            axios.post(`https://ccm.digisailor.in/api/public/client/edit/`+10,data,{
                 auth: {
                     username: 'ccm_auth',
                     password: 'ccm_digi123#'
