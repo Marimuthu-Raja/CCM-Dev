@@ -12,13 +12,11 @@ import {
     Spinner,
 } from 'react-bootstrap';
 import CustomTextBox from './CustomBox/TextBox'
-import $ from 'jquery'
 import swal from 'sweetalert'
 
 
 import axios from 'axios'
-import { Bar } from 'react-chartjs-2';
-import { Pie } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

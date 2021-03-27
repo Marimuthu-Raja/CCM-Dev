@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {Link, useHistory} from 'react-router-dom';
-import topimage from  '../logo-light.png';
-import loginimage from  '../loginscrn.png';
+import topimage from  '../img/logo-light.png';
+import loginimage from  '../img/loginscrn.png';
 import { Row,Col,Form,Image } from 'react-bootstrap'
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -34,7 +34,7 @@ const onSubmit=(e)=>{
                     const access_token = data.response.access_token
                     localStorage.setItem('isLogin',true)
                     localStorage.setItem('access_token',access_token)
-                    window.location.replace('http://localhost:3001/dashboard')
+                    window.location.replace('/dashboard')
                     //window.location.replace('https://fir-2304e.web.app/dashboard')
 
                 }

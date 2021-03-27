@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Card, Row, Col, Form, Image } from 'react-bootstrap'
-import topimage from '../logo-light.png';
-import CustomButton from './Button/Button'
+import topimage from './img/logo-light.png';
+import CustomButton from './utils/Button'
 import CountrySelect from 'react-bootstrap-country-select';
 import { head } from 'ramda';
-import axios from './utils/axiosinstance'
+import axiosInstance from './utils/axiosinstance'
 import { Alert } from './utils/Utilities'
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
@@ -28,11 +28,12 @@ export default class Country extends Component {
 
     componentDidMount() {
         console.log(process.env.REACT_APP_URL)
-        axios.post(`/country/list`, {})
+        axiosInstance.post(`/country/list`)
             .then((res) => {
+                console.log(res,'response')
                 const country_list = res.data.response.country_list
                 this.setState({ country_list })
-                console.log(country_list);
+                console.log(country_list, 'country_list');
             })
     }
 
@@ -43,6 +44,7 @@ export default class Country extends Component {
 
 
     countryChange = (e) => {
+        console.log(e)
         this.setState({ country_object: e }, () => this.filterID())
     }
 
@@ -76,15 +78,7 @@ export default class Country extends Component {
                 text: 'Please Fillout all the Fields!',
             })
         } else {
-            axios.post(`https://ccm.digisailor.in/api/public/country/add`, data, {
-                auth: {
-                    username: 'ccm_auth',
-                    password: 'ccm_digi123#'
-                },
-                params: {
-                    access_token: token,
-                }
-            })
+            axiosInstance.post(`/country/add`, data,)
                 .then((res) => {
                     console.log(res);
                     if (res.data.message.success !== undefined) {
@@ -93,9 +87,8 @@ export default class Country extends Component {
                         swal("error!", `${res.data.message.error}`, "error")
                     }
                 })
-                .catch((e) => {
-                    console.log(e);
-                });
+                .then(() => this.onCancel())
+            .catch(e => console.log(e))
         }
     }
 
@@ -107,8 +100,16 @@ export default class Country extends Component {
             name: country_object.name,
             status: status,
         }
-        axios.post(`/country/edit/` + country_id, data)
-            .then(res => (res.data.message.success !== undefined) && Alert("success", "Success!", "Country Updated Successfully"))
+        axiosInstance.post(`/country/edit/` + country_id, data)
+            .then(res => {
+                if (res.data.message.success !== undefined) {
+                    console.log(res)
+                    Alert("success", "Success!", `${res.data.message.success}`)
+                } else {
+                    console.log(res)
+                    Alert("error", "error!", `${res.data.message.error}`)
+                }
+            })
             .then(() => this.onCancel())
             .catch(e => console.log(e))
     }
@@ -117,8 +118,16 @@ export default class Country extends Component {
     onDelete = (e) => {
         const { country_id, country_object, status } = this.state;
 
-        axios.post(`/country/delete`, { id: country_id })
-            .then((res) => (res.data.message.success !== undefined) && Alert("success", "Success!", "Country Deleted Successfully"))
+        axiosInstance.post(`/country/delete`, { id: country_id })
+        .then(res => {
+            if (res.data.message.success !== undefined) {
+                console.log(res)
+                Alert("success", "Success!", `${res.data.message.success}`)
+            } else {
+                console.log(res)
+                Alert("error", "error!", `${res.data.message.error}`)
+            }
+        })
             .then(() => this.onCancel())
             .catch((e) => console.log(e))
     }

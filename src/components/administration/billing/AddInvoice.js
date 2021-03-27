@@ -9,9 +9,9 @@ import {
     Image,
     Input,
 } from 'react-bootstrap';
-import CustomTextBox from './CustomBox/TextBox'
-import CustomButton from './Button/Button'
-import Logo from '../logo-light.png'
+import CustomTextBox from '../../utils/TextBox'
+import CustomButton from '../../utils/Button'
+import Logo from '../../img/logo-light.png'
 import axios from 'axios'
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
@@ -34,7 +34,7 @@ export class AddInvoice extends Component {
             description: '',
             date: '',
             client_list: [],
-            contractor_list:[],
+            contractor_list: [],
         }
     }
     componentDidMount() {
@@ -47,34 +47,34 @@ export class AddInvoice extends Component {
                 console.log(client_list);
             })
         axios.post(`https://ccm.digisailor.in/api/public/contractor/list`, {}, {
-                params: { access_token: token }
+            params: { access_token: token }
+        })
+            .then(res => {
+                const contractor_list = res.data.response.contractor_list
+                this.setState({ contractor_list })
+                console.log(contractor_list);
             })
-                .then(res => {
-                    const contractor_list = res.data.response.contractor_list
-                    this.setState({ contractor_list })
-                    console.log(contractor_list);
-                })
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    clientSearch = (e, value)=>{
-        value !== null && this.setState({ client_id: value.id, client_name:value.name ,contractor_id:''})  
+    clientSearch = (e, value) => {
+        value !== null && this.setState({ client_id: value.id, client_name: value.name, contractor_id: '' })
     }
-    contractorSearch = (e, value)=>{
-        value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name,client_id:''  })
+    contractorSearch = (e, value) => {
+        value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name, client_id: '' })
     }
 
     onSubmit = (e) => {
-        const { invoice_id,  client_id, contractor_id, price, description, date } = this.state;
+        const { invoice_id, client_id, contractor_id, price, description, date } = this.state;
         var data = '';
-          if( client_id !== ''){
+        if (client_id !== '') {
             data = { client_id, price, description, date, }
-          }else{
+        } else {
             data = { contractor_id, price, description, date, }
-          }
+        }
         console.log(data, 'data')
         axios.post(`https://ccm.digisailor.in/api/public/invoice/add`, data, {
             auth: {
@@ -96,7 +96,7 @@ export class AddInvoice extends Component {
             })
     }
 
-    onCancel = ()=>{
+    onCancel = () => {
         this.setState({
             invoice_id: '',
             invoice_user: 'client',
@@ -106,55 +106,56 @@ export class AddInvoice extends Component {
             description: '',
             date: '',
             client_list: [],
-            contractor_list:[],
+            contractor_list: [],
         })
         this.componentDidMount()
     }
     render() {
-        const { invoice_user, client_list, contractor_list,client_name, contractor_name, price, description, date } = this.state;
+        const { invoice_user, client_list, contractor_list, client_name, contractor_name, price, description, date } = this.state;
         return (
             <div>
                 <div className="component">
                     <p style={{ fontSize: "20px" }}>Add Invoice</p>
 
-                    <Card border="dark" sm={6} style={{ height: "500px" }}>
+                    <Card sm={6} >
                         <Form >
                             <Row>
                                 <Col lg={{ span: '5', offset: '1' }}>
-                                    <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Invoice </Form.Label>
-                                    <Form.Control as="select" className="select-style" name="invoice_user" defaultValue={invoice_user} onChange={this.onChange} style={{ padding: "10px" }} required>
-                                        <option value='' disabled> Select</option>
-                                        <option value='client' > Client</option>
-                                        <option value='contractor' > Contractor</option>
+                                    <Form.Group  >
+                                        <Form.Label > Invoice </Form.Label>
+                                        <Form.Control as="select" className="select-style" name="invoice_user" defaultValue={invoice_user} onChange={this.onChange} required>
+                                            <option value='' disabled> Select</option>
+                                            <option value='client' > Client</option>
+                                            <option value='contractor' > Contractor</option>
 
-                                    </Form.Control>
+                                        </Form.Control>
+                                    </Form.Group>
                                 </Col>
                                 <Col lg={{ span: '5', }}>
                                     <Form.Group  >
                                         {invoice_user === 'client'
                                             ? <>
-                                                <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Client</Form.Label>
+                                                <Form.Label style={{ marginTop: "5px", }} > Client</Form.Label>
                                                 <Autocomplete
-                                                    id="combo-box-demo"
                                                     options={client_list}
                                                     value={client_name}
-                                                    onChange={(e, value)=>this.clientSearch(e, value)}
+                                                    onChange={(e, value) => this.clientSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
-                                                    style={{ width: '80% ', backgroundColor:'white', padding:'0px'}}
-                                                    renderInput={(params) => <TextField {...params} size='small'   variant="outlined" />}
+                                                    style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
+                                                    renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}
                                                 />
 
                                             </>
                                             : <>
-                                            <Form.Label style={{ marginTop: "10px", fontSize: "18px" }}> Contractor</Form.Label>
-                                               <Autocomplete
+                                                <Form.Label style={{ marginTop: "5px", }}> Contractor</Form.Label>
+                                                <Autocomplete
                                                     id="combo-box-demo"
                                                     options={contractor_list}
                                                     value={contractor_name}
-                                                    onChange={(e,value)=>this.contractorSearch(e, value)}
+                                                    onChange={(e, value) => this.contractorSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
-                                                    style={{ width: '80% ', backgroundColor:'white', padding:'0px'}}
-                                                    renderInput={(params) => <TextField {...params} size='small'  variant="outlined" />}
+                                                    style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
+                                                    renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}
                                                 /> </>}
                                     </Form.Group>
                                 </Col>

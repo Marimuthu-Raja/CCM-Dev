@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import BaseRouter from './Routes'
+import BaseRouter from './components/Routes'
 
 
 

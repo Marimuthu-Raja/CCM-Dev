@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Container, Row,Col,Form } from 'react-bootstrap'
-import CustomTextBox from './CustomBox/TextBox'
+import CustomTextBox from '../../utils/TextBox'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -9,7 +9,7 @@ import swal from 'sweetalert';
 
 
 
-export class Quotation extends Component {
+export class AddQuotation extends Component {
     constructor(props) {
         super(props)
     
@@ -71,8 +71,6 @@ export class Quotation extends Component {
         const {quotation,in_voice,description,date,amount,status,client,client_po,margin,marginamount,work_schedule,complete,contractor,purchace_order,po_amount,po_date}=this.state;
         return (
             <div>
-      
-
                 <div className="component">
                     <p style={{fontSize:"20px"}}>Quotation</p>
                     <Card>
@@ -256,4 +254,4 @@ export class Quotation extends Component {
     }
 }
 
-export default Quotation
+export default AddQuotation

@@ -11,11 +11,7 @@ export default function Logout(){
             auth: {
                 username: 'ccm_auth',
                 password: 'ccm_digi123#'
-                },
-            params:{
-                name:localStorage.getItem('name'),
-                password:localStorage.getItem('password')
-            }
+                }
         }).then((res)=>{
             console.log(res);
             const data=res.data
