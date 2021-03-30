@@ -27,9 +27,10 @@ export class AddInvoice extends Component {
 
         this.state = {
             invoice_id: '',
-            invoice_user: 'client',
-            client_id: '',
-            contractor_id: '',
+
+            cust_type: '1',
+            cust_id:'',
+            cust_name:'',
             price: '',
             description: '',
             date: '',
@@ -56,25 +57,26 @@ export class AddInvoice extends Component {
             })
     }
 
-    onChange = (e) => {
+    onChange = (e) => {  
+        if(e.target.name ==='cust_type'){
+            this.setState({ cust_id:'', cust_name: '', })
+        }
+        console.log(e.target.value)
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    clientSearch = (e, value) => {
-        value !== null && this.setState({ client_id: value.id, client_name: value.name, contractor_id: '' })
+    customerSearch = (e, value) => {
+        console.log(value)
+        value !== null && this.setState({ cust_id: value.id, cust_name: value.name, })
     }
-    contractorSearch = (e, value) => {
-        value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name, client_id: '' })
-    }
+    // contractorSearch = (e, value) => {
+    //     value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name, client_id: '' })
+    // }
 
     onSubmit = (e) => {
-        const { invoice_id, client_id, contractor_id, price, description, date } = this.state;
-        var data = '';
-        if (client_id !== '') {
-            data = { client_id, price, description, date, }
-        } else {
-            data = { contractor_id, price, description, date, }
-        }
+        const { invoice_id,cust_type,cust_id, price, description, date } = this.state;
+    
+        const data = { cust_type, cust_id, price, description, date, }
         console.log(data, 'data')
         axios.post(`https://ccm.digisailor.in/api/public/invoice/add`, data, {
             auth: {
@@ -99,7 +101,7 @@ export class AddInvoice extends Component {
     onCancel = () => {
         this.setState({
             invoice_id: '',
-            invoice_user: 'client',
+            cust_type: 'client',
             client_id: '',
             contractor_id: '',
             price: '',
@@ -111,7 +113,7 @@ export class AddInvoice extends Component {
         this.componentDidMount()
     }
     render() {
-        const { invoice_user, client_list, contractor_list, client_name, contractor_name, price, description, date } = this.state;
+        const { cust_type,cust_name,cust_id, client_list, contractor_list, client_name, contractor_name, price, description, date } = this.state;
         return (
             <div>
                 <div className="component">
@@ -122,24 +124,23 @@ export class AddInvoice extends Component {
                             <Row>
                                 <Col lg={{ span: '5', offset: '1' }}>
                                     <Form.Group  >
-                                        <Form.Label > Invoice </Form.Label>
-                                        <Form.Control as="select" className="select-style" name="invoice_user" defaultValue={invoice_user} onChange={this.onChange} required>
+                                        <Form.Label > Customer Type </Form.Label>
+                                        <Form.Control as="select" className="select-style" name="cust_type" defaultValue={cust_type} onChange={this.onChange} required>
                                             <option value='' disabled> Select</option>
-                                            <option value='client' > Client</option>
-                                            <option value='contractor' > Contractor</option>
+                                            <option value='1' > Client</option>
+                                            <option value='2' > Contractor</option>
 
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
                                 <Col lg={{ span: '5', }}>
                                     <Form.Group  >
-                                        {invoice_user === 'client'
+                                        {cust_type === '1'
                                             ? <>
                                                 <Form.Label style={{ marginTop: "5px", }} > Client</Form.Label>
                                                 <Autocomplete
-                                                    options={client_list}
-                                                    value={client_name}
-                                                    onChange={(e, value) => this.clientSearch(e, value)}
+                                                    options={client_list} 
+                                                    onChange={(e, value) => this.customerSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
                                                     style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
                                                     renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}
@@ -149,10 +150,8 @@ export class AddInvoice extends Component {
                                             : <>
                                                 <Form.Label style={{ marginTop: "5px", }}> Contractor</Form.Label>
                                                 <Autocomplete
-                                                    id="combo-box-demo"
                                                     options={contractor_list}
-                                                    value={contractor_name}
-                                                    onChange={(e, value) => this.contractorSearch(e, value)}
+                                                    onChange={(e, value) => this.customerSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
                                                     style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
                                                     renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}

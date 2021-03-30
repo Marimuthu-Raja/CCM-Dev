@@ -20,7 +20,7 @@ export class Top5 extends Component {
             color:this.props.color
         }
         const label = {
-            padding: '15px 10px',
+            padding: '11px 10px',
             fontSize: '1.3em',
         }
         return (

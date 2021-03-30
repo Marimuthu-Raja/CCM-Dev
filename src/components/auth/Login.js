@@ -7,8 +7,6 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 
-
-
 export default function Login() {
 const [Username, setUsername] = useState('');
 const [Password, setPassword] = useState('');
