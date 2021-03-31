@@ -85,7 +85,7 @@ function ResponsiveDrawer(props) {
         <i class="fa fa-server" style={iconStyle} aria-hidden="true"></i> CWR summary
         </Link>
       <Link to="/dashboard" className="nav-link w3-bar-item" style={{ fontSize: "1.1em" }}>
-        <i class="fa fa-user-circle" style={iconStyle}></i>  Dashboard
+      <i class="fa fa-bars"  style={iconStyle} aria-hidden="true"></i>  Dashboard
       </Link>
       <Link to="/profile" className="nav-link w3-bar-item" style={{ fontSize: "1.1em" }}>
         <i class="fa fa-user-circle" style={iconStyle} aria-hidden="true"></i> My Profile

@@ -27,12 +27,21 @@
   font-size: 1.3em;
   font-weight: bold;
 }
+.select{
+  padding:5px;
+  margin:10px;
+  border-radius: 30px;
+  box-shadow: 1px 2px 6px #989898;
+}
+.select:focus{
+  border:none;
+  border-radius: 30px;
+}
 /* *********************** Button Style ************************** */
-
 .btn{
   max-width: 150px;
   width: 150px;
-  border-radius: 30px;
+  border-radius: 45px;
   background-color: rgb(58,95,133);
   color: white;    
   border: none;

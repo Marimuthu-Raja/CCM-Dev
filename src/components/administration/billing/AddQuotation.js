@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Container, Row, Col, Form } from 'react-bootstrap'
+import { Card, Container, Row, Col, Form, } from 'react-bootstrap'
 import CustomTextBox from '../../utils/TextBox'
 import CustomButton from '../../utils/Button'
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ export class AddQuotation extends Component {
 
         this.state = {
             quotationNo: '',
-            in_voice: '',
+            clientInvoiceNo: '',
             description: '',
             date: '',
             amount: '',
@@ -22,7 +22,7 @@ export class AddQuotation extends Component {
             client: '',
             client_po: '',
             margin: '',
-            work_schedule: '',
+            workCommence: '',
             complete: '',
             contractor: '',
             purchace_order: '',
@@ -40,8 +40,8 @@ export class AddQuotation extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { quotationNo, in_voice, description, date, amount, status, client, client_po, margin, marginamount, work_schedule, complete, contractor, purchace_order, po_amount, po_date } = this.state;
-        if (quotationNo === '' && in_voice === '' && description === '' && status === '' && date === '' && amount === '' && client === '' && margin === '' && marginamount === '' && work_schedule === '' && complete === '' && contractor === '' && purchace_order === '' && po_amount === '' && po_date === '') {
+        const { quotationNo, clientInvoiceNo, description, date, amount, status, client, client_po, margin, marginamount, workCommence, complete, contractor, purchace_order, po_amount, po_date } = this.state;
+        if (quotationNo === '' && clientInvoiceNo === '' && description === '' && status === '' && date === '' && amount === '' && client === '' && margin === '' && marginamount === '' && workCommence === '' && complete === '' && contractor === '' && purchace_order === '' && po_amount === '' && po_date === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -50,7 +50,7 @@ export class AddQuotation extends Component {
 
         }
         else {
-            axios.post('', { quotationNo, in_voice, description, date, amount, status, client, client_po, margin, marginamount, work_schedule, complete, contractor, purchace_order, po_amount, po_date })
+            axios.post('', { quotationNo, clientInvoiceNo, description, date, amount, status, client, client_po, margin, marginamount, workCommence, complete, contractor, purchace_order, po_amount, po_date })
                 .then(function (response) {
                     //access the results here....           
                     swal("success!", "Client added", "success").then(setInterval(function () { window.location.reload(); }, 1500));// alert
@@ -66,14 +66,25 @@ export class AddQuotation extends Component {
 
 
     render() {
-        const { quotationNo, quotationDate, in_voice, client, quotationAmount, description, date, quotationStatus, clientPO, margin, marginAmount, work_schedule, workStatus, contractor, contractorPO, purchace_order, PO_amount, PO_date } = this.state;
+        const { category, quotationNo, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount, clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
+            vendorInvoiceAmount, vendorInvoiceReceived, paidAmount, paidDate, tax, jobComplete, ticketNo } = this.state;
+        const categoryList = ['Categories Selection', 'FM Contract', 'Interior & General', 'Electrical', 'HVAC System', 'Plumping & Pest', 'Fire Protection', 'AV system', 'IT & Security', 'Carpentry Works', 'Furniture & Rugs', 'Additional Works']
         return (
             <div>
                 <div className="component">
-                    <p style={{ fontSize: "20px" }}>Add Quotation</p>
+                    <Row>
+                        <Col>
+                            <p style={{ fontSize: "20px" }}>Add Quotation</p>
+                        </Col>
+                        <Col className='d-flex justify-content-end'>
+                            <select className='select' name="category" value={category} onChange={this.onChange} >
+                                {categoryList.map(category => <option value={category} > {category}</option>)}
+                            </select>
+                        </Col>
+                    </Row>
                     <Card>
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <Form.Group>
                                     <Form.Label >Quotation No</Form.Label>
                                     <Form.Control as="select" name="quotation" value={quotationNo} onChange={this.onChange} required>
@@ -85,17 +96,7 @@ export class AddQuotation extends Component {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <Col lg={4}>
-                                <CustomTextBox
-                                    txtBoxLabel="Quotation Date"
-                                    txtBoxType="date"
-                                    txtBoxName="quotationDate"
-                                    txtBoxValue={quotationDate}
-                                    txtBoxPH="Price Amount"
-                                    changeEvent={this.onChange}
-                                />
-                            </Col>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <CustomTextBox
                                     txtBoxLabel="Client"
                                     txtBoxType="text"
@@ -105,31 +106,17 @@ export class AddQuotation extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                        </Row>
-                        <Row>
-                            <Col lg={4}>
-                                <Form.Group >
-                                    <Form.Label >In-Voice No</Form.Label>
-                                    <Form.Control as="select" name="in_voice" value={in_voice} onChange={this.onChange} required>
-                                        <option value="in_voice" selected disabled> invoice</option>
-                                        <option value="in_voice 1">invoice 1</option>
-                                        <option value="in_voice 2">invoice 2</option>
-                                        <option value="in_voice 3">invoice 3 </option>
-                                        <option value="in_voice 4">invoice 4</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <CustomTextBox
-                                    txtBoxLabel="Quotation Amount"
+                                    txtBoxLabel="Quote Amount"
                                     txtBoxType="text"
-                                    txtBoxName="quotationAmount"
-                                    txtBoxValue={quotationAmount}
-                                    txtBoxPH=" Quotation Amount"
+                                    txtBoxName="quoteAmount"
+                                    txtBoxValue={quoteAmount}
+                                    txtBoxPH=" Quote Amount"
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <CustomTextBox
                                     txtBoxLabel="Client PO"
                                     txtBoxType="text"
@@ -139,9 +126,21 @@ export class AddQuotation extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
+
+
                         </Row>
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Date Issued"
+                                    txtBoxType="date"
+                                    txtBoxName="quotationDate"
+                                    txtBoxValue={quotationDate}
+                                    txtBoxPH="Price Amount"
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                            <Col lg={3}>
                                 <CustomTextBox
                                     txtBoxLabel="Description"
                                     txtBoxType="text"
@@ -150,11 +149,12 @@ export class AddQuotation extends Component {
                                     txtBoxPH="Description"
                                     changeEvent={this.onChange}
                                 />
-
                             </Col>
-                            <Col lg={4}>
+
+
+                            <Col lg={3}>
                                 <Form.Group >
-                                    <Form.Label >Status</Form.Label>
+                                    <Form.Label >Quote Approval</Form.Label>
                                     <Form.Control as="select" name="quotationStatus" value={quotationStatus} onChange={this.onChange}>
                                         <option value="pending">Pending</option>
                                         <option value="completed">Completed</option>
@@ -162,7 +162,7 @@ export class AddQuotation extends Component {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <Col lg={2} >
+                            <Col lg={1} >
                                 <CustomTextBox
                                     txtBoxLabel="Margin"
                                     txtBoxType="text"
@@ -181,37 +181,73 @@ export class AddQuotation extends Component {
                                     onChange={this.onChange}
                                     style={{ marginTop: "45px" }} />
                             </Col>
-                            <Col lg={4} sm={12}>
-                                <Row>
-                                </Row>
-                            </Col>
                         </Row>
                     </Card>
-                    <Card style={{ marginTop: '15px', backgroundColor:'#C0BFBF' }} >
+                    <Card style={{ marginTop: '15px', }} >
                         <Row>
-                            <Col lg={2}>
+
+                            <Col lg={3}>
+                                <Form.Group >
+                                    <Form.Label >Client Invoice No</Form.Label>
+                                    <Form.Control as="select" name="clientInvoiceNo" value={clientInvoiceNo} onChange={this.onChange} required>
+                                        <option value="" disabled> Invoice No </option>
+                                        <option value="clientInvoiceNo 1">invoice 1</option>
+                                        <option value="clientInvoiceNo 2">invoice 2</option>
+                                        <option value="clientInvoiceNo 3">invoice 3 </option>
+                                        <option value="clientInvoiceNo 4">invoice 4</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col lg={3}>
                                 <CustomTextBox
-                                    txtBoxLabel="Work Schedule"
-                                    txtBoxType="text"
-                                    txtBoxName="work_schedule"
-                                    txtBoxValue={work_schedule}
+                                    txtBoxLabel="Client Invoice Amount"
+                                    txtBoxType="number"
+                                    txtBoxName="clientIVamount"
+                                    txtBoxValue={clientIVamount}
+                                    txtBoxPH="Client Invoice Amount"
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Invoice Issued Date"
+                                    txtBoxType="date"
+                                    txtBoxName="clientIVdate"
+                                    txtBoxValue={InvoiceIssuedDate}
                                     txtBoxPH="Commense"
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={2}>
-                                <Form.Control
-                                    type="text"
-                                    name="workStatus"
-                                    value={workStatus}
-                                    placeholder="Complete"
-                                    onChange={this.onChange}
-                                    style={{ marginTop: "45px" }} />
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Payment Received Date"
+                                    txtBoxType="date"
+                                    txtBoxName="paymentReceivedDate"
+                                    txtBoxValue={paymentReceivedDate}
+                                    txtBoxPH="Commense"
+                                    changeEvent={this.onChange}
+                                />
                             </Col>
-                            <Col lg={4} >
+                        </Row>
+                        <Row>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel=" Received Amount"
+                                    txtBoxType="number"
+                                    txtBoxName="receivedAmount"
+                                    txtBoxValue={receivedAmount}
+                                    txtBoxPH="Received Amount"
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                        </Row>
+                    </Card>
+                    <Card style={{ marginTop: '15px', }} >
+                        <Row>
+                            <Col lg={3} >
                                 <Form.Group >
-                                    <Form.Label >Contractor </Form.Label>
-                                    <Form.Control as="select" name="contractor" value={contractor} onChange={this.onChange} required>
+                                    <Form.Label >Contractor Name </Form.Label>
+                                    <Form.Control as="select" name="contractorName" value={contractorName} onChange={this.onChange} required>
                                         <option value="contractor" disabled> Country</option>
                                         <option value="contractor 1">contractor 1</option>
                                         <option value="contractor 2">contractor 2</option>
@@ -221,9 +257,9 @@ export class AddQuotation extends Component {
                                 </Form.Group>
                             </Col>
 
-                            <Col lg={2} >
+                            <Col lg={3} >
                                 <CustomTextBox
-                                    txtBoxLabel=" PO Details"
+                                    txtBoxLabel="PO Number"
                                     txtBoxType="text"
                                     txtBoxName="contractorPO"
                                     txtBoxValue={contractorPO}
@@ -231,118 +267,142 @@ export class AddQuotation extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={1} >
-                                <Form.Control
-                                    type="number"
-                                    name="PO_amount"
-                                    value={PO_amount}
-                                    placeholder="Amount"
-                                    onChange={this.onChange}
-                                    style={{ marginTop: "45px" }} />
+                            <Col lg={3} >
+                                <CustomTextBox
+                                    txtBoxLabel="PO Amount"
+                                    txtBoxType="text"
+                                    txtBoxName="PO_amount"
+                                    txtBoxValue={PO_amount}
+                                    txtBoxPH="Amount"
+                                    changeEvent={this.onChange}
+                                />
                             </Col>
-                            <Col lg={1} >
-                                <Form.Control
-                                    type="date"
-                                    name="PO_date"
-                                    value={PO_date}
-                                    onChange={this.onChange}
-                                    style={{ marginTop: "45px" }} />
+                            <Col lg={3} >
+                                <CustomTextBox
+                                    txtBoxLabel="PO Issued Date"
+                                    txtBoxType="date"
+                                    txtBoxName="PO_date"
+                                    txtBoxValue={PO_date}
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Work Commence"
+                                    txtBoxType="date"
+                                    txtBoxName="workCommence"
+                                    txtBoxValue={workCommence}
+                                    txtBoxPH="Commense"
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Work Complete"
+                                    txtBoxType="date"
+                                    txtBoxName="workComplete"
+                                    txtBoxValue={workComplete}
+                                    txtBoxPH="workComplete"
+                                    changeEvent={this.onChange}
+                                />
                             </Col>
                         </Row>
                     </Card>
                     <Card style={{ marginTop: '15px' }}>
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <Form.Group >
                                     <Form.Label >Contractor Invoice No</Form.Label>
-                                    <Form.Control as="select" name="in_voice" value={in_voice} onChange={this.onChange} required>
-                                        <option value="in_voice" selected disabled> invoice</option>
-                                        <option value="in_voice 1">invoice 1</option>
-                                        <option value="in_voice 2">invoice 2</option>
-                                        <option value="in_voice 3">invoice 3 </option>
-                                        <option value="in_voice 4">invoice 4</option>
+                                    <Form.Control as="select" name="vendorInvoiceNo" value={vendorInvoiceNo} onChange={this.onChange} required>
+                                        <option value="" selected disabled> Invoice No</option>
+                                        <option value="vendorInvoiceNo 1">invoice 1</option>
+                                        <option value="vendorInvoiceNo 2">invoice 2</option>
+                                        <option value="vendorInvoiceNo 3">invoice 3 </option>
+                                        <option value="vendorInvoiceNo 4">invoice 4</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <Col lg={4}>
+
+                            <Col lg={3}>
                                 <CustomTextBox
-                                    txtBoxLabel="Quotation Date"
-                                    txtBoxType="date"
-                                    txtBoxName="quotationDate"
-                                    txtBoxValue={quotationDate}
-                                    txtBoxPH="Price Amount"
-                                    changeEvent={this.onChange}
-                                />
-                            </Col>
-                            <Col lg={4}>
-                                <Form.Group >
-                                    <Form.Label >Status</Form.Label>
-                                    <Form.Control as="select" name="quotationStatus" value={quotationStatus} onChange={this.onChange}>
-                                        <option value="pending">Pending</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="cancel">Cancel</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col lg={4}>
-                                <CustomTextBox
-                                    txtBoxLabel="Client Invoice Number"
+                                    txtBoxLabel="Contractor Invoice Amount"
                                     txtBoxType="number"
-                                    txtBoxName="description"
-                                    txtBoxValue={description}
-                                    txtBoxPH="Description"
+                                    txtBoxName="vendorInvoiceAmount"
+                                    txtBoxValue={vendorInvoiceAmount}
+                                    txtBoxPH="Amount"
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <CustomTextBox
-                                    txtBoxLabel=" Date Issued"
+                                    txtBoxLabel="Invoice Received Date"
                                     txtBoxType="date"
-                                    txtBoxName="quotationDate"
-                                    txtBoxValue={quotationDate}
-                                    txtBoxPH="Price Amount"
+                                    txtBoxName="vendorInvoiceReceived"
+                                    txtBoxValue={vendorInvoiceReceived}
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={1}>
                                 <CustomTextBox
-                                    txtBoxLabel="Received Date"
-                                    txtBoxType="date"
-                                    txtBoxName="quotationDate"
-                                    txtBoxValue={quotationDate}
-                                    txtBoxPH="Price Amount"
+                                    txtBoxLabel="Paid Amount"
+                                    txtBoxType="number"
+                                    txtBoxName="paidAmount"
+                                    txtBoxValue={paidAmount}
+                                    txtBoxPH=" Amount"
                                     changeEvent={this.onChange}
+                                />
+                            </Col>
+                            <Col lg={2} style={{ marginTop: '12px' }}>
+                                <CustomTextBox
+                                    txtBoxType="date"
+                                    txtBoxName="paidDate"
+                                    txtBoxValue={paidDate}
+                                    changeEvent={this.onChange}
+
                                 />
                             </Col>
                         </Row>
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={3}>
                                 <CustomTextBox
-                                    txtBoxLabel="Tax"
-                                    txtBoxType="number"
-                                    txtBoxName="description"
-                                    txtBoxValue={description}
-                                    txtBoxPH="Description"
-                                    changeEvent={this.onChange}
-                                />
-                            </Col>
-                            <Col lg={4}>
-                                <CustomTextBox
-                                    txtBoxLabel="Quotation Amount"
+                                    txtBoxLabel="Tax Invoice No"
                                     txtBoxType="text"
-                                    txtBoxName="quotationAmount"
-                                    txtBoxValue={quotationAmount}
-                                    txtBoxPH=" Quotation Amount"
+                                    txtBoxName="tax"
+                                    txtBoxValue={tax}
+                                    txtBoxPH=""
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                        </Row>
-                        <Row className='d-flex justify-content-end'>
-                        <CustomButton btnType="reset" BtnTxt="Submit" ClickEvent={this.onSubmit} />
                         </Row>
                     </Card>
+                    <Card style={{ marginTop: '15px', backgroundColor: '#C0BFBF' }}>
+                        <Row>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="CCM Ticket Number"
+                                    txtBoxType="text"
+                                    txtBoxName="ticketNo"
+                                    txtBoxValue={ticketNo}
+                                    txtBoxPH=""
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                            <Col lg={3}>
+                                <CustomTextBox
+                                    txtBoxLabel="Job Complete"
+                                    txtBoxType="date"
+                                    txtBoxName="jobComplete"
+                                    txtBoxValue={jobComplete}
+                                    changeEvent={this.onChange}
+                                />
+                            </Col>
+                        </Row>
+                    </Card>
+                    <Row className='d-flex justify-content-end' style={{ marginTop: '20px' }}>
+                        <CustomButton btnType="reset" BtnTxt="Submit" ClickEvent={this.onSubmit} />
+                    </Row>
                 </div>
             </div>
         )
