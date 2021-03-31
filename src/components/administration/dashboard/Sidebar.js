@@ -22,7 +22,7 @@ export class Sidebar extends Component {
                 {
                     barThickness: 20,
                     backgroundColor: this.props.color,
-                    data: [2000, 1740, 1490],
+                    data: [1920, 1740, 1490],
                 }
             ]
         };
@@ -30,7 +30,7 @@ export class Sidebar extends Component {
         return (
             <>
                 <Row className='chartCard' >
-                    <div style={{ maxHeight: '600px', maxWidth: '500px' }}>
+                    <div style={{ maxHeight: '600px', maxWidth: '800px' }}>
                         <HorizontalBar data={Data} options={Options} />
                     </div>
                 </Row>
