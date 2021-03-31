@@ -91,7 +91,7 @@ const pluginsTrue= {
 
 const Sidebarplugins= {
     datalabels: {
-        align: 'top',
+        align: 'right',
         anchor: 'end',
         // font: {
         //     weight: 'bold'
