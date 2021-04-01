@@ -41,7 +41,7 @@
 .btn{
   max-width: 150px;
   width: 150px;
-  border-radius: 45px;
+  border-radius: 5px;
   background-color: rgb(58,95,133);
   color: white;    
   border: none;

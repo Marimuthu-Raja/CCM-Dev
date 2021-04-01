@@ -20,7 +20,7 @@ export const SidebarOptions = ()=>{
         legend : {
             display:false
         },
-        plugins : pluginsTrue,
+        plugins : Sidebarplugin,
         tooltips : tooltips,
         scales : scales,
     }
@@ -82,6 +82,19 @@ const pluginsFalse = {
 const pluginsTrue= {
     datalabels: {
         align: 'top',
+        anchor: 'end',
+        rotation:270,
+        // rotation: function(ctx){
+        //     return ctx.datasets.data[ctx.dataIndex] * 25;
+        // }
+        // font: {
+        //     weight: 'bold'
+        // }
+    }
+}
+const Sidebarplugin= {
+    datalabels: {
+        align: 'right',
         anchor: 'end',
        
         // rotation: function(ctx){
