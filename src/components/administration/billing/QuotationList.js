@@ -31,9 +31,9 @@ export default class quotation_list extends Component {
             fromDate: '',
             toDate: '',
             status: '',
-            
-            visible:false,
-            visible_key:null,
+
+            visible: false,
+            visible_key: null,
             addQuotation: false,
             country_list: [],
             quotation_list: [],
@@ -47,12 +47,17 @@ export default class quotation_list extends Component {
                 this.setState({ country_list })
                 console.log(country_list)
             })
-        axiosInstance.post(`/quotation/list`)
+        axios.get(`http://www.json-generator.com/api/json/get/cePWspeKMi?indent=2`)
             .then(res => {
-                const quotation_list = res.data.response.quotation_list
-                console.log(quotation_list, "response")
-                this.setState({ quotation_list })
+                console.log(res.data, "response")
+                this.setState({ quotation_list: res.data })
             })
+        // axiosInstance.post(`/quotation/list`)
+        //     .then(res => {
+        //         const quotation_list = res.data.response.quotation_list
+        //         console.log(quotation_list, "response")
+        //         this.setState({ quotation_list })
+        //     })
     }
     invoice = (e) => {
         console.log(e)
@@ -65,29 +70,28 @@ export default class quotation_list extends Component {
     renderTable = (quotation) => {
         return (
             <>
-
-                <tr key={quotation.id} className={quotation.id % 2 === 0 ? "rowtable" : ""} onClick={() => this.invoice(quotation.id)} style={{ height: "50px", padding: "10px" }}>
-                    <td style={{ padding: "15px" }}>{quotation.Name}</td>
-                    <td style={{ padding: "15px" }}>{quotation.Address}</td>
-                    <td style={{ padding: "15px" }}>{quotation.Email}</td>
-                    <td style={{ padding: "15px" }}>{quotation.Phone}</td>
-                    <td style={{ padding: "15px" }}>{quotation.Contactperson}</td>
-                    <td style={{ padding: "15px" }}>{quotation.Contactperson}</td>
+                <tr key={quotation.quotationNo} className={quotation.id % 2 === 0 ? "rowtable" : ""} onClick={() => this.invoice(quotation.id)} style={{ height: "50px", padding: "10px" }}>
+                    <td  >{quotation.quotationNo}</td>
+                    <td >{quotation.quotationDate}</td>
+                    <td >{quotation.client}</td>
+                    <td >{quotation.description}</td>
+                    <td >{quotation.quoteAmount}</td>
+                    <td >{quotation.quotationStatus}</td>
+                    <td >{quotation.clientPO}</td>
+                    <td >{quotation.margin}</td>
+                    <td >{quotation.marginAmount}</td>
+                    <td >{quotation.ticketNo}</td>
+                    <td >{quotation.jobComplete}</td>
 
                 </tr>
-                { this.state.visible && this.state.visible_key == quotation.id && <Invoice id={quotation.id} />}
-
-
-
+                { this.state.visible && this.state.visible_key == quotation.quotationNo && <Invoice id={quotation.quotationNo} />}
             </>
         )
     }
 
 
-    handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    onChange= (e) => {
+        this.setState({ [e.target.name]: e.target.value })
     }
     setDate = (date, name) => {
         this.setState({
@@ -96,10 +100,10 @@ export default class quotation_list extends Component {
     }
 
     render() {
-        const { quotation_list, country_list, emailSearch, countrySearch, fromDate, toDate, status, addQuotation } = this.state
+        const { quotation_list, country_list, emailSearch, countrySearch, fromDate, toDate, status, } = this.state
         return (
             <div>
-                {addQuotation ? <AddQuotation /> :
+                {/* {addQuotation ? <AddQuotation /> : */}
                 <div className="component">
                     <Card style={{ marginTop: "30px" }} >
                         <Row  >
@@ -109,15 +113,20 @@ export default class quotation_list extends Component {
                                     name='emailSearch'
                                     placeholder="Enter email"
                                     value={emailSearch}
+                                    onChange={this.onChange}
                                 />
-                                <button className='iconButtton' ><i className="fa fa-search" onClick={this.onSearch} ></i></button><br />
+                                <button className='iconButtton' >
+                                    <i className="fa fa-search" onClick={this.onSearch} ></i>
+                                </button><br />
                             </Col>
                             <Col lg={2}>
-                                <Form.Control as='select' value={countrySearch} name="countrySearch"  >
+                                <Form.Control as='select' value={countrySearch} name="countrySearch" onChange={this.onChange} >
                                     <option value='' >Select Country</option>
                                     {country_list.map(country => <option key={country.id} value={country.id} > {country.name} </option>)}
                                 </Form.Control><br />
-                                <button className='iconButtton' style={{bottom:'55px'}} ><i className="fa fa-angle-right" style={{fontSize:'25px'}} onClick={this.onSearch} ></i></button><br />
+                                <button className='iconButtton' style={{ bottom: '55px' }} >
+                                    <i className="fa fa-angle-right" style={{ fontSize: '25px' }} onClick={this.onSearch} ></i>
+                                </button><br />
                             </Col>
                             <Col lg={2}>
                                 <Form.Control
@@ -136,7 +145,7 @@ export default class quotation_list extends Component {
                                 /><br />
                             </Col>
                             <Col lg={2}>
-                                <Form.Control as='select' value={status} name="status"  >
+                                <Form.Control as='select' value={status} name="status" onChange={this.onChange} >
                                     <option value='' disabled selected>Status</option>
                                     <option value='pending'>Pending</option>
                                     <option value='completed'>Completed</option>
@@ -144,33 +153,39 @@ export default class quotation_list extends Component {
                                 </Form.Control><br />
                             </Col>
                             <Col lg={1}>
-                                <button className='addIcon' onClick={() => this.setState({ addQuotation: !addQuotation })} >
+                                <Link to='/addQuotation' ><button className='addIcon' >
                                     <i className="fa fa-plus" style={{ fontSize: "20px", color: "white" }}></i>
                                 </button>
+                                </Link>
                             </Col>
 
                         </Row>
                     </Card>
                     <Card style={{ marginTop: "30px", backgroundColor: "white" }}>
-                        <Row style={{ marginTop: "30px" }}>
-                            <Table hover style={{ backgroundColor: "white" }}>
+                        <Row>
+                            <Table style={{ backgroundColor: "white" }} responsive>
                                 <thead>
                                     <tr>
-                                        <th>Quotation Number</th>
-                                        <th >Date Issued</th>
-                                        <th >Client</th>
-                                        <th >Description</th>
-                                        <th >Quote Amount</th>
-                                        <th >Quote Approval</th>
+                                        <th >QUOTATION NUMBER</th>
+                                        <th >DATE ISSUED</th>
+                                        <th >CLIENT</th>
+                                        <th >DESCRIPTION</th>
+                                        <th >QUOTE AMOUNT</th>
+                                        <th >QUOTE APPROVAL</th>
+                                        <th>CLIENT PO</th>
+                                        <th>MARGIN %</th>
+                                        <th>MARGIN AMOUNT</th>
+                                        <th>CCM TICKET NO</th>
+                                        <th>JOB COMPLETE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {quotation_list.map(this.renderTable)} */}
+                                    {quotation_list.map(this.renderTable)}
                                 </tbody>
                             </Table>
                         </Row>
                     </Card>
-                </div>}
+                </div>
             </div>
         )
     }

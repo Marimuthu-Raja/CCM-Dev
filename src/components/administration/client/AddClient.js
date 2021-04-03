@@ -175,12 +175,10 @@ export default class AddClient extends Component {
                     <Card style={{ marginTop: "3%" }}>
                         <Form>
                             <Row>
-                                <Col lg={4}>
+                                <Col lg={3}>
                                     <Image src={Logo} style={{ marginLeft: "30%", marginTop: "80px" }}></Image>
                                 </Col>
-                                <Col lg={8}>
-                                    <Row>
-                                        <Col lg='6'>
+                                <Col lg={4}>
                                             <Form.Group >
                                                 <Form.Label >Client Name</Form.Label>
                                                 <Form.Control
@@ -193,8 +191,6 @@ export default class AddClient extends Component {
                                                     style={{ padding: "10px" }}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                        <Col lg='6'>
                                             <Form.Group >
                                                 <Form.Label >Email</Form.Label>
                                                 <Form.Control type="text" id="email"
@@ -205,10 +201,6 @@ export default class AddClient extends Component {
                                                     style={{ padding: "10px" }}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col lg='6'>
                                             <Form.Group >
                                                 <Form.Label >Country</Form.Label>
                                                 <Form.Control as="select" name="country" value={country} onChange={this.onChange} required>
@@ -219,7 +211,7 @@ export default class AddClient extends Component {
                                                 </Form.Control>
                                             </Form.Group>
                                         </Col>
-                                        <Col lg='6'>
+                                        <Col lg={4}>
                                             <Form.Group >
                                                 <Form.Label >Address</Form.Label>
                                                 <Form.Control
@@ -232,10 +224,6 @@ export default class AddClient extends Component {
                                                     style={{ padding: "10px" }}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col lg='6'>
                                             <Form.Group >
                                                 <Form.Label >Phone Number</Form.Label>
                                                 <Form.Control
@@ -246,8 +234,6 @@ export default class AddClient extends Component {
                                                     onChange={this.onChange}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                        <Col lg='6'>
                                             <Form.Group >
                                                 <Form.Label >Contact Person</Form.Label>
                                                 <Form.Control
@@ -258,8 +244,6 @@ export default class AddClient extends Component {
                                                     onChange={this.onChange}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                    </Row>
                                 </Col>
                             </Row>
                             <Row className="row justify-content-md-center" style={{ marginTop: "10%" }}>

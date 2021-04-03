@@ -10,15 +10,14 @@ import {
     InputGroup,
     FormControl
 } from 'react-bootstrap';
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosinstance'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import swal from 'sweetalert';
 import AddClient from './AddClient'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 var token = localStorage.getItem('access_token')
-
-
 
 
 export default class ClientList extends Component {
@@ -36,17 +35,13 @@ export default class ClientList extends Component {
     }
 
     componentDidMount() {
-        axios.post(`https://ccm.digisailor.in/api/public/country/list`, {}, {
-            params: { access_token: token }
-        }).then((res) => {
+        axiosInstance.post(`/country/list`).then((res) => {
             const country_list = res.data.response.country_list
             this.setState({ country_list })
             console.log(country_list)
         })
 
-        axios.post(`https://ccm.digisailor.in/api/public/client/list`, {}, {
-            params: { access_token: token }
-        })
+        axiosInstance.post(`/client/list`)
             .then(res => {
                 const client_list = res.data.response.client_list
                 this.setState({ client_list })
@@ -54,17 +49,11 @@ export default class ClientList extends Component {
             })
     }
 
-    handleSearch = e => {
-        this.setState({ search: e.target.value })
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
     }
     trashClient = (id) => {
-        axios.post(`https://ccm.digisailor.in/api/public/client/delete`, { id }, {
-            auth: {
-                username: 'ccm_auth',
-                password: 'ccm_digi123#'
-            },
-            params: { access_token: token }
-        })
+        axiosInstance.post(`/client/delete`, { id })
             .then((res) => {
                 console.log(res);
                 if (res.data.message.success !== undefined) {
@@ -72,9 +61,6 @@ export default class ClientList extends Component {
                 } else {
                     swal("error!", `${res.data.message.error}`, "error")
                 }
-            })
-            .catch((e) => {
-                console.log(e)
             })
     }
     renderComponent = (id) => {
@@ -90,32 +76,10 @@ export default class ClientList extends Component {
         })
         this.componentDidMount()
     }
-    renderTable = (client, i) => {
-        return (
-            <tr key={client.id} className={i % 2 === 0 ? "rowtable" : ""} style={{ height: "30px" }}>
-                <td>{client.name}</td>
-                <td>{client.address}</td>
-                <td>{client.email}</td>
-                <td>{client.phone}</td>
-                {this.state.country_list.map(country => {
-                    return (client.country === country.id) && <td>{country.name}</td>
-                })}
-                <td>{client.contact_person}</td>
-                <td><button onClick={(e) => this.trashClient(client.id)} style={{ border: "none" }} ><i className="fa fa-trash" style={{ fontSize: "18px", color: "red" }}></i></button></td>
-                <td> <button onClick={(e) => this.renderComponent(client.id)} style={{ width: "100px", height: "25px", backgroundColor: "#4A88DC", border: "none", color: "white", borderRadius: "10px" }}>EDIT</button></td>
-            </tr>
-        )
-    }
-    search = () => {
-        // alert("Hello Wrold")
-    }
 
-    Delete = (id) => {
-        // alert(`${id}`)
-        console.log(id)
-    }
     render() {
-        const { client_list, search, addClient, emailSearch, countrySearch, country_list } = this.state
+        const { client_list, addClient, emailSearch, countrySearch, country_list } = this.state
+
         return (
             <div>
                 {addClient ? <AddClient id={this.state.client_id} Back={this.Back} /> :
@@ -125,20 +89,30 @@ export default class ClientList extends Component {
                         <Card style={{ marginTop: "20px", backgroundColor: "white" }}>
                             <Row>
                                 <Col lg={4}>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter email"
-                                        value={search}
+                                    <Autocomplete
+                                        options={client_list}
+                                        onChange={(e, value) =>value !== null ? this.setState({ emailSearch: value.email }):  this.setState({ emailSearch: '' }) }
+                                        getOptionLabel={(option) => option.email}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Enter Email' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
                                     />
-                                    <button className='iconButtton' ><i className="fa fa-search" onClick={this.onSearch} ></i></button><br />
+                                    <button className='iconButtton'  ><i className="fa fa-search"  ></i></button><br />
                                 </Col>
-
                                 <Col lg={4}>
-                                        <Form.Control as='select' value={countrySearch}   >
-                                            <option value='' >Select Country</option>
-                                            {country_list.map(country => <option key={country.id} value={country.id} > {country.name} </option>)}
-                                        </Form.Control>
-                                        <button className='iconButtton'><i className="fa fa-search" onClick={this.onSearch} ></i></button><br />
+                                    <Autocomplete
+                                        options={country_list}
+                                        onChange={(e, value) => value !== null ? this.setState({ countrySearch: value.id }) : this.setState({ countrySearch: '' })}
+                                        getOptionLabel={(option) => option.name}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Enter Country' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
+                                    <button className='iconButtton'><i className="fa fa-search" onClick={this.onSearchCountry} ></i></button><br />
                                 </Col>
                                 <Col lg={{ offset: '3', span: '1' }}>
                                     <button className='addIcon' onClick={() => this.setState({ addClient: !addClient })} >
@@ -146,7 +120,7 @@ export default class ClientList extends Component {
                                     </button>
                                 </Col>
                             </Row>
-                            <Row style={{ marginTop: "30px", overflow: "auto" }}>
+                            <Row style={{ marginTop: "10px", overflow: "auto" }}>
                                 <table className="table ">
                                     <thead>
                                         <tr>
@@ -161,8 +135,23 @@ export default class ClientList extends Component {
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
-                                        {client_list.map(this.renderTable)}
+                                        {client_list.map((client, i) =>
+                                            (emailSearch === '' || client.email === emailSearch) && (countrySearch === '' || client.country === countrySearch) &&
+                                            <tr key={client.id} className={i % 2 === 0 ? "rowtable" : ""} >
+                                                <td>{client.name}</td>
+                                                <td>{client.address}</td>
+                                                <td>{client.email}</td>
+                                                <td>{client.phone}</td>
+                                                {this.state.country_list.map(country => {
+                                                    return (client.country === country.id) && <td>{country.name}</td>
+                                                })}
+                                                <td>{client.contact_person}</td>
+                                                <td><button onClick={(e) => this.trashClient(client.id)} style={{ border: "none" }} ><i className="fa fa-trash" style={{ fontSize: "18px", color: "red" }}></i></button></td>
+                                                <td> <button onClick={(e) => this.renderComponent(client.id)} style={{ width: "100px", height: "25px", backgroundColor: "#4A88DC", border: "none", color: "white", borderRadius: "10px" }}>EDIT</button></td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </Row>

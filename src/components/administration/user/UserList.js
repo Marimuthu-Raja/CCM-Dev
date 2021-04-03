@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import swal from 'sweetalert';
 import UserProfile from './AddUser'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 var token = localStorage.getItem('access_token')
 
@@ -21,6 +22,7 @@ class User extends Component {
             addUser: false,
             users: [],
             country_list: [],
+            user_list:[],
         }
     }
 
@@ -33,9 +35,9 @@ class User extends Component {
             })
         axiosInstance.post(`/user/list`)
             .then(res => {
-                const users = res.data.response.user_list
-                this.setState({ users })
-                console.log(users);
+                const user_list = res.data.response.user_list
+                this.setState({ user_list })
+                console.log(user_list);
             })
     }
     trashContractor = (id) => {
@@ -64,10 +66,9 @@ class User extends Component {
         this.componentDidMount()
     }
 
-    userTable = (user) => {
-        console.log(user.country)
+    userTable = (user, i) => {
         return (
-            <tr key={user.id} className={user.id % 2 === 0 ? "rowtable" : ""} style={{ height: "40px" }}>
+            <tr key={user.id} className={i % 2 === 0 ? "rowtable" : ""} >
                 <td>{user.name}</td>
                 <td>{user.department}</td>
                 <td>{user.email}</td>
@@ -83,7 +84,7 @@ class User extends Component {
 
 
     render() {
-        const { emailSearch, countrySearch, status, users, addUser, country_list } = this.state
+        const { emailSearch, countrySearch, status, addUser,user_list, country_list } = this.state
 
         return (
             <div>
@@ -94,24 +95,32 @@ class User extends Component {
                             <h3 style={{ marginTop: "30px" }}>User List</h3>
                             <Card style={{ marginTop: "20px", backgroundColor: "white" }}>
                                 <Row>
-                                    <Col lg={4}>
-                                        <Form.Control
-                                            type="text"
-                                            name='emailSearch'
-                                            placeholder="Enter email"
-                                            value={emailSearch}
-                                        />
-                                        <button className='iconButtton' ><i className="fa fa-search" onClick={this.onSearch} ></i></button><br />
-                                    </Col>
-                                    <Col lg={3}>
-                                        <Form.Control as='select' value={countrySearch} name="countrySearch"  >
-                                            <option value='' >Select Country</option>
-                                            {country_list.map(country => <option key={country.id} value={country.id} > {country.name} </option>)}
-                                        </Form.Control><br />
-                                        <button className='iconButtton' style={{ bottom: '55px' }} >
-                                            <i className="fa fa-angle-right" style={{ fontSize: '25px' }} onClick={this.onSearch} ></i>
-                                            </button><br />
-                                    </Col>
+                                <Col lg={4}>
+                                    <Autocomplete
+                                        options={user_list}
+                                        onChange={(e, value) =>value !== null ? this.setState({ emailSearch: value.email }):  this.setState({ emailSearch: '' }) }
+                                        getOptionLabel={(option) => option.email}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Enter Email' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
+                                    <button className='iconButtton'  ><i className="fa fa-search"  ></i></button><br />
+                                </Col>
+                                <Col lg={3}>
+                                    <Autocomplete
+                                        options={country_list}
+                                        onChange={(e, value) => value !== null ? this.setState({ countrySearch: value.id }) : this.setState({ countrySearch: '' })}
+                                        getOptionLabel={(option) => option.name}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Enter Country' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
+                                    <button className='iconButtton'><i className="fa fa-search" onClick={this.onSearchCountry} ></i></button><br />
+                                </Col>
                                     <Col lg={2}>
                                         <Form.Control as='select' value={status} name="status"  >
                                             <option value='' disabled selected>Status</option>
@@ -120,14 +129,14 @@ class User extends Component {
                                             <option value='cancel'>Cancel</option>
                                         </Form.Control><br />
                                     </Col>
-                                    <Col lg={{offset:'2'}}>
+                                    <Col lg={{ offset: '2' }}>
                                         <button className='addIcon' onClick={() => this.setState({ addUser: !addUser })} >
                                             <i className="fa fa-plus" style={{ fontSize: "20px", color: "white" }}></i>
                                         </button>
                                     </Col>
                                 </Row>
 
-                                <Row style={{ marginTop: "35px", overflow: "auto" }}>
+                                <Row style={{ marginTop: "10px", overflow: "auto" }}>
                                     <table class="table ">
                                         <thead>
                                             <tr>
@@ -142,9 +151,21 @@ class User extends Component {
 
                                             </tr>
                                         </thead>
-
                                         <tbody>
-                                            {users.map(this.userTable)}
+                                            {user_list.map((user, i) =>
+                                             (emailSearch === '' || user.email === emailSearch) && (countrySearch === '' || user.country === countrySearch) &&
+                                                <tr key={user.id} className={i % 2 === 0 && "rowtable"} >
+                                                    <td>{user.name}</td>
+                                                    <td>{user.department}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.phone}</td>
+                                                    {this.state.country_list.map(country => {
+                                                        return (user.country === country.id) && <td>{country.name}</td>
+                                                    })}
+                                                    <td><button onClick={(e) => this.trashContractor(user.id)} style={{ border: "none" }} ><i className="fa fa-trash" style={{ fontSize: "18px", color: "red" }}></i></button></td>
+                                                    <td> <button onClick={(e) => this.renderComponent(user.id)} style={{ width: "100px", height: "25px", backgroundColor: "#4A88DC", border: "none", color: "white", borderRadius: "10px" }}>EDIT</button></td>
+                                                </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </Row>

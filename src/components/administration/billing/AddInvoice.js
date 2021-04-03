@@ -12,12 +12,10 @@ import {
 import CustomTextBox from '../../utils/TextBox'
 import CustomButton from '../../utils/Button'
 import Logo from '../../img/logo-light.png'
-import axios from 'axios'
-import swal from 'sweetalert';
-import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
+import axiosInstance from '../../utils/axiosinstance'
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import CurrencyFormat from 'react-currency-format'
+import { Alert } from '../../utils/Utilities'
 
 var token = localStorage.getItem('access_token')
 
@@ -39,21 +37,23 @@ export class AddInvoice extends Component {
         }
     }
     componentDidMount() {
-        axios.post(`https://ccm.digisailor.in/api/public/client/list`, {}, {
-            params: { access_token: token }
-        })
+        axiosInstance.post(`/client/list`)
             .then(res => {
                 const client_list = res.data.response.client_list
                 this.setState({ client_list })
                 console.log(client_list);
             })
-        axios.post(`https://ccm.digisailor.in/api/public/contractor/list`, {}, {
-            params: { access_token: token }
-        })
+            axiosInstance.post(`/contractor/list`)
             .then(res => {
                 const contractor_list = res.data.response.contractor_list
                 this.setState({ contractor_list })
                 console.log(contractor_list);
+            })
+            axiosInstance.post(`/invoice/list`)
+            .then(res => {
+                const invoice_list = res.data.response.invoice_list
+                this.setState({ invoice_list })
+                console.log(invoice_list);
             })
     }
 
@@ -64,33 +64,27 @@ export class AddInvoice extends Component {
         console.log(e.target.value)
         this.setState({ [e.target.name]: e.target.value })
     }
+    onChangeAmount = (values, name) => {
+        const { formattedValue, value } = values;
+        this.setState({ [name]: value })
+    }
 
     customerSearch = (e, value) => {
         console.log(value)
         value !== null && this.setState({ cust_id: value.id, cust_name: value.name, })
     }
-    // contractorSearch = (e, value) => {
-    //     value !== null && this.setState({ contractor_id: value.id, contractor_name: value.name, client_id: '' })
-    // }
 
     onSubmit = (e) => {
         const { invoice_id,cust_type,cust_id, price, description, date } = this.state;
-    
-        const data = { cust_type, cust_id, price, description, date, }
-        console.log(data, 'data')
-        axios.post(`https://ccm.digisailor.in/api/public/invoice/add`, data, {
-            auth: {
-                username: 'ccm_auth',
-                password: 'ccm_digi123#'
-            },
-            params: { access_token: token }
-        })
+        const data = { cust_type, cust_id, price:parseFloat(price).toFixed(2), description, date, }
+        console.log(data)
+        axiosInstance.post(`/invoice/add`, data)
             .then((res) => {
                 console.log(res);
                 if (res.data.message.success !== undefined) {
-                    swal("success!", `${res.data.message.success}`, "success").then(() => this.onCancel())
+                    Alert("success","success!", `${res.data.message.success}`, ).then(() => this.onCancel())
                 } else {
-                    swal("error!", `${res.data.message.error}`, "error")
+                    Alert( "error", "error!", `${res.data.message.error}`,)
                 }
             })
             .catch((e) => {
@@ -137,24 +131,30 @@ export class AddInvoice extends Component {
                                     <Form.Group  >
                                         {cust_type === '1'
                                             ? <>
-                                                <Form.Label style={{ marginTop: "5px", }} > Client</Form.Label>
+                                                <Form.Label > Client</Form.Label>
                                                 <Autocomplete
                                                     options={client_list} 
                                                     onChange={(e, value) => this.customerSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
-                                                    style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
-                                                    renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}
+                                                    renderInput={(params) => (
+                                                        <div ref={params.InputProps.ref}>
+                                                            <Form.Control placeholder='Client Name' type="text" {...params.inputProps} />
+                                                        </div>
+                                                    )}
                                                 />
 
                                             </>
                                             : <>
-                                                <Form.Label style={{ marginTop: "5px", }}> Contractor</Form.Label>
+                                                <Form.Label> Contractor</Form.Label>
                                                 <Autocomplete
                                                     options={contractor_list}
                                                     onChange={(e, value) => this.customerSearch(e, value)}
                                                     getOptionLabel={(option) => option.name}
-                                                    style={{ backgroundColor: 'white', boxShadow: '1px 2px 6px #989898' }}
-                                                    renderInput={(params) => <TextField {...params} size='small' variant="outlined" />}
+                                                    renderInput={(params) => (
+                                                        <div ref={params.InputProps.ref}>
+                                                            <Form.Control placeholder='Contractor Name' type="text" {...params.inputProps} />
+                                                        </div>
+                                                    )}
                                                 /> </>}
                                     </Form.Group>
                                 </Col>
@@ -162,15 +162,15 @@ export class AddInvoice extends Component {
                             </Row>
                             <Row>
                                 <Col lg={{ span: '5', offset: '1' }}>
-                                    <CustomTextBox
-                                        txtBoxLabel="Price"
-                                        txtBoxType="text"
-                                        txtBoxName="price"
-                                        txtBoxValue={price}
-                                        txtBoxID="price"
-                                        txtBoxPH="Price Amount"
-                                        changeEvent={this.onChange}
-                                    />
+                                <Form.Group>
+                                    <Form.Label >Price Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={price}
+                                        placeholder="Amount"
+                                        onValueChange={(values) => this.onChangeAmount(values, 'price')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
                                 </Col>
                                 <Col lg={{ span: '5', }}>
                                     <CustomTextBox

@@ -20,6 +20,7 @@ import NavBar from './Navbar'
 
 import LandingPage from './administration/landingPage/LandingPage'
 import ForgotPassword from './auth/Forgotpassword'
+import AddQuotation from './administration/billing/AddQuotation'
 
 //import Client from './components/Client'
 //import Contractor from './components/Contractor'
@@ -51,6 +52,9 @@ export default function BaseRouter() {
       
       <Route exact path="/addinvoice">
         {isLogin?<><NavBar /> <AddInvoice /></>:<Redirect to='/' />}
+      </Route>
+      <Route exact path="/addQuotation">
+        {isLogin?<><NavBar /> <AddQuotation /></>:<Redirect to='/' />}
       </Route>
       <Route exact path="/cwr-summary">
         {isLogin?<><NavBar /> <QuotationList /></>:<Redirect to='/' />}

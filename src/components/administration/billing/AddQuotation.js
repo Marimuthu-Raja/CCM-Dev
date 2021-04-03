@@ -3,8 +3,9 @@ import { Card, Container, Row, Col, Form, } from 'react-bootstrap'
 import CustomTextBox from '../../utils/TextBox'
 import CustomButton from '../../utils/Button'
 import Swal from 'sweetalert2';
-import axios from 'axios';
-import swal from 'sweetalert';
+import axiosInstance from '../../utils/axiosinstance'
+import CurrencyFormat from 'react-currency-format'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 export class AddQuotation extends Component {
@@ -12,63 +13,104 @@ export class AddQuotation extends Component {
         super(props)
 
         this.state = {
-            quotationNo: '',
-            clientInvoiceNo: '',
+            category: '',
+            quotation_num: '',
+            quotationDate: '',
+            client_id: '',
+            quoteAmount: '',
             description: '',
-            date: '',
-            amount: '',
-            marginamount: '',
-            status: '',
-            client: '',
-            client_po: '',
+            quotationStatus: '',
+            clientPO: '',
             margin: '',
+            marginAmount: '',
+            clientInvoiceNo: '',
+            clientIVamount: '',
+            InvoiceIssuedDate: '',
+            paymentReceivedDate: '',
+            receivedAmount: '',
+            invoiceCredit: false,
+            creditNotes: '',
+            creditIssuedDate: '',
+            creditAmount: '',
             workCommence: '',
-            complete: '',
-            contractor: '',
+            workComplete: '',
+            cont_id: '',
+            contractorPO: '',
             purchace_order: '',
-            po_amount: '',
-            po_date: ''
+            PO_amount: '',
+            PO_date: '',
+            vendorInvoiceNo: '',
+            vendorInvoiceAmount: '',
+            vendorInvoiceReceived: '',
+            paidAmount: '',
+            paidDate: '',
+            tax: '',
+            jobComplete: '',
+            ticketNo: '',
+
+            client_list:[],
+            contractor_list: [],
+            client_invoice: [],
+            contractor_invoice:[],
         }
+    }
+
+    componentDidMount() {
+        axiosInstance.post(`/client/list`)
+            .then(res => {
+                const client_list = res.data.response.client_list
+                this.setState({ client_list })
+                console.log(client_list);
+            })
+        axiosInstance.post(`/contractor/list`)
+            .then(res => {
+                const contractor_list = res.data.response.contractor_list
+                this.setState({ contractor_list })
+                console.log(contractor_list);
+            })
+        axiosInstance.post(`/invoice/list`)
+            .then(res => {
+                const invoice_list = res.data.response.invoice_list
+                this.setState({ 
+                    client_invoice:invoice_list.filter(invoice=> invoice.cust_type==='1'),
+                    contractor_invoice:invoice_list.filter(invoice=> invoice.cust_type==='2') 
+                })
+            })
+            axiosInstance.post(`/quotation/list`)
+            .then(res => {
+                const quotation_list = res.data.response.quotation_list
+                this.setState({ quotation_list })
+                console.log(quotation_list, 'quotation_list');
+            })
     }
 
     onChange = (e) => {
-        e.preventDefault();
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        this.setState({ [e.target.name]: e.target.value })
     }
-
+    checkboxChange = (e) => {
+        this.setState({ [e.target.name]: e.target.checked })
+    }
+    onChangeAmount = (values, name) => {
+        const { formattedValue, value } = values;
+        this.setState({ [name]: value })
+    }
+    autoComplete = (e, value, name) => {
+        console.log(e,value)
+         value !== null && this.setState({ [name]: value[name], })
+    }
     onSubmit = (e) => {
-        e.preventDefault();
-        const { quotationNo, clientInvoiceNo, description, date, amount, status, client, client_po, margin, marginamount, workCommence, complete, contractor, purchace_order, po_amount, po_date } = this.state;
-        if (quotationNo === '' && clientInvoiceNo === '' && description === '' && status === '' && date === '' && amount === '' && client === '' && margin === '' && marginamount === '' && workCommence === '' && complete === '' && contractor === '' && purchace_order === '' && po_amount === '' && po_date === '') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please Fillout all the Fields!',
-            })
-
-        }
-        else {
-            axios.post('', { quotationNo, clientInvoiceNo, description, date, amount, status, client, client_po, margin, marginamount, workCommence, complete, contractor, purchace_order, po_amount, po_date })
-                .then(function (response) {
-                    //access the results here....           
-                    swal("success!", "Client added", "success").then(setInterval(function () { window.location.reload(); }, 1500));// alert
-                    console.log(response);// log
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            console.log(this.state.errors)
-        }
+        console.log(this.state)
     }
 
 
 
     render() {
-        const { category, quotationNo, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount, clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
-            vendorInvoiceAmount, vendorInvoiceReceived, paidAmount, paidDate, tax, jobComplete, ticketNo } = this.state;
+        const { category, quotation_num, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount,
+            clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, invoiceCredit, creditNotes, creditIssuedDate, creditAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
+            vendorInvoiceAmount, vendorInvoiceReceived, paidAmount, paidDate, tax, jobComplete, ticketNo,
+            quotation_list,client_list,contractor_list,contractor_invoice,client_invoice} = this.state;
         const categoryList = ['Categories Selection', 'FM Contract', 'Interior & General', 'Electrical', 'HVAC System', 'Plumping & Pest', 'Fire Protection', 'AV system', 'IT & Security', 'Carpentry Works', 'Furniture & Rugs', 'Additional Works']
+        console.log(client_invoice,contractor_invoice)
         return (
             <div>
                 <div className="component">
@@ -85,36 +127,45 @@ export class AddQuotation extends Component {
                     <Card>
                         <Row>
                             <Col lg={3}>
-                                <Form.Group>
-                                    <Form.Label >Quotation No</Form.Label>
-                                    <Form.Control as="select" name="quotation" value={quotationNo} onChange={this.onChange} required>
-                                        <option value="Quotation" selected disabled> Quotation No</option>
-                                        <option value="Quotation 1">Quotation 1</option>
-                                        <option value="Quotation 2">Quotation 2</option>
-                                        <option value="Quotation 3">Quotation 3 </option>
-                                        <option value="Quotation 4">Quotation 4</option>
-                                    </Form.Control>
+                            <Form.Group >
+                                    <Form.Label > Quotation No</Form.Label>
+                                    <Autocomplete
+                                        options={quotation_list}   
+                                        onChange={(e, value) =>value !== null ? this.setState({quotation_num : value.quotation_num}) :this.setState({quotation_num : ''})}
+                                        getOptionLabel={(option) => option.quotation_num}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Quotation No' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col lg={3}>
-                                <CustomTextBox
-                                    txtBoxLabel="Client"
-                                    txtBoxType="text"
-                                    txtBoxName="client"
-                                    txtBoxValue={client}
-                                    txtBoxPH=" Client"
-                                    changeEvent={this.onChange}
-                                />
+                            <Form.Group >
+                                    <Form.Label > Client</Form.Label>
+                                    <Autocomplete
+                                        options={client_list}   
+                                        onChange={(e, value) =>value !== null ? this.setState({client_id : value.id}): this.setState({client_id : ''}) }
+                                        getOptionLabel={(option) => option.name}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Client Name' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
+                                </Form.Group>
                             </Col>
                             <Col lg={3}>
-                                <CustomTextBox
-                                    txtBoxLabel="Quote Amount"
-                                    txtBoxType="text"
-                                    txtBoxName="quoteAmount"
-                                    txtBoxValue={quoteAmount}
-                                    txtBoxPH=" Quote Amount"
-                                    changeEvent={this.onChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label >Quote Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={quoteAmount}
+                                        placeholder="Amount"
+                                        onValueChange={(values) => this.onChangeAmount(values, 'quoteAmount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <CustomTextBox
@@ -156,6 +207,8 @@ export class AddQuotation extends Component {
                                 <Form.Group >
                                     <Form.Label >Quote Approval</Form.Label>
                                     <Form.Control as="select" name="quotationStatus" value={quotationStatus} onChange={this.onChange}>
+                                        <option value="" disabled>Quote Approval</option>
+                                        <option value="approved">Approved</option>
                                         <option value="pending">Pending</option>
                                         <option value="completed">Completed</option>
                                         <option value="cancel">Cancel</option>
@@ -173,13 +226,13 @@ export class AddQuotation extends Component {
                                 />
                             </Col>
                             <Col lg={2} >
-                                <Form.Control
-                                    type="number"
-                                    name="marginAmount"
-                                    value={marginAmount}
+                                <CurrencyFormat
+                                    className='form-control'
                                     placeholder="Amount"
-                                    onChange={this.onChange}
-                                    style={{ marginTop: "45px" }} />
+                                    value={marginAmount}
+                                    onValueChange={(values) => this.onChangeAmount(values, 'marginAmount')}
+                                    thousandSeparator={true}
+                                    style={{ marginTop: "47px" }} />
                             </Col>
                         </Row>
                     </Card>
@@ -188,31 +241,35 @@ export class AddQuotation extends Component {
 
                             <Col lg={3}>
                                 <Form.Group >
-                                    <Form.Label >Client Invoice No</Form.Label>
-                                    <Form.Control as="select" name="clientInvoiceNo" value={clientInvoiceNo} onChange={this.onChange} required>
-                                        <option value="" disabled> Invoice No </option>
-                                        <option value="clientInvoiceNo 1">invoice 1</option>
-                                        <option value="clientInvoiceNo 2">invoice 2</option>
-                                        <option value="clientInvoiceNo 3">invoice 3 </option>
-                                        <option value="clientInvoiceNo 4">invoice 4</option>
-                                    </Form.Control>
+                                    <Form.Label > Client Invoice No</Form.Label>
+                                    <Autocomplete
+                                        options={client_invoice}   
+                                        onChange={(e, value) => value !== null ? this.setState({clientInvoiceNo : value.num}):this.setState({clientInvoiceNo : ''})  }
+                                        getOptionLabel={(option) => option.id}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col lg={3}>
-                                <CustomTextBox
-                                    txtBoxLabel="Client Invoice Amount"
-                                    txtBoxType="number"
-                                    txtBoxName="clientIVamount"
-                                    txtBoxValue={clientIVamount}
-                                    txtBoxPH="Client Invoice Amount"
-                                    changeEvent={this.onChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label >Client Invoice Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={clientIVamount}
+                                        placeholder="Client Invoice Amount"
+                                        onValueChange={(values) => this.onChangeAmount(values, 'clientIVamount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <CustomTextBox
                                     txtBoxLabel="Invoice Issued Date"
                                     txtBoxType="date"
-                                    txtBoxName="clientIVdate"
+                                    txtBoxName="InvoiceIssuedDate"
                                     txtBoxValue={InvoiceIssuedDate}
                                     txtBoxPH="Commense"
                                     changeEvent={this.onChange}
@@ -231,29 +288,78 @@ export class AddQuotation extends Component {
                         </Row>
                         <Row>
                             <Col lg={3}>
-                                <CustomTextBox
-                                    txtBoxLabel=" Received Amount"
-                                    txtBoxType="number"
-                                    txtBoxName="receivedAmount"
-                                    txtBoxValue={receivedAmount}
-                                    txtBoxPH="Received Amount"
-                                    changeEvent={this.onChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label >Received Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={receivedAmount}
+                                        placeholder="Received Amount"
+                                        onValueChange={(values) => this.onChangeAmount(values, 'receivedAmount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
+                            </Col>
+                            <Col lg={3} style={{ marginTop: '40px' }}>
+                                <Form.Group controlId="formBasicCheckbox">
+                                    <Form.Check
+                                        style={{ fontSize: '1.3em', fontWeight: 'bold' }}
+                                        name='invoiceCredit'
+                                        checked={invoiceCredit}
+                                        type="checkbox"
+                                        label="Is Credit Available ?"
+                                        onChange={this.checkboxChange}
+                                    />
+                                </Form.Group>
                             </Col>
                         </Row>
+                        {invoiceCredit &&
+                            <Row>
+                                <Col lg={3}>
+                                    <Form.Group>
+                                        <Form.Label >Credit Amount</Form.Label>
+                                        <CurrencyFormat
+                                            className='form-control'
+                                            value={creditAmount}
+                                            placeholder="Credit Amount"
+                                            onValueChange={(values) => this.onChangeAmount(values, 'creditAmount')}
+                                            thousandSeparator={true} />
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={3}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Credit Issued Date"
+                                        txtBoxType="date"
+                                        txtBoxName="creditIssuedDate"
+                                        txtBoxValue={creditIssuedDate}
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                                <Col lg={6}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Credit Note"
+                                        txtBoxType="text"
+                                        txtBoxName="creditNotes"
+                                        txtBoxValue={creditNotes}
+                                        txtBoxPH="Notes"
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                            </Row>}
                     </Card>
                     <Card style={{ marginTop: '15px', }} >
                         <Row>
                             <Col lg={3} >
                                 <Form.Group >
-                                    <Form.Label >Contractor Name </Form.Label>
-                                    <Form.Control as="select" name="contractorName" value={contractorName} onChange={this.onChange} required>
-                                        <option value="contractor" disabled> Country</option>
-                                        <option value="contractor 1">contractor 1</option>
-                                        <option value="contractor 2">contractor 2</option>
-                                        <option value="contractor 3">contractor 3 </option>
-                                        <option value="contractor 4">contractor 4</option>
-                                    </Form.Control>
+                                    <Form.Label > Contractor Name</Form.Label>
+                                    <Autocomplete
+                                        options={contractor_list}   
+                                        onChange={(e, value) => value !== null ? this.setState({cont_id : value.id}) : this.setState({cont_id : ''}) }
+                                        getOptionLabel={(option) => option.name}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Contractor Name' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
                                 </Form.Group>
                             </Col>
 
@@ -268,14 +374,15 @@ export class AddQuotation extends Component {
                                 />
                             </Col>
                             <Col lg={3} >
-                                <CustomTextBox
-                                    txtBoxLabel="PO Amount"
-                                    txtBoxType="text"
-                                    txtBoxName="PO_amount"
-                                    txtBoxValue={PO_amount}
-                                    txtBoxPH="Amount"
-                                    changeEvent={this.onChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label >PO Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={PO_amount}
+                                        placeholder=" Amount "
+                                        onValueChange={(values) => this.onChangeAmount(values, 'PO_amount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
                             </Col>
                             <Col lg={3} >
                                 <CustomTextBox
@@ -313,27 +420,31 @@ export class AddQuotation extends Component {
                     <Card style={{ marginTop: '15px' }}>
                         <Row>
                             <Col lg={3}>
-                                <Form.Group >
-                                    <Form.Label >Contractor Invoice No</Form.Label>
-                                    <Form.Control as="select" name="vendorInvoiceNo" value={vendorInvoiceNo} onChange={this.onChange} required>
-                                        <option value="" selected disabled> Invoice No</option>
-                                        <option value="vendorInvoiceNo 1">invoice 1</option>
-                                        <option value="vendorInvoiceNo 2">invoice 2</option>
-                                        <option value="vendorInvoiceNo 3">invoice 3 </option>
-                                        <option value="vendorInvoiceNo 4">invoice 4</option>
-                                    </Form.Control>
+                            <Form.Group >
+                                    <Form.Label > Contractor Invoice No</Form.Label>
+                                    <Autocomplete
+                                        options={contractor_invoice}   
+                                        onChange={(e, value) => value !== null ? this.setState({vendorInvoiceNo : value.num}) : this.setState({vendorInvoiceNo : ''}) }
+                                        getOptionLabel={(option) => option.num}
+                                        renderInput={(params) => (
+                                            <div ref={params.InputProps.ref}>
+                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps} />
+                                            </div>
+                                        )}
+                                    />
                                 </Form.Group>
                             </Col>
 
                             <Col lg={3}>
-                                <CustomTextBox
-                                    txtBoxLabel="Contractor Invoice Amount"
-                                    txtBoxType="number"
-                                    txtBoxName="vendorInvoiceAmount"
-                                    txtBoxValue={vendorInvoiceAmount}
-                                    txtBoxPH="Amount"
-                                    changeEvent={this.onChange}
-                                />
+                                <Form.Group>
+                                    <Form.Label >Contractor Invoice Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={vendorInvoiceAmount}
+                                        placeholder=" Amount "
+                                        onValueChange={(values) => this.onChangeAmount(values, 'vendorInvoiceAmount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <CustomTextBox
@@ -344,27 +455,6 @@ export class AddQuotation extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
-                            <Col lg={1}>
-                                <CustomTextBox
-                                    txtBoxLabel="Paid Amount"
-                                    txtBoxType="number"
-                                    txtBoxName="paidAmount"
-                                    txtBoxValue={paidAmount}
-                                    txtBoxPH=" Amount"
-                                    changeEvent={this.onChange}
-                                />
-                            </Col>
-                            <Col lg={2} style={{ marginTop: '12px' }}>
-                                <CustomTextBox
-                                    txtBoxType="date"
-                                    txtBoxName="paidDate"
-                                    txtBoxValue={paidDate}
-                                    changeEvent={this.onChange}
-
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col lg={3}>
                                 <CustomTextBox
                                     txtBoxLabel="Tax Invoice No"
@@ -375,6 +465,31 @@ export class AddQuotation extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={3}>
+                                <Form.Group>
+                                    <Form.Label >Paid Amount</Form.Label>
+                                    <CurrencyFormat
+                                        className='form-control'
+                                        value={paidAmount}
+                                        placeholder=" Amount "
+                                        onValueChange={(values) => this.onChangeAmount(values, 'paidAmount')}
+                                        thousandSeparator={true} />
+                                </Form.Group>
+                            </Col>
+                            <Col lg={3}>
+                                <Form.Group>
+                                    <CustomTextBox
+                                        txtBoxLabel="Paid Date"
+                                        txtBoxType="date"
+                                        txtBoxName="paidDate"
+                                        txtBoxValue={paidDate}
+                                        changeEvent={this.onChange}
+                                    />
+                                </Form.Group>
+                            </Col>
+
                         </Row>
                     </Card>
                     <Card style={{ marginTop: '15px', backgroundColor: '#C0BFBF' }}>
@@ -401,6 +516,7 @@ export class AddQuotation extends Component {
                         </Row>
                     </Card>
                     <Row className='d-flex justify-content-end' style={{ marginTop: '20px' }}>
+                        <CustomButton btnType="reset" BtnTxt="Complete" ClickEvent={this.onComplete} />
                         <CustomButton btnType="reset" BtnTxt="Submit" ClickEvent={this.onSubmit} />
                     </Row>
                 </div>
