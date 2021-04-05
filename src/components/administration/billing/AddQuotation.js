@@ -28,10 +28,10 @@ export class AddQuotation extends Component {
             InvoiceIssuedDate: '',
             paymentReceivedDate: '',
             receivedAmount: '',
-            invoiceCredit: false,
-            creditNotes: '',
-            creditIssuedDate: '',
-            creditAmount: '',
+            clientInvoiceCredit: false,
+            clientCreditNotes: '',
+            clientCreditIssuedDate: '',
+            clientCreditAmount: '',
             workCommence: '',
             workComplete: '',
             cont_id: '',
@@ -44,6 +44,7 @@ export class AddQuotation extends Component {
             vendorInvoiceReceived: '',
             paidAmount: '',
             paidDate: '',
+            cont_InvoiceCredit:'',cont_CreditAmount:'',cont_CreditIssuedDate:'',cont_CreditNotes:'',
             tax: '',
             jobComplete: '',
             ticketNo: '',
@@ -106,9 +107,9 @@ export class AddQuotation extends Component {
 
     render() {
         const { category, quotation_num, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount,
-            clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, invoiceCredit, creditNotes, creditIssuedDate, creditAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
+            clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, clientInvoiceCredit, clientCreditNotes, clientCreditIssuedDate, clientCreditAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
             vendorInvoiceAmount, vendorInvoiceReceived, paidAmount, paidDate, tax, jobComplete, ticketNo,
-            quotation_list,client_list,contractor_list,contractor_invoice,client_invoice} = this.state;
+            quotation_list,client_list,contractor_list,contractor_invoice,client_invoice , cont_InvoiceCredit,cont_CreditAmount,cont_CreditIssuedDate,cont_CreditNotes} = this.state;
         const categoryList = ['Categories Selection', 'FM Contract', 'Interior & General', 'Electrical', 'HVAC System', 'Plumping & Pest', 'Fire Protection', 'AV system', 'IT & Security', 'Carpentry Works', 'Furniture & Rugs', 'Additional Works']
         console.log(client_invoice,contractor_invoice)
         return (
@@ -132,7 +133,7 @@ export class AddQuotation extends Component {
                                     <Autocomplete
                                         options={quotation_list}   
                                         onChange={(e, value) =>value !== null ? this.setState({quotation_num : value.quotation_num}) :this.setState({quotation_num : ''})}
-                                        getOptionLabel={(option) => option.quotation_num}
+                                        getOptionLabel={(option) => option.id}
                                         renderInput={(params) => (
                                             <div ref={params.InputProps.ref}>
                                                 <Form.Control placeholder='Quotation No' type="text" {...params.inputProps} />
@@ -302,8 +303,8 @@ export class AddQuotation extends Component {
                                 <Form.Group controlId="formBasicCheckbox">
                                     <Form.Check
                                         style={{ fontSize: '1.3em', fontWeight: 'bold' }}
-                                        name='invoiceCredit'
-                                        checked={invoiceCredit}
+                                        name='clientInvoiceCredit'
+                                        checked={clientInvoiceCredit}
                                         type="checkbox"
                                         label="Is Credit Available ?"
                                         onChange={this.checkboxChange}
@@ -311,16 +312,16 @@ export class AddQuotation extends Component {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        {invoiceCredit &&
+                        {clientInvoiceCredit &&
                             <Row>
                                 <Col lg={3}>
                                     <Form.Group>
                                         <Form.Label >Credit Amount</Form.Label>
                                         <CurrencyFormat
                                             className='form-control'
-                                            value={creditAmount}
+                                            value={clientCreditAmount}
                                             placeholder="Credit Amount"
-                                            onValueChange={(values) => this.onChangeAmount(values, 'creditAmount')}
+                                            onValueChange={(values) => this.onChangeAmount(values, 'clientCreditAmount')}
                                             thousandSeparator={true} />
                                     </Form.Group>
                                 </Col>
@@ -328,8 +329,8 @@ export class AddQuotation extends Component {
                                     <CustomTextBox
                                         txtBoxLabel="Credit Issued Date"
                                         txtBoxType="date"
-                                        txtBoxName="creditIssuedDate"
-                                        txtBoxValue={creditIssuedDate}
+                                        txtBoxName="clientCreditIssuedDate"
+                                        txtBoxValue={clientCreditIssuedDate}
                                         changeEvent={this.onChange}
                                     />
                                 </Col>
@@ -337,8 +338,8 @@ export class AddQuotation extends Component {
                                     <CustomTextBox
                                         txtBoxLabel="Credit Note"
                                         txtBoxType="text"
-                                        txtBoxName="creditNotes"
-                                        txtBoxValue={creditNotes}
+                                        txtBoxName="clientCreditNotes"
+                                        txtBoxValue={clientCreditNotes}
                                         txtBoxPH="Notes"
                                         changeEvent={this.onChange}
                                     />
@@ -489,8 +490,52 @@ export class AddQuotation extends Component {
                                     />
                                 </Form.Group>
                             </Col>
-
+                            <Col lg={3} style={{ marginTop: '40px' }}>
+                                <Form.Group controlId="formBasicCheckbox">
+                                    <Form.Check
+                                        style={{ fontSize: '1.3em', fontWeight: 'bold' }}
+                                        name='cont_InvoiceCredit'
+                                        checked={cont_InvoiceCredit}
+                                        type="checkbox"
+                                        label="Is Credit Available ?"
+                                        onChange={this.checkboxChange}
+                                    />
+                                </Form.Group>
+                            </Col>
                         </Row>
+                        {cont_InvoiceCredit &&
+                            <Row>
+                                <Col lg={3}>
+                                    <Form.Group>
+                                        <Form.Label >Credit Amount</Form.Label>
+                                        <CurrencyFormat
+                                            className='form-control'
+                                            value={cont_CreditAmount}
+                                            placeholder="Credit Amount"
+                                            onValueChange={(values) => this.onChangeAmount(values, 'cont_CreditAmount')}
+                                            thousandSeparator={true} />
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={3}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Credit Issued Date"
+                                        txtBoxType="date"
+                                        txtBoxName="cont_CreditIssuedDate"
+                                        txtBoxValue={cont_CreditIssuedDate}
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                                <Col lg={6}>
+                                    <CustomTextBox
+                                        txtBoxLabel="Credit Note"
+                                        txtBoxType="text"
+                                        txtBoxName="cont_CreditNotes"
+                                        txtBoxValue={cont_CreditNotes}
+                                        txtBoxPH="Notes"
+                                        changeEvent={this.onChange}
+                                    />
+                                </Col>
+                            </Row>}
                     </Card>
                     <Card style={{ marginTop: '15px', backgroundColor: '#C0BFBF' }}>
                         <Row>
@@ -517,7 +562,7 @@ export class AddQuotation extends Component {
                     </Card>
                     <Row className='d-flex justify-content-end' style={{ marginTop: '20px' }}>
                         <CustomButton btnType="reset" BtnTxt="Complete" ClickEvent={this.onComplete} />
-                        <CustomButton btnType="reset" BtnTxt="Submit" ClickEvent={this.onSubmit} />
+                        <CustomButton btnType="reset" BtnTxt="Save" ClickEvent={this.onSubmit} />
                     </Row>
                 </div>
             </div>
