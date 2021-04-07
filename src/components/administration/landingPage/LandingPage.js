@@ -33,17 +33,16 @@ export default class LandingPage extends Component {
                     <Row>
                         <Col>
                             <Card lg={4}>
-                            <Form.Control type="text"  id="search"
+                                <Col>
+                                    <Form.Control type="text"  id="search"
                                     placeholder="Search"
                                     onChange={this.onChange}
                                     name="search"
-                                    onChange={this.handleSearch}
-                                    style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888",paddingLeft:"20px"}}
                                     />
-                                   <i className="fa fa-search" style={{position:"relative",
-                                                bottom:"30px",
-                                                left:"73%"}}
-                                        ></i>
+                                   <button className='iconButtton' >
+                                    <i className="fa fa-search" onClick={this.onSearch} ></i>
+                                </button><br/>
+                                </Col>
                                         {countries.map((country,i)=>(
                                                 <CountryFlags key={i} country={country.name}/>))}
                             <Row style={{marginTop:"20%"}}>
@@ -57,12 +56,10 @@ export default class LandingPage extends Component {
                                     placeholder="Search"
                                     onChange={this.onChange}
                                     name="search"
-                                    onChange={this.handleSearch}
-                                    style={{borderRadius:"25px",padding:"10px",boxShadow:"5px 5px 8px #888888",paddingLeft:"20px"}}
                                     />
                                     <i className="fa fa-search" style={{position:"relative",
                                                 bottom:"30px",
-                                                left:"73%"}}
+                                                left:"90%",cursor:'pointer',fontSize:"20px",color:'grey'}}
                                         ></i>
 
                                 <Row>

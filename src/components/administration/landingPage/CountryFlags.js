@@ -6,7 +6,7 @@ export default function CountryFlags(props) {
 
     return (
         <div>
-            <Card style={{backgroundColor:"white",marginTop:"10px",width:"80%"}}>
+            <Card style={{backgroundColor:"white",marginTop:"10px"}}>
                 <Row>
                     <Col lg={3}>
                     <ReactCountryFlag countryCode={getCode(props.country)} style={{fontSize:"25px"}} svg />

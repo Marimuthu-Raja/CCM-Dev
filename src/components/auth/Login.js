@@ -32,7 +32,7 @@ const onSubmit=(e)=>{
                     const access_token = data.response.access_token
                     localStorage.setItem('isLogin',true)
                     localStorage.setItem('access_token',access_token)
-                    window.location.replace('/dashboard')
+                    window.location.replace('/list')
                     //window.location.replace('https://fir-2304e.web.app/dashboard')
 
                 }
