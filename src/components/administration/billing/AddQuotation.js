@@ -211,8 +211,8 @@ export class AddQuotation extends Component {
                                         <option value="" disabled>Quote Approval</option>
                                         <option value="approved">Approved</option>
                                         <option value="pending">Pending</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="cancel">Cancel</option>
+                                        <option value="rejected">Rejected</option>
+                                        <option value="canceled">Canceled</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
@@ -306,7 +306,7 @@ export class AddQuotation extends Component {
                                         name='clientInvoiceCredit'
                                         checked={clientInvoiceCredit}
                                         type="checkbox"
-                                        label="Is Credit Available ?"
+                                        label="Submit Credit Note"
                                         onChange={this.checkboxChange}
                                     />
                                 </Form.Group>
@@ -316,18 +316,18 @@ export class AddQuotation extends Component {
                             <Row>
                                 <Col lg={3}>
                                     <Form.Group>
-                                        <Form.Label >Credit Amount</Form.Label>
+                                        <Form.Label >Credit Note Amount</Form.Label>
                                         <CurrencyFormat
                                             className='form-control'
                                             value={clientCreditAmount}
-                                            placeholder="Credit Amount"
+                                            placeholder="Credit Note Amount"
                                             onValueChange={(values) => this.onChangeAmount(values, 'clientCreditAmount')}
                                             thousandSeparator={true} />
                                     </Form.Group>
                                 </Col>
                                 <Col lg={3}>
                                     <CustomTextBox
-                                        txtBoxLabel="Credit Issued Date"
+                                        txtBoxLabel="Credit Note Issued Date"
                                         txtBoxType="date"
                                         txtBoxName="clientCreditIssuedDate"
                                         txtBoxValue={clientCreditIssuedDate}
@@ -336,11 +336,11 @@ export class AddQuotation extends Component {
                                 </Col>
                                 <Col lg={6}>
                                     <CustomTextBox
-                                        txtBoxLabel="Credit Note"
+                                        txtBoxLabel="Credit Note No"
                                         txtBoxType="text"
                                         txtBoxName="clientCreditNotes"
                                         txtBoxValue={clientCreditNotes}
-                                        txtBoxPH="Notes"
+                                        txtBoxPH="No"
                                         changeEvent={this.onChange}
                                     />
                                 </Col>
@@ -497,7 +497,7 @@ export class AddQuotation extends Component {
                                         name='cont_InvoiceCredit'
                                         checked={cont_InvoiceCredit}
                                         type="checkbox"
-                                        label="Is Credit Available ?"
+                                        label="Submit Credit Note"
                                         onChange={this.checkboxChange}
                                     />
                                 </Form.Group>
@@ -507,18 +507,18 @@ export class AddQuotation extends Component {
                             <Row>
                                 <Col lg={3}>
                                     <Form.Group>
-                                        <Form.Label >Credit Amount</Form.Label>
+                                        <Form.Label >Credit Note Amount</Form.Label>
                                         <CurrencyFormat
                                             className='form-control'
                                             value={cont_CreditAmount}
-                                            placeholder="Credit Amount"
+                                            placeholder="Credit Note Amount"
                                             onValueChange={(values) => this.onChangeAmount(values, 'cont_CreditAmount')}
                                             thousandSeparator={true} />
                                     </Form.Group>
                                 </Col>
                                 <Col lg={3}>
                                     <CustomTextBox
-                                        txtBoxLabel="Credit Issued Date"
+                                        txtBoxLabel="Credit Note Issued Date"
                                         txtBoxType="date"
                                         txtBoxName="cont_CreditIssuedDate"
                                         txtBoxValue={cont_CreditIssuedDate}
@@ -527,11 +527,11 @@ export class AddQuotation extends Component {
                                 </Col>
                                 <Col lg={6}>
                                     <CustomTextBox
-                                        txtBoxLabel="Credit Note"
+                                        txtBoxLabel="Credit Note No"
                                         txtBoxType="text"
                                         txtBoxName="cont_CreditNotes"
                                         txtBoxValue={cont_CreditNotes}
-                                        txtBoxPH="Notes"
+                                        txtBoxPH="No"
                                         changeEvent={this.onChange}
                                     />
                                 </Col>
