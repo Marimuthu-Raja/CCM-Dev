@@ -6,7 +6,8 @@ import Swal from 'sweetalert2';
 import axiosInstance from '../../utils/axiosinstance'
 import CurrencyFormat from 'react-currency-format'
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import {Link} from 'react-router-dom';
+import { Dropdown, Segment } from "semantic-ui-react";
 
 export class AddQuotation extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export class AddQuotation extends Component {
 
         this.state = {
             category: '',
+            option :'',
             quotation_num: '',
             quotationDate: '',
             client_id: '',
@@ -106,11 +108,24 @@ export class AddQuotation extends Component {
 
 
     render() {
-        const { category, quotation_num, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount,
+        const { category,option, quotation_num, quotationDate, client, quoteAmount, description, quotationStatus, clientPO, margin, marginAmount,
             clientInvoiceNo, clientIVamount, InvoiceIssuedDate, paymentReceivedDate, receivedAmount, clientInvoiceCredit, clientCreditNotes, clientCreditIssuedDate, clientCreditAmount, workCommence, workComplete, contractorName, contractorPO, purchace_order, PO_amount, PO_date, vendorInvoiceNo,
             vendorInvoiceAmount, vendorInvoiceReceived, paidAmount, paidDate, tax, jobComplete, ticketNo,
             quotation_list,client_list,contractor_list,contractor_invoice,client_invoice , cont_InvoiceCredit,cont_CreditAmount,cont_CreditIssuedDate,cont_CreditNotes} = this.state;
-        const categoryList = ['Categories Selection', 'FM Contract', 'Interior & General', 'Electrical', 'HVAC System', 'Plumping & Pest', 'Fire Protection', 'AV system', 'IT & Security', 'Carpentry Works', 'Furniture & Rugs', 'Additional Works']
+        // const categoryList = ['Categories Selection', 'FM Contract', 'Interior & General', 'Electrical', 'HVAC System', 'Plumping & Pest', 'Fire Protection', 'AV system', 'IT & Security', 'Carpentry Works', 'Furniture & Rugs', 'Additional Works']
+          const categoryList = [
+            { key: "FM", value: "FM", text: "FM Contract" },
+            { key: "IN", value: "IN", text: "Interior & General" },
+            { key: "EL", value: "EL", text: "Electrical" },
+            { key: "HV", value: "HV", text: "HVAC System" },
+            { key: "PL", value: "PL", text: "Plumping & Pest" },
+            { key: "FI", value: "FI", text: "Fire Protection" },
+            { key: "AV", value: "AV", text: "AV system" },
+            { key: "IT", value: "IT", text: "IT & Security" },
+            { key: "CA", value: "CA", text: "Carpentry Works" },
+            { key: "FU", value: "FU", text: "Furniture & Rugs" },
+            { key: "AD", value: "AD", text: "Additional Works" }
+          ];
         console.log(client_invoice,contractor_invoice)
         return (
             <div>
@@ -119,12 +134,31 @@ export class AddQuotation extends Component {
                         <Col>
                             <p style={{ fontSize: "20px" }}>Add Quotation</p>
                         </Col>
-                        <Col className='d-flex justify-content-end'>
-                            <select className='select' name="category" value={category} onChange={this.onChange} >
+                        <Col className='d-flex justify-content-end'>        
+                        <div className='ui right aligned fluid container'>                
+                            <Dropdown
+                            className='mx-lg-3'
+                            // options={options}
+                            placeholder="Parent Quote"
+                            search
+                            searchInput={{ autoFocus: false }}
+                            selection
+                            />
+                             <Dropdown
+                            options={categoryList}
+                            placeholder="--Category--"
+                            // search
+                            // searchInput={{ autoFocus: false }}
+                            selection
+                            onChange={this.onChange}
+                            />
+                        </div>
+                            {/* <select className='select' name="category" value={category} onChange={this.onChange} >
                                 {categoryList.map(category => <option value={category} > {category}</option>)}
-                            </select>
+                            </select> */}
+                           
                         </Col>
-                    </Row>
+                    </Row><br/>
                     <Card>
                         <Row>
                             <Col lg={3}>
@@ -241,20 +275,27 @@ export class AddQuotation extends Component {
                         <Row>
 
                             <Col lg={3}>
-                                <Form.Group >
+                                <Form.Group>
                                     <Form.Label > Client Invoice No</Form.Label>
                                     <Autocomplete
                                         options={client_invoice}   
                                         onChange={(e, value) => value !== null ? this.setState({clientInvoiceNo : value.num}):this.setState({clientInvoiceNo : ''})  }
                                         getOptionLabel={(option) => option.id}
                                         renderInput={(params) => (
-                                            <div ref={params.InputProps.ref}>
-                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps} />
-                                            </div>
+                                            <div ref={params.InputProps.ref} class="input-group">
+                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps}/>
+                                                <div class="input-group-append mx-sm-1 mt-sm-2">                            
+                                                <Link to='/addinvoice/client' style={{textDecoration:'none'}}><i aria-hidden="true" class="green plus circle icon big" /></Link>
+                                               </div></div>
                                         )}
                                     />
                                 </Form.Group>
                             </Col>
+                            {/* <Col lg={1}>
+                                <div><br/><br/><br/>
+                                <Link to='/addinvoice/client' style={{textDecoration:'none'}}><i aria-hidden="true" class="green plus circle icon large mx-sm-5" /></Link>
+                                </div>
+                            </Col> */}
                             <Col lg={3}>
                                 <Form.Group>
                                     <Form.Label >Client Invoice Amount</Form.Label>
@@ -428,8 +469,11 @@ export class AddQuotation extends Component {
                                         onChange={(e, value) => value !== null ? this.setState({vendorInvoiceNo : value.num}) : this.setState({vendorInvoiceNo : ''}) }
                                         getOptionLabel={(option) => option.num}
                                         renderInput={(params) => (
-                                            <div ref={params.InputProps.ref}>
-                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps} />
+                                            <div ref={params.InputProps.ref} class="input-group">
+                                                <Form.Control placeholder='Invoice No' type="text" {...params.inputProps}/>
+                                                <div class="input-group-append mx-sm-1 mt-sm-2">                            
+                                                <Link to='/addinvoice/contractor' style={{textDecoration:'none'}}><i aria-hidden="true" class="green plus circle icon big" /></Link>
+                                               </div>
                                             </div>
                                         )}
                                     />

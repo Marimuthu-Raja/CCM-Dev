@@ -52,7 +52,7 @@ export class Profile extends Component {
             <div>
                 {resetPassword ? <Forgotpassword Back={this.setPassword} /> :
                 <div className="component">
-                    <Card style={{ marginTop: "30px" }} >
+                    
                         <Row  >
                             <Col lg={3} style={{ marginTop: '100px' }}>
                                 <Image src={Logo} className="profile-img" ></Image>
@@ -136,12 +136,151 @@ export class Profile extends Component {
                                     changeEvent={this.onChange}
                                 />
                             </Col>
+                        </Row><br/>
+                        <Row>
+                        <Col lg={3} style={{ marginTop: '100px' }}>
+                        <div className='ui center aligned container'><div className='ui huge label'>Permissions</div></div>
+                            </Col>
+
+                            <Col lg={4} md={12} sm={12}>
+                            
+                            <Card >
+                            
+                            {/* <div className='row'>
+                            
+                                <div className='col-7 mx-sm-3'>
+                                
+                                <Form.Label >Quotations/Invoice Management</Form.Label><br/><br/>
+                                <label className='h6'><b>Quotation Client Section</b></label><br/><br/>
+                                <label className='h6'><b>Quotation Contractor Section</b></label><br/><br/>
+                                <label className='h6'><b>Invoice Client Section</b></label><br/><br/>
+                                <label className='h6'><b>Invoice Contractor Section</b></label>
+                                   </div>
+                                   
+                                   <div className='col mx-sm-2'>
+                                    <Form.Label >View</Form.Label><br/><br/>
+                                    <div className='mx-sm-2'>
+                                    <Form.Check type="checkbox" /><br/>
+                                    <Form.Check type="checkbox" /><br/>
+                                    <Form.Check type="checkbox" /><br/>
+                                    <Form.Check type="checkbox" /></div>
+                                    </div> 
+
+                                        <div className='col'>             
+                                        <Form.Label >Edit</Form.Label><br/><br/>
+                                        <div className='mx-sm-2'>
+                                        <Form.Check type="checkbox" /><br/>
+                                        <Form.Check type="checkbox" /><br/>
+                                        <Form.Check type="checkbox" /><br/>
+                                        <Form.Check type="checkbox" /></div>
+                                        </div></div> */}
+
+                                        <table class="table table-borderless table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Quotations/Invoice Management</th>
+                                            <th scope="col">View</th>
+                                            <th scope="col">Edit</th>
+                                           
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <td scope="row"> <label className='h6'>Quotation Client Section</label></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            
+                                            </tr>
+                                            <tr>
+                                            <td scope="row"><label className='h6'>Quotation Contractor Section</label></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                           
+                                            </tr>
+                                            <tr>
+                                            <td scope="row"><label className='h6'>Invoice Client Section</label></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            
+                                            </tr>
+                                            <tr>
+                                            <td scope="row"><label className='h6'>Invoice Contractor Section</label></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            <td> <Form.Check type="checkbox" /></td>
+                                            
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                            </Card><br/></Col>
+
+                                <Col lg={4} >  
+                                            
+                                <Card >
+                                
+                                <div className='ui checkbox'><input type="checkbox" /><Form.Label >Administration</Form.Label></div><br/>
+                                <div>
+                                <div className='ui checkbox'><input type="checkbox" /><Form.Label >View User</Form.Label></div> <nbsp/>   
+                                <div className='ui checkbox mx-sm-5'><input type="checkbox" /><Form.Label >Manage User</Form.Label></div>
+                                </div>
+            
+                                </Card> <br/>
+                                
+                                <Card >
+                                    <Form.Label >Other Privileges</Form.Label><br/>
+                                    <div>
+                                    <div className='ui checkbox'><input type="checkbox" />
+                                    <Form.Label >View Dashboard</Form.Label></div></div>
+                                </Card>
+                               
+                                </Col>                        
+                        </Row><br/>
+                        <Row>
+                        <Col lg={3} style={{ marginTop: '70px' }}>
+                                <div className='ui center aligned container'><div className='ui huge label'>Country</div></div>
+                            </Col>
+
+                            <Col lg={8} >
+                            
+                            <Card>
+                            <div className='ui six cards mx-sm-2' >               
+                                        <div className='ui yellow fluid card' style={{ width: '15rem' }}>
+                                       <div className='content mx-sm-3' >
+                                       <i className='ui flag th'></i>
+                                       <Form.Label >Thailand</Form.Label>
+                                       <label className='ui right floated green circular label'>6</label></div>
+                                        </div>
+                                        <div className='ui yellow fluid card mx-sm-2' style={{ width: '15rem' }}>
+                                       <div className='content mx-sm-3' >
+                                       <i className='ui flag vn'></i>
+                                       <Form.Label >Vietnam</Form.Label>
+                                       <label className='ui  right floated green circular label'>6</label></div>
+                                        </div>                      
+                                        <div className='ui yellow fluid card' style={{ width: '15rem' }}>
+                                       <div className='content mx-sm-3' >
+                                       <i className='ui flag sg'></i>
+                                       <Form.Label >Singapore</Form.Label>
+                                       <label className='ui right floated green circular label'>6</label></div>
+                                        </div>
+                                        <div className='ui yellow fluid card' style={{ width: '15rem' }}>
+                                       <div className='content mx-sm-3' >
+                                       <i className='ui flag ph'></i>
+                                       <Form.Label >Philipines</Form.Label>
+                                       <label className='ui right floated green circular label'>6</label></div>
+                                        </div>
+                                        <div className='ui yellow fluid card mx-sm-2' style={{ width: '15rem' }}>
+                                       <div className='content mx-sm-3' >
+                                       <i className='ui flag hk'></i>
+                                       <Form.Label >Hong Kong</Form.Label>
+                                       <label className='ui right floated green circular label'>6</label></div>
+                                        </div></div>
+                                                                     
+                            </Card></Col>                      
                         </Row>
-                        <Row className='d-flex justify-content-end' style={{ marginTop: "3%" }} >
+                        <Row className='d-flex justify-content-end' style={{ marginTop: "2%" }} >
                                 <Button onClick={this.setPassword} >Reset Password</Button>
                                 <Button onClick={this.onSubmit}>Save</Button>
                         </Row>
-                    </Card>
+                   
                 </div>}
 
             </div>

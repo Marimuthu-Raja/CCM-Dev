@@ -22,6 +22,9 @@ import LandingPage from './administration/landingPage/LandingPage'
 import ForgotPassword from './auth/Forgotpassword'
 import AddQuotation from './administration/billing/AddQuotation'
 
+import AddInvClient from './administration/billing/AddInvoiceClient';
+import AddInvContractor from './administration/billing/AddInvContractor';
+
 //import Client from './components/Client'
 //import Contractor from './components/Contractor'
 // import Quotation from './components/Quotation'
@@ -84,6 +87,15 @@ export default function BaseRouter() {
       <Route exact path="/list">
         {isLogin? <><NavBar /><LandingPage /></>:<Redirect to='/' />}
       </Route>
+
+
+      <Route exact path="/addinvoice/client">
+        {isLogin? <><NavBar /><AddInvClient /></>:<Redirect to='/' />}
+      </Route>
+      <Route exact path="/addinvoice/contractor">
+        {isLogin? <><NavBar /><AddInvContractor /></>:<Redirect to='/' />}
+      </Route>
+
 
       {/* <Route exact path="/contractor">
         {isLogin? <><NavBar /><Contractor /></>:<Redirect to='/' />}
